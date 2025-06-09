@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "esnext",
+    "lib": ["ESNext", "dom", "dom.iterable"],
+    "moduleResolution": "node",
+    "declaration": true, // 启用类型声明文件的生成
+    "rootDir": "src",
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/globals"]
+  },
+  "include": ["src/**/*", "package.json", "tests/**/*"],
+  "exclude": ["node_modules", "./dist/*"]
+}
