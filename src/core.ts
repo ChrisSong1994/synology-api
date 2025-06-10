@@ -109,4 +109,41 @@ export class SynologyApi {
     }
     return Object.prototype.hasOwnProperty.call(this.apiInfo, apiName);
   }
+
+  async run(
+    apiName: string,
+    options: {
+      method?: "get" | "post";
+      params?: Record<string, any>;
+      data?: Record<string, any>;
+      headers?: Record<string, any>;
+    }
+  ) {
+    if (!this.isConnecting) {
+      throw new Error("Not connected");
+    }
+    if (!this.hasApi(apiName)) {
+      throw new Error(`${apiName} not found`);
+    }
+    const { method = "get", params, data, headers } = options;
+    const api = this.apiInfo[apiName];
+    const url = `${this.baseUrl}${api.path}`;
+    const externalParams = {
+      api: apiName,
+      version: api.maxVersion,
+      _sid: this.authInfo.sid,
+      ...params,
+    };
+    let result = null;
+    if (method === "get") {
+      result = await axios.get(url, { params: externalParams, data, headers });
+    }
+    if (method === "post") {
+      result = await axios.post(url, { params: externalParams, data, headers });
+    }
+
+    return result;
+  }
 }
+
+// SynologyApi.prototype 
