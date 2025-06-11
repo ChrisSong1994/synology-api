@@ -1,9 +1,9 @@
-export function isEmpty(obj: Record<string, any>) {
-  return Object.keys(obj).length === 0;
+export function isObjEmpty(obj: Record<string, any>) {
+  return obj && typeof obj === "object" && Object.keys(obj).length === 0;
 }
 
 export function queryObjToString(params: Record<string, any>) {
-  if (isEmpty(params)) {
+  if (isObjEmpty(params)) {
     return "";
   }
   return Object.keys(params)
