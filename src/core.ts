@@ -144,6 +144,8 @@ export class SynologyApi {
 
     return result;
   }
+
+  
 }
 
-// SynologyApi.prototype 
+// SynologyApi.prototype["AudioStation"] = AudioStationMethods;

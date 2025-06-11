@@ -5,7 +5,7 @@ import {
 } from "../types/AudioStation.Song";
 
 export const AudioStationMethods = {
-  getSongList: async (params: AudioStationSongListRequest) => {
+  getSongList: async function (params: AudioStationSongListRequest) {
     const res = await (this as SynologyApi).run("SYNO.AudioStation.Song", {
       params: {
         method: "list",
@@ -17,3 +17,16 @@ export const AudioStationMethods = {
     return res.data as AudioStationSongListResponse;
   },
 };
+
+const instanceBindings = new WeakMap();
+
+Object.defineProperty(SynologyApi.prototype, "AudioStation", {
+  get() {
+    if (!instanceBindings.has(this)) {
+      instanceBindings.set(this, {
+        getSongList: AudioStationMethods.getSongList.bind(this),
+      });
+    }
+    return instanceBindings.get(this);
+  },
+});
