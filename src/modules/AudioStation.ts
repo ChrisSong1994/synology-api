@@ -3,6 +3,9 @@ import {
   AudioStationSongListResponse,
 } from "../types/AudioStation.Song";
 
+/**
+ * fetch song list
+ * */ 
 async function getSongList(params: AudioStationSongListRequest) {
   const res = await this.run("SYNO.AudioStation.Song", {
     params: {
