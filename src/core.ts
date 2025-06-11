@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { SYNOLOGY_API_AUTH, SYNOLOGY_API_INFO } from "./constants";
+import { BaseSynologyApi } from "./modules";
 
 export interface SynologyApiOptions {
   server: string;
@@ -22,7 +23,7 @@ export interface SynologyApiAuthInfo {
   synotoken: string;
 }
 
-export class SynologyApi {
+export class SynologyApi extends BaseSynologyApi {
   server: string;
   username: string;
   password: string;
@@ -31,6 +32,7 @@ export class SynologyApi {
   private authInfo: SynologyApiAuthInfo | null = null;
   private apiInfo: Record<string, SynologyApiInfo> = {};
   constructor(options: SynologyApiOptions) {
+    super();
     this.server = options.server;
     this.username = options.username;
     this.password = options.password;
@@ -144,8 +146,4 @@ export class SynologyApi {
 
     return result;
   }
-
-  
 }
-
-// SynologyApi.prototype["AudioStation"] = AudioStationMethods;

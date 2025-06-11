@@ -1,7 +1,7 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.1-beta.0",
+  "description": "synology api for nodejs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -9,19 +9,21 @@
   "keywords": [
     "synology",
     "api",
-    "nodejs"
+    "nodejs",
+    "typescript",
+    "esmodule"
   ],
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "tsc --sourceMap --watch",
-    "build": "pnpm run clean && tsc",
+    "build": "npm run clean && tsc",
     "lint": "eslint src --ext .ts --fix",
     "prettier": "prettier --write 'src/**/*.ts'",
-    "format": "pnpm run prettier && pnpm run lint",
-    "prepublish": "pnpm run build",
-    "pub": "pnpm publish",
+    "format": "npm run prettier && npm run lint",
+    "prepublish": "npm run build",
+    "pub": "npm publish --access=public",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "clean": "rimraf dist"

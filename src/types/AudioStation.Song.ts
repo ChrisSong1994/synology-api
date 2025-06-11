@@ -1,11 +1,10 @@
 export type AudioStationSongListRequest = {
-  limit: number;
-  offset: number;
-  method: "list";
-  library: "all";
-  api: "SYNO.AudioStation.Song";
-  additional: string;
-  version: number;
+  limit?: number;
+  offset?: number;
+  method?: number;
+  library?: number;
+  additional?: string;
+  version?: number;
   sort_by?: string;
   sort_direction?: string;
 };
