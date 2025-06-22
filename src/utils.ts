@@ -10,3 +10,7 @@ export function queryObjToString(params: Record<string, any>) {
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(params[key]))
     .join("&");
 }
+
+export function isHttpUrl(url: string) {
+  return /^https?:\/\//.test(url);
+}

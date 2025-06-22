@@ -1,8 +1,10 @@
+// reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
 import axios from "axios";
 
 import { SYNOLOGY_API_AUTH, SYNOLOGY_API_INFO } from "./constants";
 import { BaseSynologyApi } from "./modules";
-
+import { isHttpUrl } from "./utils";
+import { getServerInfo } from "./helpers";
 export interface SynologyApiOptions {
   server: string;
   username: string;
@@ -24,7 +26,7 @@ export interface SynologyApiAuthInfo {
 }
 
 export class SynologyApi extends BaseSynologyApi {
-  server: string;
+  server: string | string[];
   username: string;
   password: string;
   baseUrl: string;
@@ -40,6 +42,13 @@ export class SynologyApi extends BaseSynologyApi {
   }
 
   async connect() {
+    // url 骗人
+    if (isHttpUrl(this.server as string)) {
+      this.baseUrl = `${this.server}/webapi/`;
+    } else {
+      this.server = await getServerInfo(this.server as string);
+      this.baseUrl = `${this.server[0]}/webapi/`;
+    }
     const params = {
       api: SYNOLOGY_API_AUTH,
       version: 6,
@@ -87,7 +96,7 @@ export class SynologyApi extends BaseSynologyApi {
     }
   }
 
-  async _getApiInfo() {
+  private async _getApiInfo() {
     const params = {
       api: SYNOLOGY_API_INFO,
       version: 1,
