@@ -1,10 +1,10 @@
 // reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
 import axios from "axios";
 
-import { SYNOLOGY_API_AUTH, SYNOLOGY_API_INFO } from "./constants";
-import { BaseSynologyApi } from "./modules";
-import { isHttpUrl } from "./utils";
-import { getServerInfo } from "./helpers";
+import { BaseSynologyApi } from "@/modules";
+import { isHttpUrl } from "@/utils";
+import { getServerInfo } from "@/helpers";
+import { login, logout, getApiInfo } from "@/modules/Api";
 export interface SynologyApiOptions {
   server: string;
   username: string;
@@ -45,24 +45,12 @@ export class SynologyApi extends BaseSynologyApi {
     // if quickconnect id
     if (!isHttpUrl(this.server as string)) {
       this.server = await getServerInfo(this.server as string);
+      // reset base url
+      this.baseUrl = `${this.server}/webapi/`;
     }
-    this.baseUrl = `${this.server}/webapi/`;
-    const params = {
-      api: SYNOLOGY_API_AUTH,
-      version: 6,
-      method: "login",
-      account: this.username,
-      passwd: this.password,
-      format: "sid",
-    };
     try {
-      const url = `${this.baseUrl}entry.cgi`;
-      const result = await axios.get(url, { params });
-      if (!result.data.success) {
-        throw new Error(result.data.error.message);
-      }
-
-      this.authInfo = result.data.data;
+      const result = await login(this);
+      this.authInfo = result.data;
       this.isConnecting = true;
       await this._getApiInfo();
       return true;
@@ -73,17 +61,8 @@ export class SynologyApi extends BaseSynologyApi {
   }
 
   async disconnect() {
-    const params = {
-      api: SYNOLOGY_API_AUTH,
-      version: 6,
-      method: "logout",
-    };
     try {
-      const url = `${this.baseUrl}entry.cgi`;
-      const result = await axios.get(url, { params });
-      if (!result.data.success) {
-        throw new Error(result.data.error.message);
-      }
+      await logout(this);
       this.authInfo = null;
       this.apiInfo = {};
       this.isConnecting = false;
@@ -95,18 +74,9 @@ export class SynologyApi extends BaseSynologyApi {
   }
 
   private async _getApiInfo() {
-    const params = {
-      api: SYNOLOGY_API_INFO,
-      version: 1,
-      method: "query",
-    };
     try {
-      const url = `${this.baseUrl}entry.cgi`;
-      const result = await axios.get(url, { params });
-      if (!result.data.success) {
-        throw new Error(result.data.error.message);
-      }
-      this.apiInfo = result.data.data;
+      const result = await getApiInfo(this);
+      this.apiInfo = result.data;
     } catch (err) {
       console.error(err);
     }

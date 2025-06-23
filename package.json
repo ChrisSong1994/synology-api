@@ -18,8 +18,8 @@
     "dist"
   ],
   "scripts": {
-    "dev": "tsc --sourceMap --watch",
-    "build": "npm run clean && tsc",
+    "dev": "tsc && tsc-alias  --sourceMap --watch",
+    "build": "npm run clean && tsc && tsc-alias",
     "lint": "eslint src --ext .ts --fix",
     "prettier": "prettier --write 'src/**/*.ts'",
     "format": "npm run prettier && npm run lint",
@@ -38,6 +38,7 @@
     "prettier": "3.5.3",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.32.0",
     "vite": "^6.3.5",

@@ -8,5 +8,10 @@ export default defineConfig(({ mode }) => {
       env: loadEnv(mode, process.cwd(), ""),
       testTimeout:  10000,
     },
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
   };
 });
