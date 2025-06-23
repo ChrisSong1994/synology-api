@@ -1,6 +1,6 @@
 {
-  "name": "syno-api",
-  "version": "0.0.1-beta.0",
+  "name": "@fett/synology-api",
+  "version": "0.0.1-beta.1",
   "description": "synology api for nodejs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -1,10 +1,10 @@
 // reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
 import axios from "axios";
 
-import { BaseSynologyApi } from "@/modules";
-import { isHttpUrl } from "@/utils";
-import { getServerInfo } from "@/helpers";
-import { login, logout, getApiInfo } from "@/modules/Api";
+import { BaseSynologyApi } from "./modules";
+import { isHttpUrl } from "./utils";
+import { getServerInfo } from "./helpers";
+import { login, logout, getApiInfo } from "./modules/Api";
 export interface SynologyApiOptions {
   server: string;
   username: string;
