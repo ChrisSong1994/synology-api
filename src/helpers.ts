@@ -2,12 +2,12 @@ import axios from "axios";
 import { GLOBAL_QUICK_CONNECT_URL, QUICK_CONNECT_PINGPANG_API } from "./constants";
 
 const getServersFromServerInfo = async (serverInfo) => {
-  const result = [];
   // proxy server
   if (serverInfo.service.relay_ip) {
     const server = `http://${serverInfo.service.relay_ip}:${serverInfo.service.relay_port}`;
-    if (await pingpang(server)) {
-      result.push(server);
+    const res = await pingpang(server);
+    if (res) {
+      return server;
     }
   }
 
@@ -15,7 +15,7 @@ const getServersFromServerInfo = async (serverInfo) => {
   if (serverInfo.server.external.ip) {
     const server = `http://${serverInfo.server.external.ip}:${serverInfo.service.port}`;
     if (await pingpang(server)) {
-      result.push(server);
+      return server;
     }
   }
 
@@ -23,11 +23,9 @@ const getServersFromServerInfo = async (serverInfo) => {
   if (serverInfo.server.interface?.[0]) {
     const server = `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
     if (await pingpang(server)) {
-      result.push(server);
+      return server;
     }
   }
-
-  return result;
 };
 
 // get server ip
@@ -60,10 +58,17 @@ export const getServerInfo = async (quickConnectId: string) => {
 
 // pingpang
 export const pingpang = async (server: string) => {
-  const result = await axios.get(`${server}/${QUICK_CONNECT_PINGPANG_API}`);
-  if (result.data.success) {
-    return true;
-  } else {
+  try {
+    const result = await axios.get(`${server}/${QUICK_CONNECT_PINGPANG_API}`, {
+      timeout: 3000,
+    });
+    if (result.data.success) {
+      return true;
+    } else {
+      return false;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_err: any) {
     return false;
   }
 };

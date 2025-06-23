@@ -1,4 +1,4 @@
-import { describe, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import { createSynologyApi } from "./util";
 
@@ -12,6 +12,8 @@ describe("SynologyApi AudioStation", async () => {
         limit: 10,
         offset: 0,
       });
+
+      expect(result.success).toBeDefined();
 
       console.log(result);
     });

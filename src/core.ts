@@ -26,7 +26,7 @@ export interface SynologyApiAuthInfo {
 }
 
 export class SynologyApi extends BaseSynologyApi {
-  server: string | string[];
+  server: string;
   username: string;
   password: string;
   baseUrl: string;
@@ -42,13 +42,11 @@ export class SynologyApi extends BaseSynologyApi {
   }
 
   async connect() {
-    // url 骗人
-    if (isHttpUrl(this.server as string)) {
-      this.baseUrl = `${this.server}/webapi/`;
-    } else {
+    // if quickconnect id
+    if (!isHttpUrl(this.server as string)) {
       this.server = await getServerInfo(this.server as string);
-      this.baseUrl = `${this.server[0]}/webapi/`;
     }
+    this.baseUrl = `${this.server}/webapi/`;
     const params = {
       api: SYNOLOGY_API_AUTH,
       version: 6,

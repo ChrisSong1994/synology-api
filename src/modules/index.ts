@@ -1,4 +1,4 @@
-import { AudioStationProp, AudioStationMethods } from "./AudioStation";
+import { AudioStationKey, AudioStationMethods } from "./AudioStation";
 
 // bind methods to BaseSynologyApi instance
 function methodsBundler(instance: any, methods: typeof AudioStationMethods) {
@@ -9,14 +9,13 @@ function methodsBundler(instance: any, methods: typeof AudioStationMethods) {
   return output;
 }
 export class BaseSynologyApi {
-  [AudioStationProp]: typeof AudioStationMethods;
+  [AudioStationKey]: typeof AudioStationMethods;
   constructor() {}
 }
 
-
 // proxy methods namespace to BaseSynologyApi instance
 Object.defineProperties(BaseSynologyApi.prototype, {
-  [AudioStationProp]: {
+  [AudioStationKey]: {
     get() {
       return methodsBundler(this, AudioStationMethods);
     },
