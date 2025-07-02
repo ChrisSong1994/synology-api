@@ -14,8 +14,6 @@ describe("SynologyApi AudioStation", async () => {
       });
 
       expect(result.success).toBeDefined();
-
-      console.log(result);
     });
   }
 });
