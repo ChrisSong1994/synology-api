@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { SYNOLOGY_API_INFO } from "@/constants";
+import { SynologyApiInfo } from "@/types";
 import { SynologyApi } from "@/core";
 
 export async function getApiInfo(core: SynologyApi) {
   const params = {
-    api: SYNOLOGY_API_INFO,
+    api: SynologyApiInfo.Info,
     version: 1,
     method: "query",
   };

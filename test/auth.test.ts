@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import { SynologyApiInfo } from "../src";
 
 import { createSynologyApi } from "./util";
 
@@ -15,7 +16,7 @@ describe("SynologyApi auth", () => {
   });
 
   test("SynologyApi hasApi", () => {
-    expect(synologyApi.hasApi("SYNO.API.Info")).toBeTruthy();
+    expect(synologyApi.hasApi(SynologyApiInfo.Info)).toBeTruthy();
     expect(synologyApi.hasApi("SYNO.Core.XXXX")).toBeFalsy();
   });
 
@@ -29,7 +30,7 @@ describe("SynologyApi auth", () => {
   });
 
   test("SynologyApi hasApi with logout", () => {
-    expect(() => synologyApi.hasApi("SYNO.API.Info")).toThrowError(
+    expect(() => synologyApi.hasApi(SynologyApiInfo.Info)).toThrowError(
       expect.objectContaining({
         message: "Not connected",
       })

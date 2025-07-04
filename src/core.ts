@@ -11,7 +11,7 @@ export interface SynologyApiOptions {
   password: string;
 }
 
-export interface SynologyApiInfo {
+export interface SynologyApiInfoData {
   maxVersion: number;
   minVersion: number;
   path: string;
@@ -32,7 +32,7 @@ export class SynologyApi extends BaseSynologyApi {
   baseUrl: string;
   isConnecting: boolean = false;
   private authInfo: SynologyApiAuthInfo | null = null;
-  private apiInfo: Record<string, SynologyApiInfo> = {};
+  private apiInfo: Record<string, SynologyApiInfoData> = {};
   constructor(options: SynologyApiOptions) {
     super();
     this.server = options.server;

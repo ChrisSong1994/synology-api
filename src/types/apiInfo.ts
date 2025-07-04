@@ -1,0 +1,41 @@
+/**
+ * api info
+ * */
+export enum SynologyApiInfo {
+  Auth = "SYNO.API.Auth",
+  Info = "SYNO.API.Info",
+  OTP = "SYNO.API.OTP",
+}
+
+/**
+ * AudioStation
+ * */
+export enum AudioStationApi {
+  Song = "SYNO.AudioStation.Song",
+  Album = "SYNO.AudioStation.Album",
+  Artist = "SYNO.AudioStation.Artist",
+  Genre = "SYNO.AudioStation.Genre",
+  Playlist = "SYNO.AudioStation.Playlist",
+  Folder = "SYNO.AudioStation.Folder",
+  Cover = "SYNO.AudioStation.Cover",
+  Download = "SYNO.AudioStation.Download",
+  Info = "SYNO.AudioStation.Info",
+  Lyrics = "SYNO.AudioStation.Lyrics",
+  LyricsSearch = "SYNO.AudioStation.LyricsSearch",
+  Radio = "SYNO.AudioStation.Radio",
+  Stream = "SYNO.AudioStation.Stream",
+  Tag = "SYNO.AudioStation.Tag",
+}
+
+/**
+ * FileStation API
+ */
+export enum FileStationApi {
+  File = "SYNO.FileStation.File",
+  Info = "SYNO.FileStation.Info",
+  List = "SYNO.FileStation.List",
+  Quota = "SYNO.FileStation.Quota",
+  Share = "SYNO.FileStation.Share",
+  Thumb = "SYNO.FileStation.Thumb",
+  Upload = "SYNO.FileStation.Upload",
+}

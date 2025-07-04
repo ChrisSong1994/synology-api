@@ -1,11 +1,11 @@
+import { AudioStationApi } from "@/types";
 import { AudioStationSongListRequest, AudioStationSongListResponse } from "./types";
-
 
 /**
  * fetch song list
  * */
 export async function getSongList(params: AudioStationSongListRequest) {
-  const res = await this.run("SYNO.AudioStation.Song", {
+  const res = await this.run(AudioStationApi.Song, {
     params: {
       method: "list",
       library: "all",

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { SYNOLOGY_API_AUTH } from "@/constants";
+import { SynologyApiInfo } from "@/types";
 import { SynologyApi } from "@/core";
 
 export async function login(core: SynologyApi) {
   const params = {
-    api: SYNOLOGY_API_AUTH,
+    api: SynologyApiInfo.Auth,
     version: 6,
     method: "login",
     account: core.username,
@@ -22,7 +22,7 @@ export async function login(core: SynologyApi) {
 
 export async function logout(core: SynologyApi) {
   const params = {
-    api: SYNOLOGY_API_AUTH,
+    api: SynologyApiInfo.Auth,
     version: 6,
     method: "logout",
   };
