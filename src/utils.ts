@@ -14,3 +14,8 @@ export function queryObjToString(params: Record<string, any>) {
 export function isHttpUrl(url: string) {
   return /^https?:\/\//.test(url);
 }
+
+
+export function isUndfined(value: any) {
+  return value === undefined;
+}

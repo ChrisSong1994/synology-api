@@ -13,6 +13,7 @@ function methodsBundler(instance: any, methods: SynologyApiMethods) {
 }
 export class BaseSynologyApi {
   [AudioStationKey]: typeof AudioStationMethods;
+  [FileStationKey]: typeof FileStationMethods;
   constructor() {}
 }
 

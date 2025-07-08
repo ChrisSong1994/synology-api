@@ -7,10 +7,38 @@ describe("SynologyApi FileStation", async () => {
   await synologyApi.connect();
 
   if (synologyApi.isConnecting) {
-    test("FileStation Info  getInfo", async () => {
+    test("FileStation   getInfo", async () => {
       const result = await synologyApi.FileStation.getInfo();
 
       expect(result.success).toBeDefined();
+    });
+
+    test("FileStation   getFileList params error", async () => {
+      await expect(synologyApi.FileStation.getFileList()).rejects.toThrowError(
+        new Error("folder_path is required")
+      );
+    });
+
+    test("FileStation   getFileList result", async () => {
+      const result = await synologyApi.FileStation.getFileList({ folder_path: "/book" });
+      expect(result).toMatchObject({
+        success: true,
+        data: {
+          offset: 0,
+        },
+      });
+      expect(result.data.files.length).toBeGreaterThanOrEqual(0);
+    });
+
+    test("FileStation   getFileList result", async () => {
+      const result = await synologyApi.FileStation.getFileListShare();
+      expect(result).toMatchObject({
+        success: true,
+        data: {
+          offset: 0,
+        },
+      });
+      expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
     });
   }
 });

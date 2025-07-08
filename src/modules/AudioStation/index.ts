@@ -2,7 +2,7 @@ import { getSongList } from "./Song";
 
 
 export const AudioStationMethods = {
-  getSongList: getSongList,
+  getSongList,
 };
 
 export const AudioStationKey = "AudioStation";

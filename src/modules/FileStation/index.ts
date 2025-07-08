@@ -3,9 +3,12 @@
  */
 
 import { getInfo } from "./Info";
+import { getFileList, getFileListShare } from "./List";
 
 export const FileStationMethods = {
-  getInfo: getInfo,
+  getInfo,
+  getFileList,
+  getFileListShare,
 };
 
 export const FileStationKey = "FileStation";
