@@ -6,18 +6,19 @@ export { FileStationKey } from "./FileStation";
 
 type SynologyApiMethods = typeof AudioStationMethods | typeof FileStationMethods;
 
+export class BaseSynologyApi {
+  [AudioStationKey]: typeof AudioStationMethods;
+  [FileStationKey]: typeof FileStationMethods;
+  constructor() {}
+}
+
 // bind methods to BaseSynologyApi instance
-function methodsBundler(instance: any, methods: SynologyApiMethods) {
+function methodsBundler(instance: BaseSynologyApi, methods: SynologyApiMethods) {
   const output = {};
   for (const key in methods) {
     output[key] = methods[key].bind(instance);
   }
   return output;
-}
-export class BaseSynologyApi {
-  [AudioStationKey]: typeof AudioStationMethods;
-  [FileStationKey]: typeof FileStationMethods;
-  constructor() {}
 }
 
 // proxy methods namespace to BaseSynologyApi instance
