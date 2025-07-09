@@ -100,7 +100,10 @@ export class SynologyApi extends BaseSynologyApi {
     }
   ) {
     if (!this.isConnecting) {
-      throw new Error("Not connected");
+      const res = await this.connect();
+      if (!res) {
+        throw new Error("Not connected");
+      }
     }
     if (!this.hasApi(apiName)) {
       throw new Error(`${apiName} not found`);
@@ -125,7 +128,7 @@ export class SynologyApi extends BaseSynologyApi {
     // match error code msg
     const apiKey = getApiKey(apiName);
     if (!isUndfined(apiKey)) {
-      result.data = resWithErrorCode(apiKey,result.data);
+      result.data = resWithErrorCode(apiKey, result.data);
     }
     return result;
   }
