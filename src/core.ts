@@ -2,9 +2,10 @@
 import axios from "axios";
 
 import { BaseSynologyApi } from "./modules";
-import { isHttpUrl } from "./utils";
+import { isHttpUrl, getApiKey, isUndfined } from "./utils";
 import { getServerInfo } from "./helpers";
 import { login, logout, getApiInfo } from "./modules/Api";
+import { resWithErrorCode } from "./errorcodes";
 export interface SynologyApiOptions {
   server: string;
   username: string;
@@ -121,6 +122,11 @@ export class SynologyApi extends BaseSynologyApi {
       result = await axios.post(url, { params: externalParams, data, headers });
     }
 
+    // match error code msg
+    const apiKey = getApiKey(apiName);
+    if (!isUndfined(apiKey)) {
+      result.data = resWithErrorCode(apiKey,result.data);
+    }
     return result;
   }
 }

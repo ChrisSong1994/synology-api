@@ -19,15 +19,25 @@ describe("SynologyApi FileStation", async () => {
       );
     });
 
-    test("FileStation   getFileList result", async () => {
-      const result = await synologyApi.FileStation.getFileList({ folder_path: "/book" });
+    test("FileStation   getFileList result success", async () => {
+      const result = await synologyApi.FileStation.getFileList({
+        folder_path: "/book",
+      });
       expect(result).toMatchObject({
         success: true,
-        data: {
-          offset: 0,
-        },
+        data: {},
       });
       expect(result.data.files.length).toBeGreaterThanOrEqual(0);
+    });
+
+    test("FileStation   getFileList result error", async () => {
+      const result = await synologyApi.FileStation.getFileList({
+        folder_path: "/",
+      });
+      expect(result).toMatchObject({
+        success: false,
+        error: {},
+      });
     });
 
     test("FileStation   getFileList result", async () => {

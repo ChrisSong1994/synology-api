@@ -19,3 +19,7 @@ export function isHttpUrl(url: string) {
 export function isUndfined(value: any) {
   return value === undefined;
 }
+
+export function getApiKey(apiName: string): string {
+  return apiName.split('.')[1];
+}

@@ -23,7 +23,7 @@ export type AudioStationSongListResponse = SynologyApiResponse<{
   };
 }>;
 
-export async function getSongList(params: AudioStationSongListRequest) {
+export async function getSongList(params: AudioStationSongListRequest):Promise<AudioStationSongListResponse> {
   const res = await this.run(AudioStationApi.Song, {
     params: {
       method: "list",
@@ -31,5 +31,5 @@ export async function getSongList(params: AudioStationSongListRequest) {
       ...params,
     },
   });
-  return res.data as AudioStationSongListResponse;
+  return res.data ;
 }

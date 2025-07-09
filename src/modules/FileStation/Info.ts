@@ -10,11 +10,11 @@ export type FileStationInfoResponse = SynologyApiResponse<{
   hostname: string;
 }>;
 
-export async function getInfo() {
+export async function getInfo():Promise<FileStationInfoResponse> {
   const res = await this.run(FileStationApi.Info, {
     params: {
       method: "get",
     },
   });
-  return res.data as FileStationInfoResponse;
+  return res.data ;
 }

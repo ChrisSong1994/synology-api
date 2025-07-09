@@ -10,7 +10,7 @@ export type FileStationFileListRequest = {
   sort_by?: string;
   sort_direction?: "ASC" | "DESC";
   version?: number;
-  filetype?: string;
+  filetype?: "file" | "dir" | "all";
   folder_path?: string;
   additional?: string[];
 };
@@ -41,7 +41,9 @@ export type FileStationFileListResponse = SynologyApiResponse<{
   total: number;
 }>;
 
-export async function getFileList(params: FileStationFileListRequest = {}) {
+export async function getFileList(
+  params: FileStationFileListRequest = {}
+): Promise<FileStationFileListResponse> {
   const { additional = ["real_path", "size", "owner", "time"], filetype = "all" } = params;
   if (isUndfined(params.folder_path)) {
     throw new Error("folder_path is required");
@@ -49,13 +51,13 @@ export async function getFileList(params: FileStationFileListRequest = {}) {
   const res = await this.run(FileStationApi.List, {
     params: {
       method: "list",
-      additional: `[${additional.join(",")}]`,
+      additional: JSON.stringify(additional),
       filetype: filetype,
       folder_path: params.folder_path,
       ...params,
     },
   });
-  return res.data as FileStationFileListResponse;
+  return res.data;
 }
 
 /**
@@ -81,16 +83,18 @@ export type FileStationFileShareListResponse = SynologyApiResponse<{
   total: number;
 }>;
 
-export async function getFileListShare(params: FileStationFileShareListRequest = {}) {
+export async function getFileListShare(
+  params: FileStationFileShareListRequest = {}
+): Promise<FileStationFileShareListResponse> {
   const { additional = ["real_path", "size", "owner", "time"], onlywritable = false } = params;
 
   const res = await this.run(FileStationApi.List, {
     params: {
       method: "list_share",
-      additional: `[${additional.join(",")}]`,
+      additional: JSON.stringify(additional),
       onlywritable: onlywritable,
       ...params,
     },
   });
-  return res.data as FileStationFileShareListResponse;
+  return res.data;
 }

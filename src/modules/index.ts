@@ -1,6 +1,9 @@
 import { AudioStationKey, AudioStationMethods } from "./AudioStation";
 import { FileStationKey, FileStationMethods } from "./FileStation";
 
+export { AudioStationKey } from "./AudioStation";
+export { FileStationKey } from "./FileStation";
+
 type SynologyApiMethods = typeof AudioStationMethods | typeof FileStationMethods;
 
 // bind methods to BaseSynologyApi instance
