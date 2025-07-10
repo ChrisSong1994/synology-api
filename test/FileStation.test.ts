@@ -6,7 +6,7 @@ describe("SynologyApi FileStation", async () => {
   const synologyApi = createSynologyApi();
 
   test("FileStation   getInfo", async () => {
-    const result = await synologyApi.FileStation.getInfo();
+    const result = await synologyApi.fs.getInfo();
 
     expect(result.success).toBeDefined();
   });

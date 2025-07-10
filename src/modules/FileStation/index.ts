@@ -5,10 +5,16 @@
 import { getInfo } from "./Info";
 import { getFileList, getFileListShare } from "./List";
 
-export const FileStationMethods = {
+// fs methods
+export const METHODS = {
   getInfo,
   getFileList,
   getFileListShare,
 };
 
-export const FileStationKey = "FileStation";
+// name space
+export const SPELLING_KEY = "FileStation";
+export const SIMPLIFY_KEY = "fs";
+
+// type
+export type TMethods = typeof METHODS;

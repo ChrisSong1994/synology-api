@@ -1,4 +1,4 @@
-import { FileStationKey, AudioStationKey } from "@/modules";
+import { SynologyApiKeys } from "@/modules";
 import { SynologyApiResponse } from "@/types";
 import { isUndfined } from "./utils";
 
@@ -6,7 +6,7 @@ const CODE_SUCCESS = 0;
 const CODE_UNKNOWN = 9999;
 
 export const SYNOLOGY_ERROR_CODES = {
-  [FileStationKey]: {
+  [SynologyApiKeys.FileStation]: {
     400: "Invalid parameter of file operation",
     401: "Unknown error of file operation",
     402: "System is too busy",
@@ -31,7 +31,7 @@ export const SYNOLOGY_ERROR_CODES = {
     421: "Device or resource busy",
     599: "No such task of the file operation",
   },
-  [AudioStationKey]: {},
+  [SynologyApiKeys.AudioStation]: {},
   COMMON_CODES: {
     [CODE_SUCCESS]: "Success",
     100: "Unknown error",

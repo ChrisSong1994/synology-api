@@ -1,6 +1,6 @@
 .eslintrc.js
 node_modules
 examples
-dist
+lib
 scripts
 .eslintrc

@@ -5,9 +5,9 @@
     "lib": ["ESNext", "dom", "dom.iterable"],
     "moduleResolution": "node",
     "declaration": true, // 启用类型声明文件的生成
-    "declarationDir": "dist/types",
+    "declarationDir": "lib/types",
     "rootDir": "src",
-    "outDir": "dist/esm",
+    "outDir": "lib/esm",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,5 +17,5 @@
     }
   },
   "include": ["src/**/*", "package.json", "tests/**/*"],
-  "exclude": ["node_modules", "./dist/*"]
+  "exclude": ["node_modules", "./lib/*"]
 }

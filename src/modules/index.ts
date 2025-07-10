@@ -1,14 +1,20 @@
-import { AudioStationKey, AudioStationMethods } from "./AudioStation";
-import { FileStationKey, FileStationMethods } from "./FileStation";
+import * as AudioStation from "./AudioStation";
+import * as FileStation from "./FileStation";
 
-export { AudioStationKey } from "./AudioStation";
-export { FileStationKey } from "./FileStation";
+export const SynologyApiKeys = {
+  FileStation: FileStation.SPELLING_KEY,
+  AudioStation: AudioStation.SPELLING_KEY,
+};
 
-type SynologyApiMethods = typeof AudioStationMethods | typeof FileStationMethods;
+export type SynologyApiMethods = FileStation.TMethods | AudioStation.TMethods;
+
+// export type BaseSynologyApiKeyMethods = FileStation.IKeyMethods
 
 export class BaseSynologyApi {
-  [AudioStationKey]: typeof AudioStationMethods;
-  [FileStationKey]: typeof FileStationMethods;
+  [AudioStation.SPELLING_KEY]: AudioStation.TMethods;
+  [AudioStation.SIMPLIFY_KEY]: AudioStation.TMethods;
+  [FileStation.SPELLING_KEY]: FileStation.TMethods;
+  [FileStation.SIMPLIFY_KEY]: FileStation.TMethods;
   constructor() {}
 }
 
@@ -23,14 +29,26 @@ function methodsBundler(instance: BaseSynologyApi, methods: SynologyApiMethods) 
 
 // proxy methods namespace to BaseSynologyApi instance
 Object.defineProperties(BaseSynologyApi.prototype, {
-  [FileStationKey]: {
+  // FileStation
+  [FileStation.SPELLING_KEY]: {
     get() {
-      return methodsBundler(this, FileStationMethods);
+      return methodsBundler(this, FileStation.METHODS);
     },
   },
-  [AudioStationKey]: {
+  [FileStation.SIMPLIFY_KEY]: {
     get() {
-      return methodsBundler(this, AudioStationMethods);
+      return methodsBundler(this, FileStation.METHODS);
+    },
+  },
+  // AudioStation
+  [AudioStation.SPELLING_KEY]: {
+    get() {
+      return methodsBundler(this, AudioStation.METHODS);
+    },
+  },
+  [AudioStation.SIMPLIFY_KEY]: {
+    get() {
+      return methodsBundler(this, AudioStation.METHODS);
     },
   },
 });

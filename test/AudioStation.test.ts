@@ -6,7 +6,7 @@ describe("SynologyApi AudioStation", async () => {
   const synologyApi = createSynologyApi();
 
   test("SynologyApi getSongList", async () => {
-    const result = await synologyApi.AudioStation.getSongList({
+    const result = await synologyApi.as.getSongList({
       limit: 10,
       offset: 0,
     });
