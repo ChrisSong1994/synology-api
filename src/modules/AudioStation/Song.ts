@@ -31,5 +31,5 @@ export async function getSongList(params: AudioStationSongListRequest):Promise<A
       ...params,
     },
   });
-  return res.data ;
+  return res ;
 }

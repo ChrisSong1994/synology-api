@@ -1,5 +1,5 @@
 // reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
-import axios from "axios";
+import ky from "ky";
 
 import { BaseSynologyApi } from "./modules";
 import { isHttpUrl, getApiKey, isUndfined } from "./utils";
@@ -119,16 +119,15 @@ export class SynologyApi extends BaseSynologyApi {
     };
     let result = null;
     if (method === "get") {
-      result = await axios.get(url, { params: externalParams, data, headers });
+      result = await ky.get(url, { searchParams: externalParams, headers }).json();
     }
     if (method === "post") {
-      result = await axios.post(url, { params: externalParams, data, headers });
+      result = await ky.post(url, { searchParams: externalParams, json: data, headers }).json();
     }
-
     // match error code msg
     const apiKey = getApiKey(apiName);
     if (!isUndfined(apiKey)) {
-      result.data = resWithErrorCode(apiKey, result.data);
+      result = resWithErrorCode(apiKey, result);
     }
     return result;
   }

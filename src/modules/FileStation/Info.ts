@@ -16,5 +16,5 @@ export async function getInfo():Promise<FileStationInfoResponse> {
       method: "get",
     },
   });
-  return res.data ;
+  return res ;
 }

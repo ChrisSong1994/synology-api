@@ -57,7 +57,7 @@ export async function getFileList(
       ...params,
     },
   });
-  return res.data;
+  return res;
 }
 
 /**
@@ -96,5 +96,5 @@ export async function getFileListShare(
       ...params,
     },
   });
-  return res.data;
+  return res;
 }

@@ -1,6 +1,6 @@
-import axios from "axios";
+import ky from "ky";
 
-import { SynologyApiInfo } from "@/types";
+import { SynologyApiInfo, SynologyApiResponse } from "@/types";
 import { SynologyApi } from "@/core";
 
 export async function login(core: SynologyApi) {
@@ -13,11 +13,11 @@ export async function login(core: SynologyApi) {
     format: "sid",
   };
   const url = `${core.baseUrl}entry.cgi`;
-  const result = await axios.get(url, { params });
-  if (!result.data.success) {
-    throw new Error(result.data.error.message);
+  const result = await ky.get<SynologyApiResponse>(url, { searchParams: params }).json();
+  if (!result.success) {
+    throw new Error(result.error.message);
   }
-  return result.data;
+  return result;
 }
 
 export async function logout(core: SynologyApi) {
@@ -27,8 +27,8 @@ export async function logout(core: SynologyApi) {
     method: "logout",
   };
   const url = `${core.baseUrl}entry.cgi`;
-  const result = await axios.get(url, { params });
-  if (!result.data.success) {
-    throw new Error(result.data.error.message);
+  const result = await ky.get<SynologyApiResponse>(url, { searchParams: params }).json();
+  if (!result.success) {
+    throw new Error(result.error.message);
   }
 }
