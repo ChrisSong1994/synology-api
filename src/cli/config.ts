@@ -5,7 +5,10 @@ import { program } from "commander";
 import chalk from "chalk";
 import { isLowerCaseEqual, printMessages, geneDashLine } from "./helper";
 
-const CONFIG_FILE_PATH = path.join(os.homedir(), "./.synology-api.json");
+const CONFIG_FILE_PATH =
+  process.env.NODE_ENV === "development"
+    ? path.join(process.cwd(), "./.userdata/.synology-api.json")  // development
+    : path.join(os.homedir(), "./.synology-api.json");
 
 export type ConfigEntry = {
   server: string;
@@ -21,6 +24,7 @@ export type Config = {
 // load config
 export const loadConfig = async (): Promise<Config> => {
   if (!(await fse.pathExists(CONFIG_FILE_PATH))) {
+    await fse.ensureFile(CONFIG_FILE_PATH);
     await fse.writeJSON(CONFIG_FILE_PATH, {
       used: "",
       connections: {},
@@ -50,7 +54,7 @@ export const configCmdRegister = () => {
       const dashLineLength = Math.max(...keys.map((key) => key.length)) + 3;
       const messages = keys.map((key) => {
         const connection = config.connections[key];
-        const prefix = isLowerCaseEqual(key, config.used) ? chalk.green.bold("* ") : ":";
+        const prefix = isLowerCaseEqual(key, config.used) ? chalk.green.bold("* ") : "  ";
         return (
           prefix +
           key +

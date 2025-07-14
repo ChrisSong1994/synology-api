@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "dev:esm": "tsc --sourceMap --watch && tsc-alias",
-    "dev:cjs": "tsup --config tsup.config.ts --watch ",
+    "dev:cjs": "tsup --config tsup.config.ts --watch --env.NODE_ENV development",
     "build:cjs": "tsup --config tsup.config.ts",
     "build:esm": "tsc  && tsc-alias",
     "build": "npm run clean && npm run build:cjs && npm run build:esm",
@@ -49,6 +49,7 @@
   "packageManager": "pnpm@10.8.1",
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "cross-env": "^7.0.3",
     "eslint": "9.25.1",
     "execa": "^9.6.0",
     "globals": "^16.1.0",
