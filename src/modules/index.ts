@@ -3,7 +3,9 @@ import * as FileStation from "./FileStation";
 
 export const SynologyApiKeys = {
   FileStation: FileStation.SPELLING_KEY,
+  fs: FileStation.SIMPLIFY_KEY,
   AudioStation: AudioStation.SPELLING_KEY,
+  as: AudioStation.SIMPLIFY_KEY,
 };
 
 export type SynologyApiMethods = FileStation.TMethods | AudioStation.TMethods;
@@ -30,23 +32,23 @@ function methodsBundler(instance: BaseSynologyApi, methods: SynologyApiMethods) 
 // proxy methods namespace to BaseSynologyApi instance
 Object.defineProperties(BaseSynologyApi.prototype, {
   // FileStation
-  [FileStation.SPELLING_KEY]: {
+  [SynologyApiKeys.FileStation]: {
     get() {
       return methodsBundler(this, FileStation.METHODS);
     },
   },
-  [FileStation.SIMPLIFY_KEY]: {
+  [SynologyApiKeys.fs]: {
     get() {
       return methodsBundler(this, FileStation.METHODS);
     },
   },
   // AudioStation
-  [AudioStation.SPELLING_KEY]: {
+  [SynologyApiKeys.AudioStation]: {
     get() {
       return methodsBundler(this, AudioStation.METHODS);
     },
   },
-  [AudioStation.SIMPLIFY_KEY]: {
+  [SynologyApiKeys.as]: {
     get() {
       return methodsBundler(this, AudioStation.METHODS);
     },

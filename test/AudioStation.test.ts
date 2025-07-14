@@ -10,7 +10,7 @@ describe("SynologyApi AudioStation", async () => {
       limit: 10,
       offset: 0,
     });
-
+    expect(result.data.songs.length).toBeLessThanOrEqual(10);
     expect(result.success).toBeDefined();
   });
 });

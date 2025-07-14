@@ -3,7 +3,7 @@ import { GLOBAL_QUICK_CONNECT_URL, QUICK_CONNECT_PINGPANG_API } from "./constant
 
 const getServersFromServerInfo = async (serverInfo) => {
   // proxy server
-  if (serverInfo.service.relay_ip) {
+  if (serverInfo?.service?.relay_ip) {
     const server = `http://${serverInfo.service.relay_ip}:${serverInfo.service.relay_port}`;
     const res = await pingpang(server);
     if (res) {
@@ -12,7 +12,7 @@ const getServersFromServerInfo = async (serverInfo) => {
   }
 
   // WAN IP
-  if (serverInfo.server.external.ip) {
+  if (serverInfo?.server?.external?.ip) {
     const server = `http://${serverInfo.server.external.ip}:${serverInfo.service.port}`;
     if (await pingpang(server)) {
       return server;
@@ -20,7 +20,7 @@ const getServersFromServerInfo = async (serverInfo) => {
   }
 
   // lan ip
-  if (serverInfo.server.interface?.[0]) {
+  if (serverInfo?.server?.interface?.[0]) {
     const server = `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
     if (await pingpang(server)) {
       return server;
