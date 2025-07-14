@@ -1,6 +1,6 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.0.1-beta.6",
+  "version": "0.0.1-beta.8",
   "description": "synology api for nodejs",
   "module": "./lib/esm/index.js",
   "main": "./lib/cjs/index.js",

@@ -13,7 +13,7 @@ export async function loadCli() {
     .name("synology")
     .usage("<command> [options]")
     .description("synology api cli tool")
-    .version(pkg.version);
+    .version(pkg.version, "-v, --version", "output the version number");
 
   // register commands
   configCmdRegister();
