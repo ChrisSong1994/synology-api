@@ -92,3 +92,6 @@ syno config use newConnetionName
 syno fs getInfo --pretty # print file system info
 
 ```
+
+## License
+[MIT](https://github.com/ChrisSong1994/synology-api/blob/main/LICENSE)
