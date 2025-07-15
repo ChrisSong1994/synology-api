@@ -41,7 +41,7 @@
     "build:esm": "tsc  && tsc-alias",
     "build": "npm run clean && npm run build:cjs && npm run build:esm",
     "docs:dev": "rspress dev",
-    "docs:build": "rspress build",
+    "docs:build": "cross-env BASE_PATH=/synology-api/ rspress build",
     "docs:preview": "rspress preview",
     "clean": "rimraf lib",
     "lint": "eslint src --ext .ts --fix",
@@ -52,7 +52,6 @@
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
-  "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.26.0",
     "cross-env": "^7.0.3",
@@ -76,5 +75,6 @@
     "fs-extra": "^11.3.0",
     "ky": "^1.8.1",
     "ora": "^8.2.0"
-  }
+  },
+  "license": "MIT"
 }
