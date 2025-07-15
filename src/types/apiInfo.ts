@@ -39,3 +39,11 @@ export enum FileStationApi {
   Thumb = "SYNO.FileStation.Thumb",
   Upload = "SYNO.FileStation.Upload",
 }
+
+/**
+ * VideoStation API
+ */
+export enum VideoStationApi {
+  Info = "SYNO.VideoStation2.Info",
+  Library = "SYNO.VideoStation2.Library",
+}

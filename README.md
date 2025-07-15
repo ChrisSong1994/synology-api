@@ -5,6 +5,7 @@
 [中文文档](./README-zh_CN.md)
 Synology Api Node.js wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
 You can use domain or ip address, also supports Synology Quick Connect connect Synology server.
+All apis from [https://kb.synology.cn](https://kb.synology.cn/zh-cn/search?query=API&services%5B%5D=File_Station)
 
 ## Install
 
