@@ -1,6 +1,6 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.0.1-beta.9",
+  "version": "0.0.1-beta.10",
   "description": "synology api for nodejs",
   "module": "./lib/esm/index.js",
   "main": "./lib/cjs/index.js",
@@ -10,7 +10,10 @@
       "require": "./lib/cjs/index.js",
       "import": "./lib/esm/index.js"
     },
-    "./browser": "./lib/esm/core.js"
+    "./browser": {
+      "import": "./lib/esm/core.js",
+      "types": "./lib/types/core.d.ts"
+    }
   },
   "bin": {
     "synology": "./bin/syno",
