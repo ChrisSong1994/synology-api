@@ -12,7 +12,7 @@ export default defineConfig({
       {
         icon: "github",
         mode: "link",
-        content: "https://github.com/web-infra-dev/rspress",
+        content: "https://github.com/ChrisSong1994/synology-api",
       },
     ],
   },
