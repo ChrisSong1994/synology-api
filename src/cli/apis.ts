@@ -36,6 +36,10 @@ const apisCmdRegisterInfo = [
     cmd: SynologyApiKeys.AudioStation,
     alias: SynologyApiKeys.as,
   },
+  {
+    cmd: SynologyApiKeys.VideoStation,
+    alias: SynologyApiKeys.vs,
+  },
 ];
 
 export const apiCmdRegister = () => {
