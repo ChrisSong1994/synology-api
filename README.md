@@ -1,7 +1,10 @@
 # Synology Api
 
-Synology Api Node.js wrapper,can be used in Browser、Cli or Nodejs to interact with Synology NAS.
-Can use domain or ip address, also supports Synology Quick Connect connect Synology server.
+⚠️ The project is under development ...
+
+[中文文档](./README-zh_CN.md)
+Synology Api Node.js wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
+You can use domain or ip address, also supports Synology Quick Connect connect Synology server.
 
 ## Install
 
@@ -88,15 +91,3 @@ syno config use newConnetionName
 syno fs getInfo --pretty # print file system info
 
 ```
-
-## API
-
-list all Synology Api supported
-
-### FileStation
-
-#### getInfo
-
-### AudioStation
-
-#### getSongList

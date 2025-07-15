@@ -8,3 +8,4 @@ pnpm-debug.log*
 Thumbs.db
 _test
 .userdata
+doc_build
