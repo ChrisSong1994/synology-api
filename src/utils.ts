@@ -14,3 +14,12 @@ export function queryObjToString(params: Record<string, any>) {
 export function isHttpUrl(url: string) {
   return /^https?:\/\//.test(url);
 }
+
+
+export function isUndfined(value: any) {
+  return value === undefined;
+}
+
+export function getApiKey(apiName: string): string {
+  return apiName.split('.')[1];
+}

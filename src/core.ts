@@ -1,17 +1,18 @@
 // reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
-import axios from "axios";
+import ky from "ky";
 
 import { BaseSynologyApi } from "./modules";
-import { isHttpUrl } from "./utils";
+import { isHttpUrl, getApiKey, isUndfined } from "./utils";
 import { getServerInfo } from "./helpers";
 import { login, logout, getApiInfo } from "./modules/Api";
+import { resWithErrorCode } from "./errorcodes";
 export interface SynologyApiOptions {
   server: string;
   username: string;
   password: string;
 }
 
-export interface SynologyApiInfo {
+export interface SynologyApiInfoData {
   maxVersion: number;
   minVersion: number;
   path: string;
@@ -32,7 +33,7 @@ export class SynologyApi extends BaseSynologyApi {
   baseUrl: string;
   isConnecting: boolean = false;
   private authInfo: SynologyApiAuthInfo | null = null;
-  private apiInfo: Record<string, SynologyApiInfo> = {};
+  private apiInfo: Record<string, SynologyApiInfoData> = {};
   constructor(options: SynologyApiOptions) {
     super();
     this.server = options.server;
@@ -99,7 +100,10 @@ export class SynologyApi extends BaseSynologyApi {
     }
   ) {
     if (!this.isConnecting) {
-      throw new Error("Not connected");
+      const res = await this.connect();
+      if (!res) {
+        throw new Error("Not connected");
+      }
     }
     if (!this.hasApi(apiName)) {
       throw new Error(`${apiName} not found`);
@@ -115,12 +119,16 @@ export class SynologyApi extends BaseSynologyApi {
     };
     let result = null;
     if (method === "get") {
-      result = await axios.get(url, { params: externalParams, data, headers });
+      result = await ky.get(url, { searchParams: externalParams, headers }).json();
     }
     if (method === "post") {
-      result = await axios.post(url, { params: externalParams, data, headers });
+      result = await ky.post(url, { searchParams: externalParams, json: data, headers }).json();
     }
-
+    // match error code msg
+    const apiKey = getApiKey(apiName);
+    if (!isUndfined(apiKey)) {
+      result = resWithErrorCode(apiKey, result);
+    }
     return result;
   }
 }
