@@ -21,7 +21,7 @@
   },
   files: ["lib", "bin"],
   publishConfig: {
-    access: "public", // 公开包
+    access: "public",
   },
   author: "ChrisSong1994 <https://github.com/ChrisSong1994>",
   repository: {
