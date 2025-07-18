@@ -1,5 +1,5 @@
 import { getInfo } from "./Info";
-import { getAcrossLibrary, getLibrary } from "./Library1";
+import { getAcrossLibrary, getLibrary } from "./Library";
 
 // fs methods
 export const METHODS = {
