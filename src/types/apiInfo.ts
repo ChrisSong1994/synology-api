@@ -46,4 +46,5 @@ export enum FileStationApi {
 export enum VideoStationApi {
   Info = "SYNO.VideoStation2.Info",
   Library = "SYNO.VideoStation2.Library",
+  AcrossLibrary="SYNO.VideoStation2.AcrossLibrary"
 }

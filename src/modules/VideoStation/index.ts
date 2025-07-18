@@ -1,8 +1,11 @@
 import { getInfo } from "./Info";
+import { getAcrossLibrary, getLibrary } from "./Library1";
 
 // fs methods
 export const METHODS = {
   getInfo,
+  getAcrossLibrary,
+  getLibrary,
 };
 
 // name space
