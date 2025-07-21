@@ -2,7 +2,7 @@ import path from "path";
 import { describe, test, expect } from "vitest";
 import { execa } from "execa";
 
-const syno = path.resolve(__dirname, "../bin/syno");
+const syno = path.resolve(__dirname, "../lib/cli/index.js");
 
 describe("syno cli", () => {
   test("SynologyApi FileStation", async () => {

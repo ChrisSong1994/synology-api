@@ -1,8 +1,15 @@
 import chalk from "chalk";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+export const __dirname = () => {
+  const __filename = fileURLToPath(import.meta.url);
+  return dirname(__filename);
+};
+
 export function printMessages(messages: string[]) {
   console.log(messages.join("\n"));
 }
-
 
 export function isLowerCaseEqual(str1: string, str2: string) {
   if (str1 && str2) {
@@ -12,18 +19,11 @@ export function isLowerCaseEqual(str1: string, str2: string) {
   return !str1 && !str2;
 }
 
-
-export function padding(message = '', before = 1, after = 1) {
-  return (
-    new Array(before).fill(' ').join('') +
-    message +
-    new Array(after).fill(' ').join('')
-  );
+export function padding(message = "", before = 1, after = 1) {
+  return new Array(before).fill(" ").join("") + message + new Array(after).fill(" ").join("");
 }
 
 export function geneDashLine(message: string, length: number) {
-  const finalMessage = new Array(Math.max(2, length - message.length + 2)).join(
-    '-',
-  );
+  const finalMessage = new Array(Math.max(2, length - message.length + 2)).join("-");
   return padding(chalk.dim(finalMessage));
 }
