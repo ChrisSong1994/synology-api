@@ -15,7 +15,7 @@ export enum AudioStationApi {
   Song = "SYNO.AudioStation.Song",
   Album = "SYNO.AudioStation.Album",
   Artist = "SYNO.AudioStation.Artist",
-  Genre = "SYNO.AudioStation.Genre",
+  Search = "SYNO.AudioStation.Search",
   Playlist = "SYNO.AudioStation.Playlist",
   Folder = "SYNO.AudioStation.Folder",
   Cover = "SYNO.AudioStation.Cover",
