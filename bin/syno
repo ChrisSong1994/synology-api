@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-const { loadCli } = require("../lib/index");
-
-(async () => {
-  await loadCli();
-})();
