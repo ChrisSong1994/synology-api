@@ -1,6 +1,7 @@
 import * as AudioStation from "./AudioStation";
 import * as FileStation from "./FileStation";
 import * as VideoStation from "./VideoStation";
+import * as Auth from "./Auth";
 
 export const SynologyApiKeys = {
   FileStation: FileStation.SPELLING_KEY,
@@ -9,12 +10,15 @@ export const SynologyApiKeys = {
   as: AudioStation.SIMPLIFY_KEY,
   VideoStation: VideoStation.SPELLING_KEY,
   vs: VideoStation.SIMPLIFY_KEY,
+  Auth: Auth.SPELLING_KEY,
+  au: Auth.SIMPLIFY_KEY,
 };
 
 export type SynologyApiMethods =
   | FileStation.TMethods
   | AudioStation.TMethods
-  | VideoStation.TMethods;
+  | VideoStation.TMethods
+  | Auth.TMethods;
 
 // export type BaseSynologyApiKeyMethods = FileStation.IKeyMethods
 
@@ -25,6 +29,8 @@ export class BaseSynologyApi {
   [FileStation.SIMPLIFY_KEY]: FileStation.TMethods;
   [VideoStation.SPELLING_KEY]: VideoStation.TMethods;
   [VideoStation.SIMPLIFY_KEY]: VideoStation.TMethods;
+  [Auth.SPELLING_KEY]: Auth.TMethods;
+  [Auth.SIMPLIFY_KEY]: Auth.TMethods;
   constructor() {}
 }
 
@@ -70,6 +76,17 @@ Object.defineProperties(BaseSynologyApi.prototype, {
   [SynologyApiKeys.vs]: {
     get() {
       return methodsBundler(this, VideoStation.METHODS);
+    },
+  },
+  // Auth
+  [SynologyApiKeys.Auth]: {
+    get() {
+      return methodsBundler(this, Auth.METHODS);
+    },
+  },
+  [SynologyApiKeys.au]: {
+    get() {
+      return methodsBundler(this, Auth.METHODS);
     },
   },
 });

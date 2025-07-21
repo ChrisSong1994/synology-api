@@ -23,3 +23,7 @@ export function isUndfined(value: any) {
 export function getApiKey(apiName: string): string {
   return apiName.split('.')[1];
 }
+
+export function buildUrlWithQuery(url: string, query: Record<string, any>) {
+  return `${url}?${queryObjToString(query)}`;
+}

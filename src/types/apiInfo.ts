@@ -5,6 +5,7 @@ export enum SynologyApiInfo {
   Auth = "SYNO.API.Auth",
   Info = "SYNO.API.Info",
   OTP = "SYNO.API.OTP",
+  AuthKey = "SYNO.API.Auth.Key",
 }
 
 /**
@@ -14,7 +15,7 @@ export enum AudioStationApi {
   Song = "SYNO.AudioStation.Song",
   Album = "SYNO.AudioStation.Album",
   Artist = "SYNO.AudioStation.Artist",
-  Genre = "SYNO.AudioStation.Genre",
+  Search = "SYNO.AudioStation.Search",
   Playlist = "SYNO.AudioStation.Playlist",
   Folder = "SYNO.AudioStation.Folder",
   Cover = "SYNO.AudioStation.Cover",
@@ -46,4 +47,9 @@ export enum FileStationApi {
 export enum VideoStationApi {
   Info = "SYNO.VideoStation2.Info",
   Library = "SYNO.VideoStation2.Library",
+  AcrossLibrary = "SYNO.VideoStation2.AcrossLibrary",
+  HomeVideo = "SYNO.VideoStation2.HomeVideo",
+  File = "SYNO.VideoStation2.File",
+  Streaming = "SYNO.VideoStation2.Streaming",
+  Movie = "SYNO.VideoStation2.Movie",
 }

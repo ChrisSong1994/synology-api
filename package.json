@@ -1,23 +1,12 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.0.1-beta.11",
+  "version": "0.0.1-beta.12",
   "description": "synology api for nodejs",
-  "module": "./lib/esm/index.js",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/types/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./lib/cjs/index.js",
-      "import": "./lib/esm/index.js"
-    },
-    "./browser": {
-      "import": "./lib/esm/core.js",
-      "types": "./lib/types/core.d.ts"
-    }
-  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "bin": {
-    "synology": "./bin/syno",
-    "syno": "./bin/syno"
+    "synology": "./lib/cli/index.js",
+    "syno": "./lib/cli/index.js"
   },
   "files": [
     "lib",
@@ -26,6 +15,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "author": "ChrisSong1994 <https://github.com/ChrisSong1994>",
   "repository": {
     "type": "git",
@@ -38,16 +28,11 @@
     "nodejs",
     "browser",
     "typescript",
-    "esmodule",
-    "cjs",
-    "commonjs"
+    "esmodule"
   ],
   "scripts": {
     "dev:esm": "tsc --sourceMap --watch && tsc-alias",
-    "dev:cjs": "tsup --config tsup.config.ts --watch --env.NODE_ENV development",
-    "build:cjs": "tsup --config tsup.config.ts",
-    "build:esm": "tsc  && tsc-alias",
-    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build": "npm run clean && tsc  && tsc-alias",
     "docs:dev": "rspress dev",
     "docs:build": "cross-env BASE_PATH=/synology-api/ rspress build",
     "docs:preview": "rspress preview",
@@ -57,6 +42,7 @@
     "format": "npm run prettier && npm run lint",
     "prepublish": "npm run build",
     "pub": "npm publish --access=public",
+    "pub:beta": "npm publish --access=public --tag=beta",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
@@ -71,7 +57,6 @@
     "rspress": "^1.44.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
-    "tsup": "^8.5.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.32.0",
     "vite": "^6.3.5",

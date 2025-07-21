@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-const { loadCli } = require("../lib/cjs/index");
-
-(async () => {
-  await loadCli();
-})();
