@@ -13,8 +13,8 @@ export const METHODS = {
 };
 
 // name space
-export const SPELLING_KEY = "FileStation";
-export const SIMPLIFY_KEY = "fs";
+export const KEY = "FileStation";
+export const ALIAS_KEY = "fs";
 
 // type
 export type TMethods = typeof METHODS;

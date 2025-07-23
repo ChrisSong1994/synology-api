@@ -6,8 +6,8 @@ export const METHODS = {
 };
 
 // name space
-export const SPELLING_KEY = "Auth";
-export const SIMPLIFY_KEY = "au";
+export const KEY = "Auth";
+export const ALIAS_KEY = "au";
 
 // type
 export type TMethods = typeof METHODS;
