@@ -8,5 +8,11 @@
     "type": "dir",
     "name": "apis",
     "label": "Apis"
+  },
+  {
+    "type": "dir",
+    "name": "contribute",
+    "label": "Contribute"
+  
   }
 ]
