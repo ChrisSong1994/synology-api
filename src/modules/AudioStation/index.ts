@@ -21,8 +21,8 @@ export const METHODS = {
 };
 
 // name space
-export const SPELLING_KEY = "AudioStation";
-export const SIMPLIFY_KEY = "as";
+export const KEY = "AudioStation";
+export const ALIAS_KEY = "as";
 
 // type
 export type TMethods = typeof METHODS;

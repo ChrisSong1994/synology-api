@@ -1,9 +1,13 @@
-# Synology Api
+<p align="center">
+  <a >
+    <img width="100" src="assets/logo.png">
+  </a>
+</p>
+<h1 align="center">Javascript Synology Api</h1>
 
 ⚠️ The project is under development ...
 
-[中文文档](./README-zh_CN.md)
-Synology Api Node.js wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
+Synology Api Javascript wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
 You can use domain or ip address, also supports Synology Quick Connect connect Synology server.
 All apis from [https://kb.synology.cn](https://kb.synology.cn/zh-cn/search?query=API&services%5B%5D=File_Station)
 
@@ -13,24 +17,9 @@ All apis from [https://kb.synology.cn](https://kb.synology.cn/zh-cn/search?query
 npm install @fett/synology-api
 ```
 
-## Use In Browser
+## Use In Browser or Node.js
 
 First you need to confirm that you can access across domains,for example in the React Native environment
-
-```js
-import { SynologyApi } from "@fett/synology-api/browser";
-// Create a new instance
-const api = new SynologyApi({
-  server: "https://192.168.1.1:5001",
-  username: "username",
-  password: "password",
-});
-// you can now use the api by calling the methods
-const info = await api.fs.getInfo();
-console.log(info);
-```
-
-## Use In Node.js
 
 ```js
 import SynologyApi from '@fett/synology-api';
@@ -94,4 +83,5 @@ syno fs getInfo --pretty # print file system info
 ```
 
 ## License
+
 [MIT](https://github.com/ChrisSong1994/synology-api/blob/main/LICENSE)

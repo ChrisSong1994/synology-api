@@ -2,91 +2,36 @@ import * as AudioStation from "./AudioStation";
 import * as FileStation from "./FileStation";
 import * as VideoStation from "./VideoStation";
 import * as Auth from "./Auth";
+import { BindMethods } from "../decorators";
+
+export const SynologyApiModules = [FileStation, AudioStation, VideoStation, Auth];
 
 export const SynologyApiKeys = {
-  FileStation: FileStation.SPELLING_KEY,
-  fs: FileStation.SIMPLIFY_KEY,
-  AudioStation: AudioStation.SPELLING_KEY,
-  as: AudioStation.SIMPLIFY_KEY,
-  VideoStation: VideoStation.SPELLING_KEY,
-  vs: VideoStation.SIMPLIFY_KEY,
-  Auth: Auth.SPELLING_KEY,
-  au: Auth.SIMPLIFY_KEY,
+  FileStation: FileStation.KEY,
+  fs: FileStation.ALIAS_KEY,
+  AudioStation: AudioStation.KEY,
+  as: AudioStation.ALIAS_KEY,
+  VideoStation: VideoStation.KEY,
+  vs: VideoStation.ALIAS_KEY,
+  Auth: Auth.KEY,
+  au: Auth.ALIAS_KEY,
 };
 
-export type SynologyApiMethods =
-  | FileStation.TMethods
-  | AudioStation.TMethods
-  | VideoStation.TMethods
-  | Auth.TMethods;
+export const SynologyApiMethods = SynologyApiModules.reduce((acc, module) => {
+  acc[module.KEY] = module.METHODS;
+  acc[module.ALIAS_KEY] = module.METHODS;
+  return acc;
+}, {});
 
-// export type BaseSynologyApiKeyMethods = FileStation.IKeyMethods
-
+@BindMethods(SynologyApiMethods)
 export class BaseSynologyApi {
-  [AudioStation.SPELLING_KEY]: AudioStation.TMethods;
-  [AudioStation.SIMPLIFY_KEY]: AudioStation.TMethods;
-  [FileStation.SPELLING_KEY]: FileStation.TMethods;
-  [FileStation.SIMPLIFY_KEY]: FileStation.TMethods;
-  [VideoStation.SPELLING_KEY]: VideoStation.TMethods;
-  [VideoStation.SIMPLIFY_KEY]: VideoStation.TMethods;
-  [Auth.SPELLING_KEY]: Auth.TMethods;
-  [Auth.SIMPLIFY_KEY]: Auth.TMethods;
+  [AudioStation.KEY]: AudioStation.TMethods;
+  [AudioStation.ALIAS_KEY]: AudioStation.TMethods;
+  [FileStation.KEY]: FileStation.TMethods;
+  [FileStation.ALIAS_KEY]: FileStation.TMethods;
+  [VideoStation.KEY]: VideoStation.TMethods;
+  [VideoStation.ALIAS_KEY]: VideoStation.TMethods;
+  [Auth.KEY]: Auth.TMethods;
+  [Auth.ALIAS_KEY]: Auth.TMethods;
   constructor() {}
 }
-
-// bind methods to BaseSynologyApi instance
-function methodsBundler(instance: BaseSynologyApi, methods: SynologyApiMethods) {
-  const output = {};
-  for (const key in methods) {
-    output[key] = methods[key].bind(instance);
-  }
-  return output;
-}
-
-// proxy methods namespace to BaseSynologyApi instance
-Object.defineProperties(BaseSynologyApi.prototype, {
-  // FileStation
-  [SynologyApiKeys.FileStation]: {
-    get() {
-      return methodsBundler(this, FileStation.METHODS);
-    },
-  },
-  [SynologyApiKeys.fs]: {
-    get() {
-      return methodsBundler(this, FileStation.METHODS);
-    },
-  },
-  // AudioStation
-  [SynologyApiKeys.AudioStation]: {
-    get() {
-      return methodsBundler(this, AudioStation.METHODS);
-    },
-  },
-  [SynologyApiKeys.as]: {
-    get() {
-      return methodsBundler(this, AudioStation.METHODS);
-    },
-  },
-  // VideoStation
-  [SynologyApiKeys.VideoStation]: {
-    get() {
-      return methodsBundler(this, VideoStation.METHODS);
-    },
-  },
-  [SynologyApiKeys.vs]: {
-    get() {
-      return methodsBundler(this, VideoStation.METHODS);
-    },
-  },
-  // Auth
-  [SynologyApiKeys.Auth]: {
-    get() {
-      return methodsBundler(this, Auth.METHODS);
-    },
-  },
-  [SynologyApiKeys.au]: {
-    get() {
-      return methodsBundler(this, Auth.METHODS);
-    },
-  },
-});

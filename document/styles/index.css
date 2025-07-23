@@ -1,0 +1,8 @@
+:root {
+  /* Modify theme color */
+  --rp-c-brand: #466fe7;
+  --rp-c-brand-dark: #3655b2;
+  --rp-c-brand-darker: #2e4898;
+  --rp-c-brand-light: #466fe7;
+  --rp-c-brand-lighter: #3d62cd;
+}

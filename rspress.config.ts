@@ -6,7 +6,11 @@ const BASE_PATH = process.env.BASE_PATH ? process.env.BASE_PATH : "/";
 export default defineConfig({
   root: path.join(__dirname, "document/docs"),
   base: BASE_PATH,
-  title: "Synology Api",
+  title: "Javascript Synology Api Docs",
+  icon:"/icon.png",
+  logo: "/logo.png",
+  logoText: "Javascript Synology Api",
+   globalStyles: path.join(__dirname, 'document/styles/index.css'),
   themeConfig: {
     socialLinks: [
       {

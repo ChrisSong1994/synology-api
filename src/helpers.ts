@@ -3,10 +3,21 @@ import { GLOBAL_QUICK_CONNECT_URL, QUICK_CONNECT_PINGPANG_API } from "./constant
 import { SynologyApiResponse } from "@/types";
 
 const getServersFromServerInfo = async (serverInfo) => {
+  // first lan ip
+  // lan ip
+  if (serverInfo?.server?.interface?.[0]) {
+    const server = `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
+    const res = await pingpang(server);
+    if (res) {
+      return server;
+    }
+  }
+
   // WAN IP
   if (serverInfo?.server?.external?.ip) {
     const server = `http://${serverInfo.server.external.ip}:${serverInfo.service.port}`;
-    if (await pingpang(server)) {
+    const res = await pingpang(server);
+    if (res) {
       return server;
     }
   }
@@ -16,14 +27,6 @@ const getServersFromServerInfo = async (serverInfo) => {
     const server = `http://${serverInfo.service.relay_ip}:${serverInfo.service.relay_port}`;
     const res = await pingpang(server);
     if (res) {
-      return server;
-    }
-  }
-
-  // lan ip
-  if (serverInfo?.server?.interface?.[0]) {
-    const server = `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
-    if (await pingpang(server)) {
       return server;
     }
   }
