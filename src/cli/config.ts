@@ -7,7 +7,7 @@ import { isLowerCaseEqual, printMessages, geneDashLine } from "./helper";
 
 const CONFIG_FILE_PATH =
   process.env.NODE_ENV === "development"
-    ? path.join(process.cwd(), "./.userdata/.synology-api.json")  // development
+    ? path.join(process.cwd(), "./.userdata/.synology-api.json") // development
     : path.join(os.homedir(), "./.synology-api.json");
 
 export type ConfigEntry = {
@@ -39,8 +39,6 @@ export const updateConfig = async (config: Config) => {
   await fse.writeJSON(CONFIG_FILE_PATH, config);
 };
 
-// check config
-export const checkConfig = async () => {};
 export const configCmdRegister = () => {
   const configCmd = program.command("config").description("synology api config management");
 
@@ -71,7 +69,7 @@ export const configCmdRegister = () => {
 
   // add connection
   configCmd
-    .command("add [name]")
+    .command("add <name>")
     .description("Add connection config")
     .requiredOption("-s, --server <server>", "Synology server domain  or QuickConnect ID ")
     .requiredOption("-u, --username <username>", "username")
@@ -81,7 +79,7 @@ export const configCmdRegister = () => {
       // 实际代码中应保存配置到文件
       const config = await loadConfig();
       const newConfig = {
-        ...config,
+        used: config.used || name,
         connections: {
           ...config.connections,
           [name]: {
@@ -96,7 +94,7 @@ export const configCmdRegister = () => {
 
   // use  connection
   configCmd
-    .command("use [name]")
+    .command("use <name>")
     .description("Change current connection")
     .action(async (name) => {
       const config = await loadConfig();
@@ -111,7 +109,7 @@ export const configCmdRegister = () => {
 
   // del connection
   configCmd
-    .command("del [name]")
+    .command("del <name>")
     .description("Remove a connection")
     .action(async (name) => {
       console.log("Remove a connection", name);
