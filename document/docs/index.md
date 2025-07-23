@@ -12,5 +12,8 @@ hero:
     - theme: alt
       text: GitHub
       link: https://github.com/ChrisSong1994/synology-api
+  image:
+    src: /logo.png
+    alt: Logo
 features:
 ---

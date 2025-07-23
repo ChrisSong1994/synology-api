@@ -6,3 +6,9 @@
   --rp-c-brand-light: #466fe7;
   --rp-c-brand-lighter: #3d62cd;
 }
+
+.rspress-home-hero-image {
+  img {
+    border-radius: 1em;
+  }
+}
