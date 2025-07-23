@@ -1,8 +1,13 @@
-# Synology Api
+<p align="center">
+  <a >
+    <img width="100" src="assets/logo.png">
+  </a>
+</p>
+<h1 align="center">Javascript Synology Api</h1>
 
 ⚠️ The project is under development ...
 
-Synology Api Node.js wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
+Synology Api Javascript wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
 You can use domain or ip address, also supports Synology Quick Connect connect Synology server.
 All apis from [https://kb.synology.cn](https://kb.synology.cn/zh-cn/search?query=API&services%5B%5D=File_Station)
 

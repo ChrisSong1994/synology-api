@@ -1,7 +1,7 @@
 # Basic Uasage
 
 :::warning
-First, make sure that you are using nodejs version of no less than 20.
+First, make sure that you are using Node.js version of no less than 20.
 Currently, this project is only tested for Synology DSM 7.1.1，you can try it. but I can't guarantee that it will work for your Synology NAS.
 :::
 
@@ -23,7 +23,6 @@ const synologyApi = new SynologyApi(
 );
 
 const info = await synologyApi.FileStation.getInfo();
-console.log(info);
 ```
 
 ## Use In CLI
@@ -62,13 +61,13 @@ Commands:
 add a connect configuration
 
 ```bash
-syno config add newConnetionName --server=https://192.168.1.1:5001 --username=admin --password=password
+syno config add ConnetionName --server=https://192.168.1.1:5001 --username=admin --password=password
 ```
 
 then you can use it and exec command
 
 ```bash
-syno config use newConnetionName
+syno config use ConnetionName
 
 syno fs getInfo --pretty # print file system info
 

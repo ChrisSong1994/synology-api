@@ -4,6 +4,8 @@ import * as VideoStation from "./VideoStation";
 import * as Auth from "./Auth";
 import { BindMethods } from "../decorators";
 
+export const SynologyApiModules = [FileStation, AudioStation, VideoStation, Auth];
+
 export const SynologyApiKeys = {
   FileStation: FileStation.KEY,
   fs: FileStation.ALIAS_KEY,
@@ -15,15 +17,11 @@ export const SynologyApiKeys = {
   au: Auth.ALIAS_KEY,
 };
 
-export const SynologyApiMethods = {
-  [AudioStation.KEY]: AudioStation.METHODS,
-  [AudioStation.ALIAS_KEY]: AudioStation.METHODS,
-  [FileStation.KEY]: FileStation.METHODS,
-  [FileStation.ALIAS_KEY]: FileStation.METHODS,
-  [VideoStation.KEY]: VideoStation.METHODS,
-  [VideoStation.ALIAS_KEY]: VideoStation.METHODS,
-  [Auth.KEY]: Auth.METHODS,
-};
+export const SynologyApiMethods = SynologyApiModules.reduce((acc, module) => {
+  acc[module.KEY] = module.METHODS;
+  acc[module.ALIAS_KEY] = module.METHODS;
+  return acc;
+}, {});
 
 @BindMethods(SynologyApiMethods)
 export class BaseSynologyApi {

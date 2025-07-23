@@ -28,10 +28,12 @@
     "nodejs",
     "browser",
     "typescript",
-    "esmodule"
+    "esmodule",
+    "cli",
+    "vitest"
   ],
   "scripts": {
-    "dev:esm": "tsc --sourceMap --watch && tsc-alias",
+    "dev": "tsc --sourceMap --watch && tsc-alias",
     "build": "npm run clean && tsc  && tsc-alias",
     "docs:dev": "rspress dev",
     "docs:build": "cross-env BASE_PATH=/synology-api/ rspress build",
