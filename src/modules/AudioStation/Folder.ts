@@ -24,6 +24,20 @@ export type AudioStationFolderListResponse = SynologyApiResponse<{
   total: number;
 }>;
 
+/**
+ * Get the list of folders from AudioStation
+ * 
+ * @param params - Parameters for retrieving the folder list
+ * @param params.limit - Maximum number of results to return, defaults to 1000
+ * @param params.offset - Starting offset for results, defaults to 0
+ * @param params.library - Specify library type, currently only supports 'all'
+ * @param params.additional - Array of additional information to retrieve, defaults to ['song_tag', 'song_audio', 'song_rating']
+ * @param params.id - Folder ID to filter results
+ * @param params.sort_by - Field to sort by, can be 'song_rating', 'title', 'album', 'artist', 'duration', or 'track', defaults to 'title'
+ * @param params.sort_direction - Sort direction, can be 'ASC' or 'DESC', defaults to 'ASC'
+ * 
+ * @returns Response object containing the list of folders and related information
+ */
 export async function getFolderList(
   params: AudioStationFolderListParams
 ): Promise<AudioStationFolderListResponse> {

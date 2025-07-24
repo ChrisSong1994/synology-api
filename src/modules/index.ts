@@ -6,16 +6,23 @@ import { BindMethods } from "../decorators";
 
 export const SynologyApiModules = [FileStation, AudioStation, VideoStation, Auth];
 
-export const SynologyApiKeys = {
-  FileStation: FileStation.KEY,
-  fs: FileStation.ALIAS_KEY,
-  AudioStation: AudioStation.KEY,
-  as: AudioStation.ALIAS_KEY,
-  VideoStation: VideoStation.KEY,
-  vs: VideoStation.ALIAS_KEY,
-  Auth: Auth.KEY,
-  au: Auth.ALIAS_KEY,
+export const SynologyApiKeys = SynologyApiModules.reduce((acc, module) => {
+  acc = { ...acc, [module.KEY]: module.KEY, [module.ALIAS_KEY]: module.ALIAS_KEY };
+  return acc;
+}, []);
+
+type EnumFromArray<T extends string[]> = {
+  [K in T[number]]: K;
 };
+
+export const SynologyApiKeysMap: EnumFromArray<typeof SynologyApiKeys> = SynologyApiModules.reduce(
+  (acc, module) => {
+    acc[module.KEY] = module.KEY;
+    acc[module.ALIAS_KEY] = module.ALIAS_KEY;
+    return acc;
+  },
+  {}
+);
 
 export const SynologyApiMethods = SynologyApiModules.reduce((acc, module) => {
   acc[module.KEY] = module.METHODS;
