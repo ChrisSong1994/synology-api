@@ -53,3 +53,14 @@ export enum VideoStationApi {
   Streaming = "SYNO.VideoStation2.Streaming",
   Movie = "SYNO.VideoStation2.Movie",
 }
+
+/**
+ * core api
+ */
+export enum CoreApi {
+  Package = "SYNO.Core.Package",
+  PackageControl = "SYNO.Core.Package.Control",
+  System = "SYNO.Core.System",
+  SystemProcess = "SYNO.Core.System.Process",
+  SystemStatus = "SYNO.Core.System.Status",
+}

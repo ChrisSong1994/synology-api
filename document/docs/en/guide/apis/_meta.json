@@ -1,1 +1,12 @@
-["supported-apis"]
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "API Overview"
+  },
+  {
+    "type": "dir",
+    "name": "modules",
+    "label": "Modules"
+  }
+]

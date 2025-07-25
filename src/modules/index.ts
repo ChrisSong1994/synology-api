@@ -4,6 +4,11 @@ import * as VideoStation from "./VideoStation";
 import * as Auth from "./Auth";
 import { BindMethods } from "../decorators";
 
+type EnumFromArray<T extends string[]> = {
+  [K in T[number]]: K;
+};
+
+
 export const SynologyApiModules = [FileStation, AudioStation, VideoStation, Auth];
 
 export const SynologyApiKeys = SynologyApiModules.reduce((acc, module) => {
@@ -11,9 +16,6 @@ export const SynologyApiKeys = SynologyApiModules.reduce((acc, module) => {
   return acc;
 }, []);
 
-type EnumFromArray<T extends string[]> = {
-  [K in T[number]]: K;
-};
 
 export const SynologyApiKeysMap: EnumFromArray<typeof SynologyApiKeys> = SynologyApiModules.reduce(
   (acc, module) => {

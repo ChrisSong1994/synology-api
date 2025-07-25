@@ -1,1 +1,7 @@
-["supported-apis"]
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "API Overview"
+  }
+]
