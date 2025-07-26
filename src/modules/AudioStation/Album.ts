@@ -30,6 +30,23 @@ export type AudioStationAlbumListResponse = SynologyApiResponse<{
   }>;
 }>;
 
+/**
+ * Get the list of albums from AudioStation
+ * 
+ * @param params - Parameters for retrieving the album list
+ * @param params.limit - Maximum number of results to return, defaults to 1000
+ * @param params.offset - Starting offset for results, defaults to 0
+ * @param params.library - Specify library type, can be 'all' or 'personal', defaults to 'all'
+ * @param params.additional - Array of additional information to retrieve, defaults to ['avg_rating']
+ * @param params.version - API version
+ * @param params.filter - Filter condition
+ * @param params.artist - Filter by artist name
+ * @param params.genre - Filter by genre
+ * @param params.sort_by - Field to sort by, can be 'time', 'random', 'year', 'name', 'display_artist', or 'avg_rating', defaults to 'name'
+ * @param params.sort_direction - Sort direction, can be 'ASC' or 'DESC', defaults to 'ASC'
+ * 
+ * @returns Response object containing the list of albums
+ */
 export async function getAlbumList(
   params: AudioStationAlbumListParams
 ): Promise<AudioStationAlbumListResponse> {

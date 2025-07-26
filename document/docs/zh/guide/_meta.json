@@ -1,0 +1,17 @@
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "快速开始"
+  },
+  {
+    "type": "dir",
+    "name": "apis",
+    "label": "API"
+  },
+  {
+    "type": "dir",
+    "name": "contribute",
+    "label": "贡献"
+  }
+]

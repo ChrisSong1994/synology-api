@@ -1,4 +1,4 @@
-import { getSongList ,setSongRating} from "./Song";
+import { getSongList, setSongRating } from "./Song";
 import { getAlbumList } from "./Album";
 import { getArtistList } from "./Artist";
 import { getPlaylist, createPlaylist, deletePlaylist } from "./Playlist";
@@ -23,6 +23,11 @@ export const METHODS = {
 // name space
 export const KEY = "AudioStation";
 export const ALIAS_KEY = "as";
+
+export enum EnumKeys {
+  AudioStation = "AudioStation",
+  as = "as",
+}
 
 // type
 export type TMethods = typeof METHODS;
