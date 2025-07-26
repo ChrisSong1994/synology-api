@@ -3,10 +3,10 @@
 ## getInfo
 
 Get AudioStation info
+
 **Returns**
 
 :::details
-
 ```json
 {
   "data": {
@@ -62,7 +62,7 @@ Get AudioStation info
 
 Get Album List
 
-**Parameters** 
+**Parameters**
 
 | Name           | Type     | Description                                                                                                      |
 | -------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -232,4 +232,192 @@ Get artist list
 }
 ```
 
+:::
+
+## getPlaylist
+
+get playlist
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| limit | number | limit |
+| offset | number | offset |
+| library | "all" \| "personal" | library type |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "offset": 0,
+    "playlists": [
+      {
+        "id": "playlist_personal_normal/__SYNO_AUDIO_SHARED_SONGS__",
+        "library": "personal",
+        "name": "__SYNO_AUDIO_SHARED_SONGS__",
+        "sharing_status": "none",
+        "type": "normal"
+      },
+      {
+        "id": "playlist_personal_normal/112",
+        "library": "personal",
+        "name": "playlist_0ib71x",
+        "path": "/homes/songjun/music/playlists",
+        "sharing_status": "none",
+        "type": "normal"
+      }
+    ],
+    "total": 2
+  },
+  "success": true
+}
+```
+
+:::
+
+## createPlaylist
+
+create a new playlist
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| name | string | playlist name |
+| library | "all" \| "personal" | library type |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "id": "playlist_personal_normal/113"
+  },
+  "success": true
+}
+```
+
+:::
+
+## deletePlaylist
+
+delete a playlist
+
+**Parameters**`
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| id | string | playlist id |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": null,
+  "success": true
+}
+```
+
+:::
+
+
+
+## getSongList
+get song list
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| limit | number | The number of songs to return. Defaults to 100. |
+| offset | number | The number of songs to skip. Defaults to 0. |
+| additional | Array<"song_tag" | "song_audio" | "song_rating"> | An array of additional fields to return. Defaults to an empty array. |
+| rating_filter | number | The minimum rating of songs to return. Defaults to 0. |
+| album_artist | string | The album artist to filter by. Defaults to an empty string. |
+| album | string | The album to filter by. Defaults to an empty string. |
+| artist | string | The artist to filter by. Defaults to an empty string. |
+| genre | string | The genre to filter by. Defaults to an empty string. |
+| sort_by | "title" \| "artist" \| "random" \| "name" | The field to sort by. Defaults to "title". |
+| sort_direction | "ASC" \| "DESC" | The direction to sort by. Defaults to "ASC". |
+
+**Returns**
+
+:::details
+```json
+{
+  "data": {
+    "offset": 0,
+    "songs": [
+      {
+        "additional": {
+          "song_audio": {
+            "bitrate": 975000,
+            "channel": 2,
+            "codec": "flac",
+            "container": "flac",
+            "duration": 251,
+            "filesize": 30642443,
+            "frequency": 44100
+          },
+          "song_rating": {
+            "rating": 5
+          },
+          "song_tag": {
+            "album": "周杰伦",
+            "album_artist": "",
+            "artist": "",
+            "comment": "",
+            "composer": "",
+            "disc": 0,
+            "genre": "",
+            "track": 0,
+            "year": 0
+          }
+        },
+        "id": "music_508",
+        "path": "/music/周杰伦/最后的战役 .flac",
+        "title": "最后的战役",
+        "type": "file"
+      },
+      {
+        "additional": {
+          "song_audio": {
+            "bitrate": 975000,
+            "channel": 2,
+            "codec": "flac",
+            "container": "flac",
+            "duration": 251,
+            "filesize": 30642443,
+            "frequency": 44100
+          },
+          "song_rating": {
+            "rating": 0
+          },
+          "song_tag": {
+            "album": "八度空间",
+            "album_artist": "",
+            "artist": "",
+            "comment": "",
+            "composer": "",
+            "disc": 0,
+            "genre": "",
+            "track": 0,
+            "year": 0
+          }
+        },
+        "id": "music_323",
+        "path": "/music/周杰伦/八度空间/周杰伦 - 最后 的 战 役 .flac",
+        "title": "周杰伦 - 最后 的 战 役",
+        "type": "file"
+      }
+    ],
+    "total": 148
+  },
+  "success": true
+}
+```
 :::

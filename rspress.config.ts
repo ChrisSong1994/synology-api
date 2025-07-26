@@ -26,6 +26,28 @@ export default defineConfig({
       description: "静态网站生成器",
     },
   ],
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: "script",
+          attrs: {
+            async: true,
+            src: "https://www.googletagmanager.com/gtag/js?id=G-XT6ETPGN85",
+          },
+        },
+        {
+          tag: "script",
+          children: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XT6ETPGN85');
+          `,
+        },
+      ],
+    },
+  },
   themeConfig: {
     socialLinks: [
       {
