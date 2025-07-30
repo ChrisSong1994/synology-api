@@ -63,4 +63,13 @@ export enum CoreApi {
   System = "SYNO.Core.System",
   SystemProcess = "SYNO.Core.System.Process",
   SystemStatus = "SYNO.Core.System.Status",
+  SystemUtilization = "SYNO.Core.System.Utilization",
+  SystemHealth = "SYNO.Core.System.SystemHealth",
+}
+
+export enum DockerApi {
+  Container = "SYNO.Docker.Container",
+  Image = "SYNO.Docker.Image",
+  Network = "SYNO.Docker.Network",
+  Migrate = "SYNO.Docker.Migrate",
 }

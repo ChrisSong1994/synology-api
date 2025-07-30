@@ -2,20 +2,19 @@ import * as AudioStation from "./AudioStation";
 import * as FileStation from "./FileStation";
 import * as VideoStation from "./VideoStation";
 import * as Auth from "./Auth";
+import * as Core from "./Core";
 import { BindMethods } from "../decorators";
 
 type EnumFromArray<T extends string[]> = {
   [K in T[number]]: K;
 };
 
-
-export const SynologyApiModules = [FileStation, AudioStation, VideoStation, Auth];
+export const SynologyApiModules = [FileStation, AudioStation, VideoStation, Auth, Core];
 
 export const SynologyApiKeys = SynologyApiModules.reduce((acc, module) => {
   acc = { ...acc, [module.KEY]: module.KEY, [module.ALIAS_KEY]: module.ALIAS_KEY };
   return acc;
 }, []);
-
 
 export const SynologyApiKeysMap: EnumFromArray<typeof SynologyApiKeys> = SynologyApiModules.reduce(
   (acc, module) => {
@@ -42,5 +41,7 @@ export class BaseSynologyApi {
   [VideoStation.ALIAS_KEY]: VideoStation.TMethods;
   [Auth.KEY]: Auth.TMethods;
   [Auth.ALIAS_KEY]: Auth.TMethods;
+  [Core.KEY]: Core.TMethods;
+  [Core.ALIAS_KEY]: Core.TMethods;
   constructor() {}
 }

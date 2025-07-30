@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { createSynologyApi } from "./util";
+import { createSynologyApi } from "./helper";
 
 describe("SynologyApi VideoStation", async () => {
   const synologyApi = createSynologyApi();
