@@ -5,6 +5,7 @@ import {
   getSystemHealth,
   getSystemUtilization,
 } from "./System";
+import { getUserList } from "./User";
 
 // fs methods
 export const METHODS = {
@@ -13,6 +14,7 @@ export const METHODS = {
   getSystemUtilization,
   getSystemInfo,
   getSystemStatus,
+  getUserList,
 };
 
 // name space
