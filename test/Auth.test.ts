@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { SynologyApiInfo } from "../src";
 
-import { createSynologyApi } from "./util";
+import { createSynologyApi } from "./helper";
 
 describe("SynologyApi auth", () => {
   const synologyApi = createSynologyApi();

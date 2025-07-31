@@ -60,7 +60,33 @@ export enum VideoStationApi {
 export enum CoreApi {
   Package = "SYNO.Core.Package",
   PackageControl = "SYNO.Core.Package.Control",
+
+  /**
+   *  System api
+   */
   System = "SYNO.Core.System",
   SystemProcess = "SYNO.Core.System.Process",
   SystemStatus = "SYNO.Core.System.Status",
+  SystemUtilization = "SYNO.Core.System.Utilization",
+  SystemHealth = "SYNO.Core.System.SystemHealth",
+
+  /**
+   * User api
+   * */
+  User = "SYNO.Core.User",
+  Group = "SYNO.Core.User.Group",
+  PasswordPolicy = "SYNO.Core.User.PasswordPolicy",
+  PasswordExpiry = "SYNO.Core.User.PasswordExpiry",
+  PasswordConfirm = "SYNO.Core.User.PasswordConfirm",
+  UsernamePolicy = "SYNO.Core.User.UsernamePolicy",
+}
+
+/**
+ * docker api
+ */
+export enum DockerApi {
+  Container = "SYNO.Docker.Container",
+  Image = "SYNO.Docker.Image",
+  Network = "SYNO.Docker.Network",
+  Migrate = "SYNO.Docker.Migrate",
 }
