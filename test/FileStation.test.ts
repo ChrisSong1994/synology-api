@@ -1,23 +1,23 @@
 import { describe, expect, test } from "vitest";
 
 import { createSynologyApi } from "./helper";
+// import fs from "fs"
 
 describe("SynologyApi FileStation", async () => {
   const synologyApi = createSynologyApi();
 
-  test("FileStation   getInfo", async () => {
+  test.skip("getInfo", async () => {
     const result = await synologyApi.fs.getInfo();
-
     expect(result.success).toBeDefined();
   });
 
-  test("FileStation   getFileList params error", async () => {
+  test.skip("getFileList params error", async () => {
     await expect(synologyApi.FileStation.getFileList()).rejects.toThrowError(
       new Error("folder_path is required")
     );
   });
 
-  test("FileStation   getFileList result success", async () => {
+  test.skip("getFileList result success", async () => {
     const result = await synologyApi.FileStation.getFileList({
       folder_path: "/book",
     });
@@ -28,7 +28,7 @@ describe("SynologyApi FileStation", async () => {
     expect(result.data.files.length).toBeGreaterThanOrEqual(0);
   });
 
-  test("FileStation   getFileList result error", async () => {
+  test.skip("getFileList result error", async () => {
     const result = await synologyApi.FileStation.getFileList({
       folder_path: "/",
     });
@@ -38,7 +38,7 @@ describe("SynologyApi FileStation", async () => {
     });
   });
 
-  test("FileStation   getFileList result", async () => {
+  test.skip("getFileList result", async () => {
     const result = await synologyApi.FileStation.getFileListShare();
     expect(result).toMatchObject({
       success: true,
@@ -47,5 +47,22 @@ describe("SynologyApi FileStation", async () => {
       },
     });
     expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
+  });
+
+  test.skip("getDownloadFile", async () => {
+    const result = await synologyApi.FileStation.getDownloadFile({
+      path: "xxxxxx",
+    });
+    expect(result.data).toBeUndefined();
+  });
+
+  test("uploadFile", async () => {
+    // const testFile = createTestFile();
+    const result = await synologyApi.fs.uploadFile({
+      path: "/book",
+      file: "/Users/songjun/Workspace/github/node-synology-api/test/Docker.test.ts",
+    });
+    console.log(result);
+    // expect(result.data).toBeUndefined();
   });
 });

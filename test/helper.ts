@@ -9,3 +9,13 @@ export const createSynologyApi = () => {
 
   return synologyApi;
 };
+
+export const createTestFile = (name = "test.txt", content = "hello world", type = "text/plain") => {
+  const blob = new Blob([content], { type });
+  const file = new File([blob], name, {
+    type: "text/plain",
+    lastModified: Date.now(),
+  });
+
+  return file;
+};

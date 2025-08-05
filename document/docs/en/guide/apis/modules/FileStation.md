@@ -6,6 +6,7 @@ Get FileStation info
 
 **Returns**
 
+:::details
 ```json
 {
   "data": {
@@ -40,3 +41,4 @@ Get FileStation info
   "success": true
 }
 ```
+:::

@@ -1,16 +1,21 @@
 import ky from "ky";
 
-import { SynologyApiInfo, SynologyApiResponse } from "@/types";
+import { SynoApi, SynologyApiResponse } from "@/types";
 import { SynologyApi } from "@/core";
 
 export async function login(core: SynologyApi) {
   const params = {
-    api: SynologyApiInfo.Auth,
-    version: 6,
     method: "login",
+    api: SynoApi.Auth,
+    version: 6,
     account: core.username,
     passwd: core.password,
-    format: "sid",
+    enable_device_token: "no",
+    enable_syno_token: "yes",
+    logintype: "local",
+    client: "browser",
+    session: "webui",
+    format: "cookie",
   };
   const url = `${core.baseUrl}entry.cgi`;
   const result = await ky.get<SynologyApiResponse>(url, { searchParams: params }).json();
@@ -22,7 +27,7 @@ export async function login(core: SynologyApi) {
 
 export async function logout(core: SynologyApi) {
   const params = {
-    api: SynologyApiInfo.Auth,
+    api: SynoApi.Auth,
     version: 6,
     method: "logout",
   };

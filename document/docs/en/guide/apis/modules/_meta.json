@@ -1,1 +1,1 @@
-["Core", "FileStation", "VideoStation", "AudioStation"]
+["Core.User", "FileStation", "VideoStation", "AudioStation", "Docker"]

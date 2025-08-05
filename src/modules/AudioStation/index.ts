@@ -6,6 +6,7 @@ import { getFolderList } from "./Folder";
 import { getLyrics, searchLyrics } from "./Lyrics";
 import { getInfo } from "./Info";
 
+// methods
 export const METHODS = {
   getSongList,
   setSongRating,

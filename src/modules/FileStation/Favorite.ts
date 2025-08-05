@@ -1,0 +1,67 @@
+import { FileStationApi, SynologyApiResponse } from "@/types";
+
+export type FavoriteListParams = {
+  limit?: number;
+  offset?: number;
+  sort_by?: string;
+  sort_direction?: "ASC" | "DESC";
+  additional?: string[];
+  status_filter?: string;
+};
+
+export type FavoriteListResponse = SynologyApiResponse<{
+  is_manager: boolean; // If the logged-in user is an administrator.
+  support_virtual_protocol: number;
+  support_sharing: boolean;
+  hostname: string;
+}>;
+
+export async function getFavoriteList(params: FavoriteListParams): Promise<FavoriteListResponse> {
+  const { additional = ["real_path", "size", "owner", "time"] } = params;
+  const res = await this.run(FileStationApi.Favorite, {
+    params: {
+      method: "list",
+      ...params,
+      additional: JSON.stringify(additional),
+    },
+  });
+  return res;
+}
+
+export type AddFavoriteParams = {
+  path: string; //  path of the file or folder to add to the favorite list.
+  name: string; //  name of the favorite.
+  index: number; //  index of the favorite.
+};
+
+/**
+ * add favorite
+ */
+export async function addFavorite(params: FavoriteListParams): Promise<SynologyApiResponse<any>> {
+  const res = await this.run(FileStationApi.Favorite, {
+    params: {
+      method: "add",
+      ...params,
+    },
+  });
+  return res;
+}
+
+export type RemoveFavoriteParams = {
+  path: string; //  path of the file or folder to remove from the favorite list.
+};
+
+/**
+ * remove favorite
+ */
+export async function deleteFavorite(
+  params: RemoveFavoriteParams
+): Promise<SynologyApiResponse<any>> {
+  const res = await this.run(FileStationApi.Favorite, {
+    params: {
+      method: "delete",
+      ...params,
+    },
+  });
+  return res;
+}

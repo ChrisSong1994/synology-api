@@ -9,4 +9,19 @@ describe("SynologyApi User", async () => {
     const result = await synologyApi.co.getUserList();
     expect(result.success).toBeDefined();
   });
+
+  test("SynologyApi getUserInfo", async () => {
+    const result = await synologyApi.co.getUserInfo({
+      name: "admin",
+      additional: [
+        "description",
+        "email",
+        "expired",
+        "cannot_chg_passwd",
+        "passwd_never_expire",
+        "password_last_change",
+      ],
+    });
+    expect(result.success).toBeDefined();
+  });
 });

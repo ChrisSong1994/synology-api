@@ -15,13 +15,12 @@ export function isHttpUrl(url: string) {
   return /^https?:\/\//.test(url);
 }
 
-
 export function isUndfined(value: any) {
   return value === undefined;
 }
 
 export function getApiKey(apiName: string): string {
-  return apiName.split('.')[1];
+  return apiName.split(".")[1];
 }
 
 export function buildUrlWithQuery(url: string, query: Record<string, any>) {

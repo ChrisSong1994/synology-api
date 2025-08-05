@@ -1,11 +1,11 @@
 import ky from "ky";
 
-import { SynologyApiInfo, SynologyApiResponse } from "@/types";
+import { SynoApi, SynologyApiResponse } from "@/types";
 import { SynologyApi } from "@/core";
 
 export async function getApiInfo(core: SynologyApi) {
   const params = {
-    api: SynologyApiInfo.Info,
+    api: SynoApi.Info,
     version: 1,
     method: "query",
   };

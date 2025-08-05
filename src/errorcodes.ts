@@ -1,9 +1,10 @@
-import { SynologyApiKeysMap} from "@/modules";
+import { SynologyApiKeysMap } from "@/modules";
 import { SynologyApiResponse } from "@/types";
 import { isUndfined } from "./utils";
 
 const CODE_SUCCESS = 0;
 const CODE_UNKNOWN = 9999;
+export const COMMON_CODES = "COMMON_CODES";
 
 export const SYNOLOGY_ERROR_CODES = {
   [SynologyApiKeysMap.FileStation]: {
@@ -32,7 +33,7 @@ export const SYNOLOGY_ERROR_CODES = {
     599: "No such task of the file operation",
   },
   [SynologyApiKeysMap.AudioStation]: {},
-  COMMON_CODES: {
+  ["COMMON_CODES"]: {
     [CODE_SUCCESS]: "Success",
     100: "Unknown error",
     101: "No parameter of API, method or version",
@@ -93,13 +94,15 @@ export const SYNOLOGY_ERROR_CODES = {
 
 export const resWithErrorCode = (apiKey: string, res: SynologyApiResponse<any>) => {
   const errorCodes = SYNOLOGY_ERROR_CODES[apiKey];
+  const commonErrorCode = SYNOLOGY_ERROR_CODES[COMMON_CODES];
   const code = res?.error?.code;
   if (isUndfined(code)) return res;
   return {
     ...res,
     error: {
       ...res.error,
-      message: res?.error?.message || errorCodes?.[code] || "Unknown error",
+      reason:
+        res?.error?.message || errorCodes?.[code] || commonErrorCode?.[code] || "Unknown error",
     },
   };
 };

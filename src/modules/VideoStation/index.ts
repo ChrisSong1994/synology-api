@@ -3,7 +3,7 @@ import { getAcrossLibrary, getLibrary } from "./Library";
 import { getStreamUrl, getStreamId } from "./Streaming";
 import { getMoiveInfo } from "./Movie";
 
-// fs methods
+// methods
 export const METHODS = {
   getInfo,
   getAcrossLibrary,

@@ -4,12 +4,28 @@
 
 import { getInfo } from "./Info";
 import { getFileList, getFileListShare } from "./List";
+import { addFavorite, deleteFavorite, getFavoriteList } from "./Favorite";
+import { searchStart, searchStop, getSearchList } from "./Search";
+import { createFolder } from "./CreateFolder";
+import { getDownloadFile } from "./Download";
+import { deleteFileStart } from "./Delete";
+import { uploadFile } from "./Upload";
 
-// fs methods
+// methods
 export const METHODS = {
   getInfo,
   getFileList,
   getFileListShare,
+  getFavoriteList,
+  addFavorite,
+  deleteFavorite,
+  searchStart,
+  searchStop,
+  getSearchList,
+  createFolder,
+  getDownloadFile,
+  deleteFileStart,
+  uploadFile,
 };
 
 // name space

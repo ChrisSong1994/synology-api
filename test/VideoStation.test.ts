@@ -24,26 +24,15 @@ describe("SynologyApi VideoStation", async () => {
 
   test("VideoStation getMoiveInfo", async () => {
     const result = await synologyApi.vs.getMoiveInfo({
-      id: [],
+      id: [790],
     });
     expect(result.success).toBeDefined();
   });
 
   test("VideoStation getStreamUrl", async () => {
-    const file = await synologyApi.vs.getMoiveInfo({
-      id: [790],
+    const result = await synologyApi.vs.getStreamUrl({
+      id: 790,
     });
-    const fileVideoInfo = file.data.movie[0].additional.file[0];
-
-    const result = await synologyApi.vs.getStreamId(fileVideoInfo.id);
-    const streamGrant = await synologyApi.au.getAuthKeyGrant({
-      allow_api: "SYNO.VideoStation2.Streaming",
-      allow_methods: ["stream"],
-    });
-    const streamUrl = await synologyApi.vs.getStreamUrl({
-      stream_id: `"${result.data.stream_id}"`,
-      tid: `"${streamGrant.data.tid}"`,
-    });
-    console.log("getStreamUrl", streamUrl);
+    expect(result.success).toBeDefined();
   });
 });

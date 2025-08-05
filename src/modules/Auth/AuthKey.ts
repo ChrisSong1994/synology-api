@@ -1,4 +1,4 @@
-import { SynologyApiInfo, SynologyApiResponse } from "@/types";
+import { SynoApi, SynologyApiResponse } from "@/types";
 
 export type SynologyApiGetAuthKeyGrantParams = {
   allow_api: string;
@@ -8,7 +8,7 @@ export async function getAuthKeyGrant(
   params: SynologyApiGetAuthKeyGrantParams
 ): Promise<SynologyApiResponse<{ tid: string }>> {
   const { allow_methods, allow_api } = params;
-  const result = await this.run(SynologyApiInfo.AuthKey, {
+  const result = await this.run(SynoApi.AuthKey, {
     params: {
       method: "grant",
       allow_api: allow_api,

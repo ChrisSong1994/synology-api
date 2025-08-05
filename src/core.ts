@@ -6,10 +6,16 @@ import { isHttpUrl, getApiKey, isUndfined } from "./utils";
 import { getServerInfo } from "./helpers";
 import { login, logout, getApiInfo } from "./modules/Api";
 import { resWithErrorCode } from "./errorcodes";
+
+interface Agent {
+  http?: { host: string; port: number };
+  https?: { host: string; port: number };
+}
 export interface SynologyApiOptions {
   server: string;
   username: string;
   password: string;
+  agent?: Agent;
 }
 
 export interface SynologyApiInfoData {
@@ -30,6 +36,7 @@ export class SynologyApi extends BaseSynologyApi {
   server: string;
   username: string;
   password: string;
+  agent?: Agent;
   baseUrl: string;
   isConnecting: boolean = false;
   private authInfo: SynologyApiAuthInfo | null = null;
@@ -39,6 +46,7 @@ export class SynologyApi extends BaseSynologyApi {
     this.server = options.server;
     this.username = options.username;
     this.password = options.password;
+    this.agent = options.agent;
     this.baseUrl = `${this.server}/webapi/`;
   }
 
@@ -83,6 +91,10 @@ export class SynologyApi extends BaseSynologyApi {
     }
   }
 
+  getApiInfoByName(apiName: string) {
+    return this.apiInfo[apiName];
+  }
+
   hasApi(apiName: string) {
     if (!this.isConnecting) {
       throw new Error("Not connected");
@@ -117,12 +129,24 @@ export class SynologyApi extends BaseSynologyApi {
       _sid: this.authInfo.sid,
       ...params,
     };
+    const externalHeaders = {
+      ...headers,
+      "x-syno-token": this.authInfo.synotoken,
+    };
     let result = null;
+
     if (method === "get") {
-      result = await ky.get(url, { searchParams: externalParams, headers }).json();
+      result = await ky
+        .get(url, {
+          searchParams: externalParams,
+          headers: externalHeaders,
+        })
+        .json();
     }
     if (method === "post") {
-      result = await ky.post(url, { searchParams: externalParams, json: data, headers }).json();
+      result = await ky
+        .post(url, { searchParams: externalParams, headers: externalHeaders, json: data })
+        .json();
     }
     // match error code msg
     const apiKey = getApiKey(apiName);

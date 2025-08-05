@@ -1,8 +1,10 @@
 import { getAuthKeyGrant } from "./AuthKey";
+import { getEncryptionInfo } from "./Encryption";
 
-// fs methods
+//  methods
 export const METHODS = {
   getAuthKeyGrant,
+  getEncryptionInfo,
 };
 
 // name space
