@@ -4,18 +4,20 @@ import { isUndfined } from "@/utils";
 /**
  * fetch filestation list
  */
-export type FileStationFileListRequest = {
+export type FileListRequest = {
   limit?: number;
   offset?: number;
   sort_by?: string;
   sort_direction?: "ASC" | "DESC";
-  version?: number;
   filetype?: "file" | "dir" | "all";
   folder_path?: string;
-  additional?: string[];
+  additional?: Array<
+    "real_path" | "size" | "owner" | "time" | "perm" | "type" | "mount_point_type"
+  >;
+  pattern?: string;
 };
 
-export type FileStationFileListItem = {
+export type FileListItem = {
   isdir: boolean;
   name: string;
   path: string;
@@ -35,15 +37,13 @@ export type FileStationFileListItem = {
   };
 };
 
-export type FileStationFileListResponse = SynologyApiResponse<{
-  files: FileStationFileListItem[];
+export type FileListResponse = SynologyApiResponse<{
+  files: FileListItem[];
   offset: number;
   total: number;
 }>;
 
-export async function getFileList(
-  params: FileStationFileListRequest = {}
-): Promise<FileStationFileListResponse> {
+export async function getFileList(params: FileListRequest = {}): Promise<FileListResponse> {
   const { additional = ["real_path", "size", "owner", "time"], filetype = "all" } = params;
   if (isUndfined(params.folder_path)) {
     throw new Error("folder_path is required");
@@ -51,10 +51,8 @@ export async function getFileList(
   const res = await this.run(FileStationApi.List, {
     params: {
       method: "list",
-      additional: JSON.stringify(additional),
-      filetype: filetype,
-      folder_path: params.folder_path,
       ...params,
+      additional: JSON.stringify(additional),
     },
   });
   return res;
@@ -64,7 +62,7 @@ export async function getFileList(
  * fetch file share list
  * */
 
-export type FileStationFileShareListRequest = {
+export type FileShareListRequest = {
   limit?: number;
   offset?: number;
   sort_by?: string;
@@ -73,8 +71,8 @@ export type FileStationFileShareListRequest = {
   onlywritable?: boolean;
 };
 
-export type FileStationFileShareListResponse = SynologyApiResponse<{
-  shares: FileStationFileListItem &
+export type FileShareListResponse = SynologyApiResponse<{
+  shares: FileListItem &
     {
       hybridshare_cache_status: number;
       hybridshare_pin_status: number;
@@ -83,17 +81,63 @@ export type FileStationFileShareListResponse = SynologyApiResponse<{
   total: number;
 }>;
 
-export async function getFileListShare(
-  params: FileStationFileShareListRequest = {}
-): Promise<FileStationFileShareListResponse> {
+export async function getShareFileList(
+  params: FileShareListRequest = {}
+): Promise<FileShareListResponse> {
   const { additional = ["real_path", "size", "owner", "time"], onlywritable = false } = params;
 
   const res = await this.run(FileStationApi.List, {
     params: {
       method: "list_share",
-      additional: JSON.stringify(additional),
-      onlywritable: onlywritable,
       ...params,
+      additional: JSON.stringify(additional),
+    },
+  });
+  return res;
+}
+
+/**
+ * fetch file share list
+ * */
+
+export type VirtualFolderListRequest = {
+  type?: "Nfs" | "cifs" | "iso";
+  limit?: number;
+  offset?: number;
+  sort_by?: string;
+  sort_direction?: "ASC" | "DESC";
+  additional?: Array<
+    "real_path" | "owner" | "time" | "perm" | "mount_point_type" | "volume_status"
+  >;
+};
+
+export type VirtualFolderListResponse = SynologyApiResponse<{
+  folders: Array<{
+    path: string;
+    name: string;
+    additional?: {
+      real_path?: string;
+      owner?: Record<string, any>;
+      time?: Record<string, any>;
+      perm?: Record<string, any>;
+      mount_point_type?: string;
+      volume_status?: Record<string, any>;
+    };
+  }>;
+  offset: number;
+  total: number;
+}>;
+
+export async function getVirtualFolderList(
+  params: VirtualFolderListRequest = {}
+): Promise<VirtualFolderListResponse> {
+  const { additional = [] } = params;
+
+  const res = await this.run(FileStationApi.VirtualFolder, {
+    params: {
+      method: "list",
+      ...params,
+      additional: JSON.stringify(additional),
     },
   });
   return res;

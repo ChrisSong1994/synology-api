@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { createSynologyApi } from "./helper";
+import { createSynologyApi } from "../helper";
 // import fs from "fs"
 
 describe("SynologyApi FileStation", async () => {
@@ -39,7 +39,7 @@ describe("SynologyApi FileStation", async () => {
   });
 
   test.skip("getFileList result", async () => {
-    const result = await synologyApi.FileStation.getFileListShare();
+    const result = await synologyApi.FileStation.getShareFileList();
     expect(result).toMatchObject({
       success: true,
       data: {
@@ -53,16 +53,60 @@ describe("SynologyApi FileStation", async () => {
     const result = await synologyApi.FileStation.getDownloadFile({
       path: "xxxxxx",
     });
-    expect(result.data).toBeUndefined();
+    expect(result.data).toMatch(/^https?:\/\//);
   });
 
-  test("uploadFile", async () => {
+  test.skip("uploadFile", async () => {
     // const testFile = createTestFile();
     const result = await synologyApi.fs.uploadFile({
       path: "/book",
       file: "/Users/songjun/Workspace/github/node-synology-api/test/Docker.test.ts",
     });
-    console.log(result);
-    // expect(result.data).toBeUndefined();
+    expect(result.data).toBeDefined();
+  });
+
+  test.skip("getVirtualFolderList", async () => {
+    const result = await synologyApi.FileStation.getVirtualFolderList();
+    expect(result.data.folders.length).toBeGreaterThanOrEqual(0);
+  });
+
+  test.skip("clearBrokenFavorite", async () => {
+    const result = await synologyApi.FileStation.clearBrokenFavorite();
+    expect(result.success).toBeTruthy();
+  });
+
+  test.skip("getThumb", async () => {
+    const result = await synologyApi.FileStation.getThumbUrl({
+      path: "/book/logo.png",
+    });
+    expect(result.data).toBeDefined();
+  });
+
+  test.skip("DirSize", async () => {
+    const result = await synologyApi.FileStation.startDirSizeCalc({
+      path: "/book",
+    });
+    expect(result.data.taskid).toBeDefined();
+
+    const statusResult = await synologyApi.FileStation.getDirSizeCalcStatus({
+      taskid: result.data.taskid,
+    });
+    if (!statusResult.data.finished) {
+      expect(statusResult.data.total_size).toBeGreaterThan(0);
+    }
+  });
+
+  test("MD5", async () => {
+    const result = await synologyApi.FileStation.startMD5Calc({
+      file_path: "/book/logo.png",
+    });
+    expect(result.data.taskid).toBeDefined();
+
+    const statusResult = await synologyApi.FileStation.getMD5CalcStatus({
+      taskid: result.data.taskid,
+    });
+    if (!statusResult?.data?.finished) {
+      expect(statusResult.data.md5).toBeDefined();
+    }
   });
 });

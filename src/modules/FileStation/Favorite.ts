@@ -65,3 +65,17 @@ export async function deleteFavorite(
   });
   return res;
 }
+
+
+/**
+ * clear_broken 
+ * Delete all broken statuses of favorites.
+*/
+export async function clearBrokenFavorite(): Promise<SynologyApiResponse<any>> {
+  const res = await this.run(FileStationApi.Favorite, {
+    params: {
+      method: "clear_broken",
+    },
+  });
+  return res;
+}

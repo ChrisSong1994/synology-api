@@ -1,18 +1,20 @@
 import { FileStationApi, SynologyApiResponse } from "@/types";
+import { FileListItem } from "./List";
 
-export type SearchStartParams = {
+export type StartSearchParams = {
   folder_path: string;
+  filetype?: "file" | "dir" | "all";
   recursive?: boolean;
   pattern: string; //  pattern to search.
   search_content: boolean;
   search_type: string; // simple | content
 };
 
-export type SearchStartResponse = SynologyApiResponse<{
+export type StartSearchResponse = SynologyApiResponse<{
   has_not_index_share: boolean;
   taskid: string;
 }>;
-export async function searchStart(params: SearchStartParams): Promise<SearchStartResponse> {
+export async function startSearch(params: StartSearchParams): Promise<StartSearchResponse> {
   const { recursive = true, search_content = false, search_type = "simple" } = params;
 
   return await this.run(FileStationApi.Search, {
@@ -26,7 +28,7 @@ export async function searchStart(params: SearchStartParams): Promise<SearchStar
   });
 }
 
-export async function searchStop(params: { taskid: string }): Promise<SynologyApiResponse<any>> {
+export async function stopSearch(params: { taskid: string }): Promise<SynologyApiResponse<any>> {
   return await this.run(FileStationApi.Search, {
     params: {
       method: "stop",
@@ -46,6 +48,8 @@ export type SearchListParams = {
 export type SearchListResponse = SynologyApiResponse<{
   offset: number;
   total: number;
+  finished: boolean;
+  files: Array<FileListItem>;
 }>;
 export async function getSearchList(params: SearchListParams): Promise<SearchListResponse> {
   const {
@@ -68,4 +72,18 @@ export async function getSearchList(params: SearchListParams): Promise<SearchLis
   });
 
   return res;
+}
+
+/**
+ * Delete search temporary database(s).
+ * @param taskid - Unique ID(s) for the search task which are
+obtained from start method.
+*/
+export async function cleanSearch(params: { taskid: string }): Promise<SynologyApiResponse<any>> {
+  return await this.run(FileStationApi.Search, {
+    params: {
+      method: "clean",
+      ...params,
+    },
+  });
 }

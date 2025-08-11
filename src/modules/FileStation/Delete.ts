@@ -8,7 +8,7 @@ export type DeleteFileParams = {
 export type DeleteFileResponse = SynologyApiResponse<{
   taskid: string;
 }>;
-export async function deleteFileStart(params: DeleteFileParams): Promise<DeleteFileResponse> {
+export async function startDeleteFile(params: DeleteFileParams): Promise<DeleteFileResponse> {
   const { accurate_progress = true, path } = params;
   const paths = Array.isArray(path) ? path : [path];
 
@@ -17,6 +17,19 @@ export async function deleteFileStart(params: DeleteFileParams): Promise<DeleteF
       method: "start",
       path: JSON.stringify(paths),
       accurate_progress,
+    },
+  });
+  return res;
+}
+
+export async function stopDeleteFile(params: {
+  taskid: string;
+}): Promise<SynologyApiResponse<any>> {
+  const { taskid } = params;
+  const res = await this.run(FileStationApi.Delete, {
+    params: {
+      method: "stop",
+      taskid,
     },
   });
   return res;
@@ -34,7 +47,7 @@ export type DeleteFileStatusResponse = SynologyApiResponse<{
   progress: number;
   total: number;
 }>;
-export async function deleteFileStatus(params: { taskid: string }): Promise<DeleteFileResponse> {
+export async function getDeleteFileStatus(params: { taskid: string }): Promise<DeleteFileResponse> {
   const { taskid } = params;
   const res = await this.run(FileStationApi.Delete, {
     params: {

@@ -31,6 +31,24 @@ export const SYNOLOGY_ERROR_CODES = {
     420: "Illegal file name on FAT file system",
     421: "Device or resource busy",
     599: "No such task of the file operation",
+
+    // copy move
+    1000: "Failed to copy files/folders. More information in <errors> object.",
+    1001: " Failed to move files/folders. More information in <errors> object.",
+    1002: " An error occurred at the destination. More information in <errors> object.",
+    1003: " Cannot overwrite or skip the existing file because no overwrite parameter is given.",
+    1004: " File cannot overwrite a folder with the same name, or folder cannot overwrite a file with the same name.",
+    1006: "Cannot copy/move file/folder with special characters to a FAT32 file system.",
+    1007: " Cannot copy/move a file bigger than 4G to a FAT32 file system.",
+
+    // create folder
+    1100: "Failed to create a folder. More information in <errors> object.",
+    1101: "The number of folders to the parent folder would exceed the system limitation.",
+
+    // sharing
+    2000: " Sharing link does not exist.",
+    2001: "Cannot generate sharing link because too many sharing links exist.",
+    2002: " Failed to access sharing links.",
   },
   [SynologyApiKeysMap.AudioStation]: {},
   ["COMMON_CODES"]: {

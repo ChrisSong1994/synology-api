@@ -1,4 +1,4 @@
-import ky from "ky";
+import Axios from "axios";
 
 import { SynoApi, SynologyApiResponse } from "@/types";
 import { SynologyApi } from "@/core";
@@ -18,7 +18,7 @@ export async function login(core: SynologyApi) {
     format: "cookie",
   };
   const url = `${core.baseUrl}entry.cgi`;
-  const result = await ky.get<SynologyApiResponse>(url, { searchParams: params }).json();
+  const result = (await Axios.get<SynologyApiResponse>(url, { params: params })).data;
   if (!result.success) {
     throw new Error(result.error.message);
   }
@@ -32,7 +32,7 @@ export async function logout(core: SynologyApi) {
     method: "logout",
   };
   const url = `${core.baseUrl}entry.cgi`;
-  const result = await ky.get<SynologyApiResponse>(url, { searchParams: params }).json();
+  const result = (await Axios.get<SynologyApiResponse>(url, { params: params })).data;
   if (!result.success) {
     throw new Error(result.error.message);
   }

@@ -74,7 +74,6 @@
     "fs-extra": "^11.3.0",
     "http-proxy-agent": "^7.0.2",
     "https-proxy-agent": "^7.0.6",
-    "ky": "^1.8.1",
     "ora": "^8.2.0"
   },
   "license": "MIT"

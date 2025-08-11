@@ -4,6 +4,7 @@ export type CreateFolderParams = {
   folder_path: string;
   name: string;
   force_parent?: boolean;
+  additional: Array<"real_path" | "size" | "owner" | "time" | "perm" | "type">;
 };
 
 export type CreateFolderResponse = SynologyApiResponse<{
@@ -15,13 +16,12 @@ export type CreateFolderResponse = SynologyApiResponse<{
 }>;
 
 export async function createFolder(params: CreateFolderParams): Promise<CreateFolderResponse> {
-  const { folder_path, name, force_parent = false } = params;
-  const res = await this.run(FileStationApi.File, {
+  const { additional = [] } = params;
+  const res = await this.run(FileStationApi.CreateFolder, {
     params: {
       method: "create_folder",
-      folder_path,
-      name,
-      force_parent,
+      ...params,
+      additional: JSON.stringify(additional),
     },
   });
 

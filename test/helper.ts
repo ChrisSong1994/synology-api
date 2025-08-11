@@ -5,6 +5,12 @@ export const createSynologyApi = () => {
     server: process.env.SYNOLOGY_SERVER as string,
     username: process.env.SYNOLOGY_USER as string,
     password: process.env.SYNOLOGY_PASSWORD as string,
+    // agent: {
+    //   http: {
+    //     host: "localhost",
+    //     port: 8888,
+    //   },
+    // },
   });
 
   return synologyApi;

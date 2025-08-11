@@ -3,29 +3,50 @@
  */
 
 import { getInfo } from "./Info";
-import { getFileList, getFileListShare } from "./List";
-import { addFavorite, deleteFavorite, getFavoriteList } from "./Favorite";
-import { searchStart, searchStop, getSearchList } from "./Search";
+import { getFileList, getShareFileList, getVirtualFolderList } from "./List";
+import { addFavorite, deleteFavorite, getFavoriteList, clearBrokenFavorite } from "./Favorite";
+import { startSearch, stopSearch, getSearchList ,cleanSearch} from "./Search";
 import { createFolder } from "./CreateFolder";
 import { getDownloadFile } from "./Download";
-import { deleteFileStart } from "./Delete";
+import { stopDeleteFile, startDeleteFile, getDeleteFileStatus } from "./Delete";
 import { uploadFile } from "./Upload";
-
+import { getThumbUrl } from "./Thumb";
+import { startDirSizeCalc, stopDirSizeCalc, getDirSizeCalcStatus } from "./DirSize";
+import { startMD5Calc, stopMD5Calc, getMD5CalcStatus } from "./MD5";
+import { checkPermission } from "./CheckPermission";
+import { rename } from "./Rename";
+import { getBackgroundTaskList, clearFinishedBackgroundTasks } from "./BackgroundTask";
 // methods
 export const METHODS = {
   getInfo,
   getFileList,
-  getFileListShare,
+  getShareFileList,
+  getVirtualFolderList,
   getFavoriteList,
   addFavorite,
   deleteFavorite,
-  searchStart,
-  searchStop,
+  clearBrokenFavorite,
+  startSearch,
+  stopSearch,
   getSearchList,
+  cleanSearch,
   createFolder,
   getDownloadFile,
-  deleteFileStart,
+  stopDeleteFile,
+  startDeleteFile,
+  getDeleteFileStatus,
   uploadFile,
+  getThumbUrl,
+  startDirSizeCalc,
+  stopDirSizeCalc,
+  getDirSizeCalcStatus,
+  startMD5Calc,
+  getMD5CalcStatus,
+  stopMD5Calc,
+  checkPermission,
+  rename,
+  clearFinishedBackgroundTasks,
+  getBackgroundTaskList,
 };
 
 // name space

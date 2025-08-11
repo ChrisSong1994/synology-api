@@ -42,6 +42,18 @@ export enum FileStationApi {
   Share = "SYNO.FileStation.Share",
   Upload = "SYNO.FileStation.Upload",
   Download = "SYNO.FileStation.Download",
+  VirtualFolder = "SYNO.FileStation.VirtualFolder",
+  Thumb = "SYNO.FileStation.Thumb",
+  DirSize = "SYNO.FileStation.DirSize",
+  MD5 = "SYNO.FileStation.MD5",
+  CheckPermission = "SYNO.FileStation.CheckPermission", 
+  Sharing = "SYNO.FileStation.Sharing",
+  CreateFolder = "SYNO.FileStation.CreateFolder",
+  Rename = "SYNO.FileStation.Rename",
+  CopyMove = "SYNO.FileStation.CopyMove",
+  Extract = "SYNO.FileStation.Extract",
+  Compress = "SYNO.FileStation.Compress",
+  BackgroundTask = "SYNO.FileStation.BackgroundTask",
 }
 
 /**
