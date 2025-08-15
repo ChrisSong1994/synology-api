@@ -1,0 +1,112 @@
+import { describe, expect, test } from "vitest";
+
+import { createSynologyApi } from "../helper";
+// import fs from "fs"
+
+describe("SynologyApi FileStation", async () => {
+  const synologyApi = createSynologyApi();
+
+  test.skip("getInfo", async () => {
+    const result = await synologyApi.fs.getInfo();
+    expect(result.success).toBeDefined();
+  });
+
+  test.skip("getFileList params error", async () => {
+    await expect(synologyApi.FileStation.getFileList()).rejects.toThrowError(
+      new Error("folder_path is required")
+    );
+  });
+
+  test.skip("getFileList result success", async () => {
+    const result = await synologyApi.FileStation.getFileList({
+      folder_path: "/book",
+    });
+    expect(result).toMatchObject({
+      success: true,
+      data: {},
+    });
+    expect(result.data.files.length).toBeGreaterThanOrEqual(0);
+  });
+
+  test.skip("getFileList result error", async () => {
+    const result = await synologyApi.FileStation.getFileList({
+      folder_path: "/",
+    });
+    expect(result).toMatchObject({
+      success: false,
+      error: {},
+    });
+  });
+
+  test.skip("getFileList result", async () => {
+    const result = await synologyApi.FileStation.getShareFileList();
+    expect(result).toMatchObject({
+      success: true,
+      data: {
+        offset: 0,
+      },
+    });
+    expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
+  });
+
+  test.skip("getDownloadFile", async () => {
+    const result = await synologyApi.FileStation.getDownloadFile({
+      path: "xxxxxx",
+    });
+    expect(result.data).toMatch(/^https?:\/\//);
+  });
+
+  test.skip("uploadFile", async () => {
+    // const testFile = createTestFile();
+    const result = await synologyApi.fs.uploadFile({
+      path: "/book",
+      file: "/Users/songjun/Workspace/github/node-synology-api/test/Docker.test.ts",
+    });
+    expect(result.data).toBeDefined();
+  });
+
+  test.skip("getVirtualFolderList", async () => {
+    const result = await synologyApi.FileStation.getVirtualFolderList();
+    expect(result.data.folders.length).toBeGreaterThanOrEqual(0);
+  });
+
+  test.skip("clearBrokenFavorite", async () => {
+    const result = await synologyApi.FileStation.clearBrokenFavorite();
+    expect(result.success).toBeTruthy();
+  });
+
+  test.skip("getThumb", async () => {
+    const result = await synologyApi.FileStation.getThumbUrl({
+      path: "/book/logo.png",
+    });
+    expect(result.data).toBeDefined();
+  });
+
+  test.skip("DirSize", async () => {
+    const result = await synologyApi.FileStation.startDirSizeCalc({
+      path: "/book",
+    });
+    expect(result.data.taskid).toBeDefined();
+
+    const statusResult = await synologyApi.FileStation.getDirSizeCalcStatus({
+      taskid: result.data.taskid,
+    });
+    if (!statusResult.data.finished) {
+      expect(statusResult.data.total_size).toBeGreaterThan(0);
+    }
+  });
+
+  test("MD5", async () => {
+    const result = await synologyApi.FileStation.startMD5Calc({
+      file_path: "/book/logo.png",
+    });
+    expect(result.data.taskid).toBeDefined();
+
+    const statusResult = await synologyApi.FileStation.getMD5CalcStatus({
+      taskid: result.data.taskid,
+    });
+    if (!statusResult?.data?.finished) {
+      expect(statusResult.data.md5).toBeDefined();
+    }
+  });
+});

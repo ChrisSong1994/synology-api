@@ -1,16 +1,16 @@
-import ky from "ky";
+import Axios from "axios";
 
-import { SynologyApiInfo, SynologyApiResponse } from "@/types";
+import { SynoApi, SynologyApiResponse } from "@/types";
 import { SynologyApi } from "@/core";
 
 export async function getApiInfo(core: SynologyApi) {
   const params = {
-    api: SynologyApiInfo.Info,
+    api: SynoApi.Info,
     version: 1,
     method: "query",
   };
   const url = `${core.baseUrl}entry.cgi`;
-  const result = await ky.get<SynologyApiResponse>(url, { searchParams: params }).json();
+  const result = (await Axios.get<SynologyApiResponse>(url, { params: params })).data;
   if (!result.success) {
     throw new Error(result.error.message);
   }

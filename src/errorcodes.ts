@@ -1,9 +1,10 @@
-import { SynologyApiKeysMap} from "@/modules";
+import { SynologyApiKeysMap } from "@/modules";
 import { SynologyApiResponse } from "@/types";
 import { isUndfined } from "./utils";
 
 const CODE_SUCCESS = 0;
 const CODE_UNKNOWN = 9999;
+export const COMMON_CODES = "COMMON_CODES";
 
 export const SYNOLOGY_ERROR_CODES = {
   [SynologyApiKeysMap.FileStation]: {
@@ -30,9 +31,32 @@ export const SYNOLOGY_ERROR_CODES = {
     420: "Illegal file name on FAT file system",
     421: "Device or resource busy",
     599: "No such task of the file operation",
+
+    // favorite
+    800: "A folder path of favorite folder is already added to user's favorites.",
+    801: "A name of favorite folder conflicts with an existing folder path in the user's favorites.",
+    802: "There are too many favorites to be added.",
+
+    // copy move
+    1000: "Failed to copy files/folders. More information in <errors> object.",
+    1001: " Failed to move files/folders. More information in <errors> object.",
+    1002: " An error occurred at the destination. More information in <errors> object.",
+    1003: " Cannot overwrite or skip the existing file because no overwrite parameter is given.",
+    1004: " File cannot overwrite a folder with the same name, or folder cannot overwrite a file with the same name.",
+    1006: "Cannot copy/move file/folder with special characters to a FAT32 file system.",
+    1007: " Cannot copy/move a file bigger than 4G to a FAT32 file system.",
+
+    // create folder
+    1100: "Failed to create a folder. More information in <errors> object.",
+    1101: "The number of folders to the parent folder would exceed the system limitation.",
+
+    // sharing
+    2000: " Sharing link does not exist.",
+    2001: "Cannot generate sharing link because too many sharing links exist.",
+    2002: " Failed to access sharing links.",
   },
   [SynologyApiKeysMap.AudioStation]: {},
-  COMMON_CODES: {
+  ["COMMON_CODES"]: {
     [CODE_SUCCESS]: "Success",
     100: "Unknown error",
     101: "No parameter of API, method or version",
@@ -93,13 +117,15 @@ export const SYNOLOGY_ERROR_CODES = {
 
 export const resWithErrorCode = (apiKey: string, res: SynologyApiResponse<any>) => {
   const errorCodes = SYNOLOGY_ERROR_CODES[apiKey];
+  const commonErrorCode = SYNOLOGY_ERROR_CODES[COMMON_CODES];
   const code = res?.error?.code;
   if (isUndfined(code)) return res;
   return {
     ...res,
     error: {
       ...res.error,
-      message: res?.error?.message || errorCodes?.[code] || "Unknown error",
+      reason:
+        res?.error?.message || errorCodes?.[code] || commonErrorCode?.[code] || "Unknown error",
     },
   };
 };

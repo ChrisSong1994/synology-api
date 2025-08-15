@@ -1,11 +1,12 @@
 /**
  * api info
  * */
-export enum SynologyApiInfo {
+export enum SynoApi {
   Auth = "SYNO.API.Auth",
   Info = "SYNO.API.Info",
   OTP = "SYNO.API.OTP",
   AuthKey = "SYNO.API.Auth.Key",
+  Encryption = "SYNO.API.Encryption",
 }
 
 /**
@@ -33,12 +34,26 @@ export enum AudioStationApi {
  */
 export enum FileStationApi {
   File = "SYNO.FileStation.File",
+  Delete = "SYNO.FileStation.Delete",
   Info = "SYNO.FileStation.Info",
+  Favorite = "SYNO.FileStation.Favorite",
+  Search = "SYNO.FileStation.Search",
   List = "SYNO.FileStation.List",
-  Quota = "SYNO.FileStation.Quota",
   Share = "SYNO.FileStation.Share",
-  Thumb = "SYNO.FileStation.Thumb",
   Upload = "SYNO.FileStation.Upload",
+  Download = "SYNO.FileStation.Download",
+  VirtualFolder = "SYNO.FileStation.VirtualFolder",
+  Thumb = "SYNO.FileStation.Thumb",
+  DirSize = "SYNO.FileStation.DirSize",
+  MD5 = "SYNO.FileStation.MD5",
+  CheckPermission = "SYNO.FileStation.CheckPermission", 
+  Sharing = "SYNO.FileStation.Sharing",
+  CreateFolder = "SYNO.FileStation.CreateFolder",
+  Rename = "SYNO.FileStation.Rename",
+  CopyMove = "SYNO.FileStation.CopyMove",
+  Extract = "SYNO.FileStation.Extract",
+  Compress = "SYNO.FileStation.Compress",
+  BackgroundTask = "SYNO.FileStation.BackgroundTask",
 }
 
 /**
@@ -58,6 +73,9 @@ export enum VideoStationApi {
  * core api
  */
 export enum CoreApi {
+  /**
+   * package api
+   */
   Package = "SYNO.Core.Package",
   PackageControl = "SYNO.Core.Package.Control",
 

@@ -34,14 +34,12 @@ interface File {
   watched_ratio: number;
 }
 
-export type Additional = {
-  file: File[];
-  watched_ratio: number;
-};
-
 export type VideoStationAcrossLibraryResponse = SynologyApiResponse<{
   movie: Array<{
-    additional: Additional;
+    additional: {
+      file: File[];
+      watched_ratio: number;
+    };
     certificate: string;
     create_time: number;
     id: number;

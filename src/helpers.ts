@@ -1,4 +1,4 @@
-import ky from "ky";
+import Axios from "axios";
 import { GLOBAL_QUICK_CONNECT_URL, QUICK_CONNECT_PINGPANG_API } from "./constants";
 import { SynologyApiResponse } from "@/types";
 
@@ -58,7 +58,7 @@ export const getServerInfo = async (quickConnectId: string) => {
     get_ca_fingerprints: true,
     command: "get_server_info",
   };
-  const serverInfo = await ky.post<ServerInfo>(GLOBAL_QUICK_CONNECT_URL, { json: params }).json();
+  const serverInfo = (await Axios.post<ServerInfo>(GLOBAL_QUICK_CONNECT_URL, params)).data;
   if (!serverInfo?.service?.relay_ip && !serverInfo?.service?.relay_port) {
     const relayRequestParams = {
       version: 1,
@@ -67,9 +67,9 @@ export const getServerInfo = async (quickConnectId: string) => {
       platform: "web",
       command: "request_tunnel",
     };
-    const result = await ky
-      .post(`https://${serverInfo.env.control_host}/Serv.php`, { json: relayRequestParams })
-      .json();
+    const result = (
+      await Axios.post(`https://${serverInfo.env.control_host}/Serv.php`, relayRequestParams)
+    ).data;
     return getServersFromServerInfo(result);
   } else {
     return getServersFromServerInfo(serverInfo);
@@ -79,9 +79,8 @@ export const getServerInfo = async (quickConnectId: string) => {
 // pingpang
 export const pingpang = async (server: string) => {
   try {
-    const result = await ky
-      .get<SynologyApiResponse>(`${server}/${QUICK_CONNECT_PINGPANG_API}`)
-      .json();
+    const result = (await Axios.get<SynologyApiResponse>(`${server}/${QUICK_CONNECT_PINGPANG_API}`))
+      .data;
     if (result.success) {
       return true;
     } else {
