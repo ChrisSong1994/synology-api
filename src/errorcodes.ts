@@ -32,6 +32,11 @@ export const SYNOLOGY_ERROR_CODES = {
     421: "Device or resource busy",
     599: "No such task of the file operation",
 
+    // favorite
+    800: "A folder path of favorite folder is already added to user's favorites.",
+    801: "A name of favorite folder conflicts with an existing folder path in the user's favorites.",
+    802: "There are too many favorites to be added.",
+
     // copy move
     1000: "Failed to copy files/folders. More information in <errors> object.",
     1001: " Failed to move files/folders. More information in <errors> object.",

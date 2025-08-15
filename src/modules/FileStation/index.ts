@@ -4,7 +4,7 @@
 
 import { getInfo } from "./Info";
 import { getFileList, getShareFileList, getVirtualFolderList } from "./List";
-import { addFavorite, deleteFavorite, getFavoriteList, clearBrokenFavorite } from "./Favorite";
+import { addFavorite, deleteFavorite, getFavoriteList, clearBrokenFavorite ,editFavorite} from "./Favorite";
 import { startSearch, stopSearch, getSearchList ,cleanSearch} from "./Search";
 import { createFolder } from "./CreateFolder";
 import { getDownloadFile } from "./Download";
@@ -25,6 +25,7 @@ export const METHODS = {
   getFavoriteList,
   addFavorite,
   deleteFavorite,
+  editFavorite,
   clearBrokenFavorite,
   startSearch,
   stopSearch,

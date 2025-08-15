@@ -19,7 +19,7 @@ export async function createFolder(params: CreateFolderParams): Promise<CreateFo
   const { additional = [] } = params;
   const res = await this.run(FileStationApi.CreateFolder, {
     params: {
-      method: "create_folder",
+      method: "create",
       ...params,
       additional: JSON.stringify(additional),
     },

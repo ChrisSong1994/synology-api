@@ -6,7 +6,7 @@ export type FavoriteListParams = {
   sort_by?: string;
   sort_direction?: "ASC" | "DESC";
   additional?: string[];
-  status_filter?: string;
+  status_filter: "all" | "valid" | "broken";
 };
 
 export type FavoriteListResponse = SynologyApiResponse<{
@@ -17,11 +17,11 @@ export type FavoriteListResponse = SynologyApiResponse<{
 }>;
 
 export async function getFavoriteList(params: FavoriteListParams): Promise<FavoriteListResponse> {
-  const { additional = ["real_path", "size", "owner", "time"] } = params;
+  const { additional = ["real_path", "size", "owner", "time"], ...resetParams } = params;
   const res = await this.run(FileStationApi.Favorite, {
     params: {
       method: "list",
-      ...params,
+      ...resetParams,
       additional: JSON.stringify(additional),
     },
   });
@@ -66,11 +66,10 @@ export async function deleteFavorite(
   return res;
 }
 
-
 /**
- * clear_broken 
+ * clear_broken
  * Delete all broken statuses of favorites.
-*/
+ */
 export async function clearBrokenFavorite(): Promise<SynologyApiResponse<any>> {
   const res = await this.run(FileStationApi.Favorite, {
     params: {
@@ -79,3 +78,25 @@ export async function clearBrokenFavorite(): Promise<SynologyApiResponse<any>> {
   });
   return res;
 }
+
+
+
+export type EditFavoriteParams = {
+  path: string;  // A folder path starting with a shared folder is edited from a user's favorites.
+  name: string;  // New favorite name.
+}
+
+/**
+ * Edit a favorite name
+*/
+export async function editFavorite(params: EditFavoriteParams): Promise<SynologyApiResponse<any>> {
+  const res = await this.run(FileStationApi.Favorite, {
+    params: {
+      method: "edit",
+     ...params
+    },
+  });
+  return res;
+}
+
+
