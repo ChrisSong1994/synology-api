@@ -749,17 +749,16 @@ List all background tasks including copy, move, delete, compress and extract tas
 **Parameters**
 
 | Name             | Type     | Description                                                                                                                     |
-| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | "limit"          | number   | Limit the number of tasks returned. Default is 100.                                                                             |
 | "offset"         | number   | Offset the number of tasks returned. Default is 0.                                                                              |
 | "sort_by"        | string   | Sort by. Default is "taskid".                                                                                                   |
-| "sort_direction" | "ASC"    | "DESC"                                                                                                                          | Sort direction. Default is "ASC". |
+| "sort_direction" | "ASC"    \| "DESC"                                                                                                                          | Sort direction. Default is "ASC". |
 | "api_filter"     | string[] | API filter. Default is SYNO.FileStation.CopyMove,SYNO.FileStation.Delete,SYNO.FileStation.Extract or SYNO.FileStation.Compress. |
 
 **Returns**
 
 :::details
-
 ```json
 {
   "success": true,
@@ -791,6 +790,7 @@ List all background tasks including copy, move, delete, compress and extract tas
   }
 }
 ```
+:::
 
 ## clearFinishedBackgroundTasks
 
@@ -798,7 +798,7 @@ Delete all finished background tasks.
 
 **Parameters**
 | Name | Type | Description |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 |taskid | string | Task ID |
 
 **Returns**
