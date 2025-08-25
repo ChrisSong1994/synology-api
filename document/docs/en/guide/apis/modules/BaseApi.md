@@ -1,6 +1,29 @@
 # BaseApi
 
-## getInfo
+:::info
+Basic Api are instance methods, which mainly involve basic operations such as logging in and out, obtaining API lists, etc
+:::
+
+## connect 
+
+Connect to Synology server
+
+**Returns** 
+
+`true`: connected successfully 、
+`false`: failed to connect
+
+
+## disconnect
+
+Disconnect from Synology server
+
+**Returns**
+
+`true`: disconnected successfully 、
+`false`: failed to disconnect
+
+## getApiInfo
 
 Get all supported APIs
 
@@ -32,3 +55,19 @@ Get all supported APIs
 }
 ```
 :::
+
+
+## hasApi
+
+Check if the API is supported
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| apiName | string | API name |
+
+**Returns**
+
+`true`: supported、
+`false`: not supported
+

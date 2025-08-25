@@ -98,7 +98,7 @@ describe("SynologyApi FileStation", async () => {
 
   test("MD5", async () => {
     const result = await synologyApi.FileStation.startMD5Calc({
-      file_path: "/book/logo.png",
+      file_path: "/book/logo1.png",
     });
     expect(result.data.taskid).toBeDefined();
 
@@ -106,7 +106,29 @@ describe("SynologyApi FileStation", async () => {
       taskid: result.data.taskid,
     });
     if (!statusResult?.data?.finished) {
-      expect(statusResult.data.md5).toBeDefined();
+      expect(statusResult.data?.md5).toBeDefined();
+    }
+  });
+
+  test("getBackgroundTaskList", async () => {
+    const result = await synologyApi.FileStation.getBackgroundTaskList();
+    expect(result.data).toBeDefined();
+  });
+
+  test("clearFinishedBackgroundTasks", async () => {
+    const result = await synologyApi.FileStation.clearFinishedBackgroundTasks();
+    expect(result.success).toBeTruthy();
+  });
+
+  test("rename", async () => {
+    const fileRename = "test.svg";
+    const result = await synologyApi.FileStation.rename({
+      path: "/book/test1.svg",
+      name: fileRename,
+      additional: ["real_path", "size", "owner", "time", "perm", "type"],
+    });
+    if (result.success) {
+      expect(result.data?.files?.[0].name).toBe(fileRename);
     }
   });
 });

@@ -56,7 +56,6 @@ export class SynologyApi extends BaseSynologyApi {
     // if quickconnect id
     if (!isHttpUrl(this.server as string)) {
       this.server = await getServerInfo(this.server as string);
-      // reset base url
       this.baseUrl = `${this.server}/webapi/`;
     }
     try {
@@ -102,6 +101,13 @@ export class SynologyApi extends BaseSynologyApi {
       throw new Error("Not connected");
     }
     return Object.prototype.hasOwnProperty.call(this.apiInfo, apiName);
+  }
+
+  public getApiInfo() {
+    if (!this.isConnecting) {
+      throw new Error("Not connected");
+    }
+    return this.apiInfo;
   }
 
   protected async genRequestOptions(

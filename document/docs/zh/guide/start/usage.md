@@ -17,7 +17,7 @@ npm install @fett/synology-api
 import SynologyApi from '@fett/synology-api';
 
 const synologyApi = new SynologyApi(
-    server: "https://192.168.1.1:5001",
+  server: "https://192.168.1.1:5001", // or QuickConnectId
   username: "username",
   password: "password",
 );
