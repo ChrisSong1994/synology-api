@@ -247,8 +247,6 @@ searched files match all these criteria.
 | pattern        | string                   | Pattern to filter.             |
 | filetype       | "file" \| "dir" \| "all" | File type to filter.           |
 | recursive      | boolean                  | Whether to search recursively. |
-| search_content | boolean                  | Whether to search content.     |
-| search_type    | string                   | simple \| content              |
 
 **Returns**
 
@@ -748,13 +746,13 @@ Rename a file or folder.
 List all background tasks including copy, move, delete, compress and extract tasks.
 **Parameters**
 
-| Name             | Type     | Description                                                                                                                     |
-| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| "limit"          | number   | Limit the number of tasks returned. Default is 100.                                                                             |
-| "offset"         | number   | Offset the number of tasks returned. Default is 0.                                                                              |
-| "sort_by"        | string   | Sort by. Default is "taskid".                                                                                                   |
-| "sort_direction" | "ASC"    | "DESC"                                                                                                                          | Sort direction. Default is "ASC". |
-| "api_filter"     | string[] | API filter. Default is SYNO.FileStation.CopyMove,SYNO.FileStation.Delete,SYNO.FileStation.Extract or SYNO.FileStation.Compress. |
+| Name             | Type            | Description                                                                                                                     |
+| ---------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| "limit"          | number          | Limit the number of tasks returned. Default is 100.                                                                             |
+| "offset"         | number          | Offset the number of tasks returned. Default is 0.                                                                              |
+| "sort_by"        | string          | Sort by. Default is "taskid".                                                                                                   |
+| "sort_direction" | "ASC" \| "DESC" | Sort direction. Default is "ASC".                                                                                               |
+| "api_filter"     | string[]        | API filter. Default is SYNO.FileStation.CopyMove,SYNO.FileStation.Delete,SYNO.FileStation.Extract or SYNO.FileStation.Compress. |
 
 **Returns**
 
@@ -792,14 +790,362 @@ List all background tasks including copy, move, delete, compress and extract tas
 }
 ```
 
+:::
+
 ## clearFinishedBackgroundTasks
 
 Delete all finished background tasks.
 
 **Parameters**
 | Name | Type | Description |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 |taskid | string | Task ID |
 
 **Returns**
 None
+
+## uploadFile
+
+Upload a file to the specified directory.
+
+:::info
+In the browser, you can use the File object to upload files.
+In Node.js, you can use the fs path or Buffer to upload files.
+:::
+
+**Parameters**
+| Name | Type | Description |
+| --- | --- | --- |
+| path | string | The path of the directory where the file will be uploaded. |
+| file | File \| Buffer \| string | The file to be uploaded. |
+| overwrite | boolean | Whether to overwrite an existing file with the same name. Default is false. |
+|create_parents | boolean | Whether to create parent directories if they do not exist. Default is false. |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "blSkip": false,
+    "file": "xxxxx.jpg",
+    "pid": 23112,
+    "progress": 1
+  },
+  "success": true
+}
+```
+
+:::
+
+## startDeleteFile
+
+Start deleting file task
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| path | string \|Array<string> | One or more copied/moved file/folder path(s) starting with a shared folder, separated by commas "," and around brackets. |
+|accurate_progress | boolean | Whether to calculate the accurate progress. Default is true. |
+| recursive | boolean | Recursively delete files within a folder |
+|search_taskid| string | Search task ID|
+
+**Returns**
+
+:::details
+
+```json
+{
+  "success": true,
+"data":{"taskid": "FileStation_51D00B7912CDE0B0}
+}
+```
+
+:::
+
+## stopDeleteFile
+
+Stop a delete task.
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| taskid | string | Task ID |
+
+**Returns**
+None
+
+## getDeleteFileStatus
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| taskid | string | Task ID |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "success": true,
+  "data": {
+    "finished": false,
+    "path": "/video/1000",
+    "processed_num": 193,
+    "processing_path": "/video/1000/509",
+    "progress": 0.03199071809649467,
+    "total": 6033
+  }
+}
+```
+
+:::
+
+## getDownloadFile
+
+get download file url
+
+**Parameters**
+| Name | Type | Description |
+|----- | ---- | ----------- |
+| path | string | file path |
+|mode | "download" | "open" | download mode |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": "https://192.168.1.1:5001/entry.cgi?api=SYNO.FileStation.Download&method=download&version=2&path=%2Fvideo%2F1000%2F509%2F%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87.jpg&_sid=5",
+  "success": true
+}
+```
+
+:::
+
+## getSharingInfo
+
+Get information of a sharing link by the sharing link ID.
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| id | string | Sharing link ID |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "date_available": "0",
+    "date_expired": "0",
+    "has_password": false,
+    "id": "pHTBKQf9",
+    "isFolder": false,
+    "link_owner": "admin",
+    "name": "ITEMA_20448251-0.mp3",
+    "path": "/test/ITEMA_20448251-0.mp3",
+    "status": "valid",
+    "url": "http://myds.com:5000/fbsharing/pHTBKQf9"
+  },
+  "success": true
+}
+```
+
+:::
+
+## getSharingList
+
+List user's file sharing links.
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| offset | number | File sharing link offset |
+| limit | number | File sharing link limit |
+| sort_by | string | Sorting field |
+| sort_direction | "ASC" \| "DESC" | Sorting direction |
+| force_clean |boolean|. If set to false, the data will be retrieved from cache database rapidly. If set to true, all sharing information including sharing statuses and user name of sharing owner will be synchronized. It consumes some time|
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "links": [
+      {
+        "date_available": "0",
+        "date_expired": "0",
+        "has_password": false,
+        "id": "pHTBKQf9",
+        "isFolder": false,
+        "link_owner": "admin",
+        "name": "ITEMA_20448251-0.mp3",
+        "path": "/test/ITEMA_20448251-0.mp3",
+        "status": "valid",
+        "url": "http://myds.com:5000/fbsharing/pHTBKQf9"
+      }
+    ],
+    "offset": 0,
+    "total": 1
+  },
+  "success": true
+}
+```
+
+:::
+
+## createSharingLink
+
+Generate one or more sharing link(s) by file/folder path(s).
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| path | string \| Array<string> | File/folder path(s) |
+|password| string | Password for the sharing link |
+| date_expired | string | The expiration date for the sharing link, written in the format YYYYMM-DD. When set to 0 (default), the sharing link is permanent. |
+|date_available | string | The available date for the sharing link to become effective, written in the format YYYY-MM-DD. When set to 0 (default), the sharing link is valid immediately after creation|
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "links": [
+      {
+        "error": 0,
+        "id": "y4LmvpaX",
+        "path": "/test/ITEMA_20445972-0.mp3",
+        "qrcode": "iVBORw0KGgoAAAANSUh...",
+        "url": "http://myds.com:5000/fbsharing/y4LmvpaX"
+      }
+    ]
+  },
+  "success": true
+}
+```
+
+:::
+
+## deleteSharingLink
+
+Delete one or more sharing links
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| id | string \| Array<string> | Unique IDs of file sharing link(s) to be deleted, separated by commas "," and around the brackets |
+
+**Returns**
+None
+
+## clearInvalidSharingLink
+
+Remove all expired and broken sharing links.
+
+**Returns**
+None
+
+## editSharingLink
+
+Edit one or more sharing links
+
+**Parameters**
+
+| Name           | Type          | Description                                                                                                                                                                  |
+| -------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id             | Array<string> | Sharing link IDs                                                                                                                                                             |
+| password       | string        | Password for the sharing link                                                                                                                                                |
+| date_expired   | string        | The expiration date for the sharing link, written in the format YYYYMM-DD. When set to 0 (default), the sharing link is permanent.                                           |
+| date_available | string        | The available date for the sharing link to become effective, written in the format YYYY-MM-DD. When set to 0 (default), the sharing link is valid immediately after creation |
+
+**Returns**
+None
+
+## startCopyMove
+
+Start to copy/move files.
+
+path: string;
+dest_folder_path: string;
+overwrite?: boolean;
+remove_src?: boolean; // true : move filess/folders. false : copy files/folders
+search_taskid?: string;
+accurate_progress?: boolean;
+
+**Parameters**
+
+| Name              | Type    | Description                                            |
+| ----------------- | ------- | ------------------------------------------------------ |
+| path              | string  | The path of the file/folder to be copied/moved.        |
+| dest_folder_path  | string  | The destination folder path.                           |
+| overwrite         | boolean | Whether to overwrite the destination file/folder.      |
+| remove_src        | boolean | true : move filess/folders. false : copy files/folders |
+| search_taskid     | string  | The search task ID.                                    |
+| accurate_progress | boolean | Whether to get accurate progress.                      |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "taskid": "FileStation_51D00B7912CDE0B0"
+  },
+  "success": true
+}
+```
+
+:::
+
+## getCopyMoveStatus
+
+Get the status of a copy/move task
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| taskid | string | The task ID. |
+
+**Returns**
+
+:::details
+
+```json
+{
+  "data": {
+    "dest_folder_path": "/video/test",
+    "finished": false,
+    "path": "/video/test.avi",
+    "processed_size": 1057,
+    "progress": 0.01812258921563625,
+    "total": 58325
+  },
+  "success": true
+}
+```
+
+:::
+
+## stopCopyMove
+
+Stop a copy/move task.
+
+**Parameters**
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| taskid | string | The task ID. |
+
+**Returns**
+Nune

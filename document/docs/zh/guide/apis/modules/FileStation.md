@@ -246,8 +246,6 @@
 | pattern        | string                   | 过滤模式。           |
 | filetype       | "file" \| "dir" \| "all" | 要过滤的文件类型。   |
 | recursive      | boolean                  | 是否递归搜索。       |
-| search_content | boolean                  | 是否搜索内容。       |
-| search_type    | string                   | simple \| content    |
 
 **返回值**
 
@@ -802,3 +800,317 @@
 
 **Returns**
 None
+
+
+## startDeleteFile
+
+开始删除文件任务
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| path | string \|Array<string> | 一个或多个要删除的文件/文件夹路径，以共享文件夹开头，用逗号","分隔并用括号括起来。 |
+|accurate_progress | boolean | 是否计算准确的进度。默认为true。 |
+| recursive | boolean | 递归删除文件夹内的文件 |
+|search_taskid| string | 搜索任务ID|
+
+**返回值**
+
+:::details
+
+```json
+{
+  "success": true,
+"data":{"taskid": "FileStation_51D00B7912CDE0B0}
+}
+```
+
+:::
+
+## stopDeleteFile
+
+停止删除任务。
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| taskid | string | 任务ID |
+
+**返回值**
+无
+
+## getDeleteFileStatus
+
+获取删除文件任务的状态
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| taskid | string | 任务ID |
+
+**返回值**
+
+:::details
+
+```json
+{
+  "success": true,
+  "data": {
+    "finished": false,
+    "path": "/video/1000",
+    "processed_num": 193,
+    "processing_path": "/video/1000/509",
+    "progress": 0.03199071809649467,
+    "total": 6033
+  }
+}
+```
+
+:::
+
+## getDownloadFile
+
+获取下载文件URL
+
+**参数**
+| 名称 | 类型 | 描述 |
+|----- | ---- | ----------- |
+| path | string | 文件路径 |
+|mode | "download" \| "open" | 下载模式 |
+
+**返回值**
+
+:::details
+
+```json
+{
+  "data": "https://192.168.1.1:5001/entry.cgi?api=SYNO.FileStation.Download&method=download&version=2&path=%2Fvideo%2F1000%2F509%2F%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87.jpg&_sid=5",
+  "success": true
+}
+```
+
+:::
+
+## getSharingInfo
+
+通过分享链接ID获取分享链接的信息。
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| id | string | 分享链接ID |
+
+**返回值**
+
+:::details
+
+```json
+{
+  "data": {
+    "date_available": "0",
+    "date_expired": "0",
+    "has_password": false,
+    "id": "pHTBKQf9",
+    "isFolder": false,
+    "link_owner": "admin",
+    "name": "ITEMA_20448251-0.mp3",
+    "path": "/test/ITEMA_20448251-0.mp3",
+    "status": "valid",
+    "url": "http://myds.com:5000/fbsharing/pHTBKQf9"
+  },
+  "success": true
+}
+```
+
+:::
+
+## getSharingList
+
+列出用户的文件分享链接。
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| offset | number | 文件分享链接偏移量 |
+| limit | number | 文件分享链接限制 |
+| sort_by | string | 排序字段 |
+| sort_direction | "ASC" \| "DESC" | 排序方向 |
+| force_clean |boolean| 如果设置为false，将从缓存数据库中快速检索数据。如果设置为true，将同步所有分享信息，包括分享状态和分享所有者的用户名。这会消耗一些时间|
+
+**返回值**
+
+:::details
+
+```json
+{
+  "data": {
+    "links": [
+      {
+        "date_available": "0",
+        "date_expired": "0",
+        "has_password": false,
+        "id": "pHTBKQf9",
+        "isFolder": false,
+        "link_owner": "admin",
+        "name": "ITEMA_20448251-0.mp3",
+        "path": "/test/ITEMA_20448251-0.mp3",
+        "status": "valid",
+        "url": "http://myds.com:5000/fbsharing/pHTBKQf9"
+      }
+    ],
+    "offset": 0,
+    "total": 1
+  },
+  "success": true
+}
+```
+
+:::
+
+## createSharingLink
+
+通过文件/文件夹路径生成一个或多个分享链接。
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| path | string \| Array<string> | 文件/文件夹路径 |
+|password| string | 分享链接的密码 |
+| date_expired | string | 分享链接的过期日期，格式为YYYY-MM-DD。当设置为0（默认）时，分享链接是永久的。 |
+|date_available | string | 分享链接生效的可用日期，格式为YYYY-MM-DD。当设置为0（默认）时，分享链接在创建后立即有效|
+
+**返回值**
+
+:::details
+
+```json
+{
+  "data": {
+    "links": [
+      {
+        "error": 0,
+        "id": "y4LmvpaX",
+        "path": "/test/ITEMA_20445972-0.mp3",
+        "qrcode": "iVBORw0KGgoAAAANSUh...",
+        "url": "http://myds.com:5000/fbsharing/y4LmvpaX"
+      }
+    ]
+  },
+  "success": true
+}
+```
+
+:::
+
+## deleteSharingLink
+
+删除一个或多个分享链接
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| id | string \| Array<string> | 要删除的文件分享链接的唯一ID，用逗号","分隔并用括号括起来 |
+
+**返回值**
+无
+
+## clearInvalidSharingLink
+
+删除所有过期和损坏的分享链接。
+
+**返回值**
+无
+
+## editSharingLink
+
+编辑一个或多个分享链接
+
+**参数**
+
+| 名称           | 类型          | 描述                                                                                                                                                                  |
+| -------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id             | Array<string> | 分享链接ID                                                                                                                                                             |
+| password       | string        | 分享链接的密码                                                                                                                                                |
+| date_expired   | string        | 分享链接的过期日期，格式为YYYY-MM-DD。当设置为0（默认）时，分享链接是永久的。                                           |
+| date_available | string        | 分享链接生效的可用日期，格式为YYYY-MM-DD。当设置为0（默认）时，分享链接在创建后立即有效 |
+
+**返回值**
+无
+
+## startCopyMove
+
+开始复制/移动文件。
+
+path: string;
+dest_folder_path: string;
+overwrite?: boolean;
+remove_src?: boolean; // true：移动文件/文件夹。false：复制文件/文件夹
+search_taskid?: string;
+accurate_progress?: boolean;
+
+**参数**
+
+| 名称              | 类型    | 描述                                            |
+| ----------------- | ------- | ------------------------------------------------------ |
+| path              | string  | 要复制/移动的文件/文件夹的路径。        |
+| dest_folder_path  | string  | 目标文件夹路径。                           |
+| overwrite         | boolean | 是否覆盖目标文件/文件夹。      |
+| remove_src        | boolean | true：移动文件/文件夹。false：复制文件/文件夹 |
+| search_taskid     | string  | 搜索任务ID。                                    |
+| accurate_progress | boolean | 是否获取准确的进度。                      |
+
+**返回值**
+
+:::details
+
+```json
+{
+  "data": {
+    "taskid": "FileStation_51D00B7912CDE0B0"
+  },
+  "success": true
+}
+```
+
+:::
+
+## getCopyMoveStatus
+
+获取复制/移动任务的状态
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| taskid | string | 任务ID。 |
+
+**返回值**
+
+:::details
+
+```json
+{
+  "data": {
+    "dest_folder_path": "/video/test",
+    "finished": false,
+    "path": "/video/test.avi",
+    "processed_size": 1057,
+    "progress": 0.01812258921563625,
+    "total": 58325
+  },
+  "success": true
+}
+```
+
+:::
+
+## stopCopyMove
+
+停止复制/移动任务。
+
+**参数**
+| 名称 | 类型 | 描述 |
+| ---- | ---- | ----------- |
+| taskid | string | 任务ID。 |
+
+**返回值**
+无

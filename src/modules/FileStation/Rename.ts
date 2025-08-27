@@ -3,7 +3,7 @@ import { FileStationApi, SynologyApiResponse } from "@/types";
 export type RenameParams = {
   path: string;
   name: string;
-  additional: Array<"real_path" | "size" | "owner" | "time" | "perm" | "type">;
+  additional?: Array<"real_path" | "size" | "owner" | "time" | "perm" | "type">;
   /**
    * Optional. A unique ID for the search
    * task which is obtained from start
@@ -18,6 +18,20 @@ export type RenameResponse = SynologyApiResponse<{
     isdir: boolean;
     name: string;
     path: string;
+    additional?: {
+      type: string;
+      size: number;
+      time: {
+        atime: number;
+        mtime: number;
+        ctime: number;
+        btime: number;
+      };
+      real_path: string;
+      mount_point_type: string;
+      indexed: boolean;
+      description: Record<string, any>;
+    };
   }>;
 }>;
 
@@ -29,6 +43,7 @@ export async function rename(params: RenameParams): Promise<RenameResponse> {
     params: {
       method: "rename",
       ...params,
+      additional: JSON.stringify(params.additional??[]),
     },
   });
   return res;

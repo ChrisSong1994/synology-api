@@ -2,12 +2,10 @@ import { FileStationApi, SynologyApiResponse } from "@/types";
 import { FileListItem } from "./List";
 
 export type StartSearchParams = {
-  folder_path: string;
+  folder_path?: string;
   filetype?: "file" | "dir" | "all";
   recursive?: boolean;
-  pattern: string; //  pattern to search.
-  search_content: boolean;
-  search_type: string; // simple | content
+  pattern?: string; //  pattern to search.
 };
 
 export type StartSearchResponse = SynologyApiResponse<{
@@ -15,14 +13,12 @@ export type StartSearchResponse = SynologyApiResponse<{
   taskid: string;
 }>;
 export async function startSearch(params: StartSearchParams): Promise<StartSearchResponse> {
-  const { recursive = true, search_content = false, search_type = "simple" } = params;
+  const { recursive = true } = params;
 
   return await this.run(FileStationApi.Search, {
     params: {
       method: "start",
       recursive: recursive,
-      search_content: search_content,
-      search_type: search_type,
       ...params,
     },
   });
@@ -43,6 +39,18 @@ export type SearchListParams = {
   limit?: number;
   offset?: number;
   additional?: string[];
+  sort_by?:
+    | "name"
+    | "size"
+    | "user"
+    | "group"
+    | "mtime"
+    | "atime"
+    | "ctime"
+    | "crtime"
+    | "posix"
+    | "type";
+  sort_direction?: "ASC" | "DESC";
 };
 
 export type SearchListResponse = SynologyApiResponse<{
@@ -57,7 +65,10 @@ export async function getSearchList(params: SearchListParams): Promise<SearchLis
     filetype,
     limit = 1000,
     offset = 0,
+    sort_by = "name",
     additional = ["real_path", "size", "owner", "time", "perm", "type"],
+    sort_direction = "ASC",
+    ...resetParams
   } = params;
   const res = await this.run(FileStationApi.Search, {
     params: {
@@ -66,8 +77,10 @@ export async function getSearchList(params: SearchListParams): Promise<SearchLis
       filetype,
       limit,
       offset,
-      ...params,
+      sort_by,
+      sort_direction,
       additional: JSON.stringify(additional),
+      ...resetParams,
     },
   });
 
