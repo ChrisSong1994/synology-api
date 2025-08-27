@@ -1,7 +1,6 @@
 // reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
 import Axios, { AxiosRequestConfig } from "axios";
-import { HttpProxyAgent } from "http-proxy-agent";
-import { HttpsProxyAgent } from "https-proxy-agent";
+import { isNode } from "@/utils";
 
 import { BaseSynologyApi } from "./modules";
 import { isHttpUrl, getApiKey, isUndfined } from "./utils";
@@ -147,17 +146,21 @@ export class SynologyApi extends BaseSynologyApi {
       },
       data: options.data ?? null,
     };
-    // https agent
-    if (this.agent?.https) {
-      requestOptions.httpsAgent = new HttpsProxyAgent(
-        `https://${this.agent.https.host}:${this.agent.https.port}`
-      );
-    }
-    // http agent
-    if (this.agent?.http) {
-      requestOptions.httpAgent = new HttpProxyAgent(
-        `http://${this.agent.http.host}:${this.agent.http.port}`
-      );
+    // https agent for node
+    if (isNode) {
+      if (this.agent?.https) {
+        const HttpsProxyAgent = require("https-proxy-agent").HttpsProxyAgent;
+        requestOptions.httpsAgent = new HttpsProxyAgent(
+          `https://${this.agent.https.host}:${this.agent.https.port}`
+        );
+      }
+      // http agent
+      if (this.agent?.http) {
+        const HttpProxyAgent = require("http-proxy-agent").HttpProxyAgent;
+        requestOptions.httpAgent = new HttpProxyAgent(
+          `http://${this.agent.http.host}:${this.agent.http.port}`
+        );
+      }
     }
 
     return requestOptions;

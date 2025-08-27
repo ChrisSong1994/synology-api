@@ -5,6 +5,7 @@ export const createSynologyApi = () => {
     server: process.env.SYNOLOGY_SERVER as string,
     username: process.env.SYNOLOGY_USER as string,
     password: process.env.SYNOLOGY_PASSWORD as string,
+    // agent for testing
     // agent: {
     //   http: {
     //     host: "localhost",
@@ -14,14 +15,4 @@ export const createSynologyApi = () => {
   });
 
   return synologyApi;
-};
-
-export const createTestFile = (name = "test.txt", content = "hello world", type = "text/plain") => {
-  const blob = new Blob([content], { type });
-  const file = new File([blob], name, {
-    type: "text/plain",
-    lastModified: Date.now(),
-  });
-
-  return file;
 };

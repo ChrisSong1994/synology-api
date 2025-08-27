@@ -56,15 +56,6 @@ describe("SynologyApi FileStation", async () => {
     expect(result.data).toMatch(/^https?:\/\//);
   });
 
-  test.skip("uploadFile", async () => {
-    // const testFile = createTestFile();
-    const result = await synologyApi.fs.uploadFile({
-      path: "/book",
-      file: "/Users/songjun/Workspace/github/node-synology-api/test/Docker.test.ts",
-    });
-    expect(result.data).toBeDefined();
-  });
-
   test.skip("getVirtualFolderList", async () => {
     const result = await synologyApi.FileStation.getVirtualFolderList();
     expect(result.data.folders.length).toBeGreaterThanOrEqual(0);

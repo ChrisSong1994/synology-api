@@ -1,15 +1,42 @@
 import { FileStationApi, SynologyApiResponse } from "@/types";
 
 export type DeleteFileParams = {
+  /**
+   * One or more copied/moved
+file/folder path(s) starting with a
+shared folder, separated by
+commas "," and around brackets.
+  */
   path: string | string[];
+  /**
+ *  true : calculate the
+progress by each moved/copied file
+within sub-folder. false : calculate
+the progress by files which you give
+in path parameters. This calculates
+the progr
+*/
   accurate_progress?: boolean;
+  /**
+ *  true : delete
+recursively. false : delete
+non-empty folder.
+ */
+  recursive?: boolean;
+  /**
+   * A unique ID for the search
+task which is obtained from start
+method. It's used to delete the file in
+the search result
+  */
+  search_taskid?: string;
 };
 
 export type DeleteFileResponse = SynologyApiResponse<{
   taskid: string;
 }>;
 export async function startDeleteFile(params: DeleteFileParams): Promise<DeleteFileResponse> {
-  const { accurate_progress = true, path } = params;
+  const { accurate_progress = true, recursive = true, path } = params;
   const paths = Array.isArray(path) ? path : [path];
 
   const res = await this.run(FileStationApi.Delete, {
@@ -17,6 +44,8 @@ export async function startDeleteFile(params: DeleteFileParams): Promise<DeleteF
       method: "start",
       path: JSON.stringify(paths),
       accurate_progress,
+      recursive,
+      search_taskid: params?.search_taskid,
     },
   });
   return res;

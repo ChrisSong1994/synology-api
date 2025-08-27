@@ -76,10 +76,12 @@ export type CreateSharingLinkResponse = SynologyApiResponse<{
 export async function createSharingLink(
   params: CreateSharingLinkParams
 ): Promise<CreateSharingLinkResponse> {
+  const { path, ...resetParams } = params;
   const res = await this.run(FileStationApi.Sharing, {
     params: {
       method: "create",
-      ...params,
+      path: Array.isArray(path) ? path.join(",") : path,
+      ...resetParams,
     },
   });
   return res;
@@ -89,15 +91,16 @@ export async function createSharingLink(
  * Delete one or more sharing links.
  */
 export type DeleteSharingLinkParams = {
-  ids: string[];
+  id: string | string[];
 };
-export async function deleteSharingLinks(
+export async function deleteSharingLink(
   params: DeleteSharingLinkParams
 ): Promise<SynologyApiResponse<any>> {
+  const { id } = params;
   const res = await this.run(FileStationApi.Sharing, {
     params: {
       method: "delete",
-      id: params.ids.join(","),
+      id: Array.isArray(id) ? id.join(",") : id,
     },
   });
   return res;
@@ -106,10 +109,10 @@ export async function deleteSharingLinks(
 /**
  * Remove all expired and broken sharing links.
  */
-export async function clearInvalidSharingLinks(): Promise<SynologyApiResponse<any>> {
+export async function clearInvalidSharingLink(): Promise<SynologyApiResponse<any>> {
   const res = await this.run(FileStationApi.Sharing, {
     params: {
-      method: "claear_invalid",
+      method: "clear_invalid",
     },
   });
   return res;
@@ -119,7 +122,7 @@ export async function clearInvalidSharingLinks(): Promise<SynologyApiResponse<an
  * Edit sharing link(s)
  * */
 export type EditSharingLinkParams = {
-  id: string;
+  id: string | string[];
   password?: string;
   date_expired?: string;
   date_available?: string;
@@ -127,10 +130,12 @@ export type EditSharingLinkParams = {
 export async function editSharingLink(
   params: EditSharingLinkParams
 ): Promise<SynologyApiResponse<any>> {
+  const { id, ...resetParams } = params;
   const res = await this.run(FileStationApi.Sharing, {
     params: {
       method: "edit",
-      ...params,
+      id: Array.isArray(id) ? id.join(",") : id,
+      ...resetParams,
     },
   });
   return res;

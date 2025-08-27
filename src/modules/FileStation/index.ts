@@ -4,8 +4,14 @@
 
 import { getInfo } from "./Info";
 import { getFileList, getShareFileList, getVirtualFolderList } from "./List";
-import { addFavorite, deleteFavorite, getFavoriteList, clearBrokenFavorite ,editFavorite} from "./Favorite";
-import { startSearch, stopSearch, getSearchList ,cleanSearch} from "./Search";
+import {
+  addFavorite,
+  deleteFavorite,
+  getFavoriteList,
+  clearBrokenFavorite,
+  editFavorite,
+} from "./Favorite";
+import { startSearch, stopSearch, getSearchList, cleanSearch } from "./Search";
 import { createFolder } from "./CreateFolder";
 import { getDownloadFile } from "./Download";
 import { stopDeleteFile, startDeleteFile, getDeleteFileStatus } from "./Delete";
@@ -15,6 +21,15 @@ import { startDirSizeCalc, stopDirSizeCalc, getDirSizeCalcStatus } from "./DirSi
 import { startMD5Calc, stopMD5Calc, getMD5CalcStatus } from "./MD5";
 import { checkPermission } from "./CheckPermission";
 import { rename } from "./Rename";
+import { startCopyMove, getCopyMoveStatus, stopCopyMove } from "./CopyMove";
+import {
+  getSharingInfo,
+  getSharingList,
+  createSharingLink,
+  deleteSharingLink,
+  editSharingLink,
+  clearInvalidSharingLink,
+} from "./Sharing";
 import { getBackgroundTaskList, clearFinishedBackgroundTasks } from "./BackgroundTask";
 // methods
 export const METHODS = {
@@ -48,6 +63,15 @@ export const METHODS = {
   rename,
   clearFinishedBackgroundTasks,
   getBackgroundTaskList,
+  getSharingInfo,
+  getSharingList,
+  createSharingLink,
+  deleteSharingLink,
+  editSharingLink,
+  clearInvalidSharingLink,
+  startCopyMove,
+  getCopyMoveStatus,
+  stopCopyMove,
 };
 
 // name space
