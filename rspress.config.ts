@@ -2,14 +2,16 @@ import * as path from "node:path";
 import { defineConfig } from "rspress/config";
 
 const BASE_PATH = process.env.BASE_PATH ? process.env.BASE_PATH : "/";
+const pkg = require("../package.json");
 
 export default defineConfig({
   root: path.join(__dirname, "document/docs"),
   base: BASE_PATH,
   title: "Javascript Synology Api Docs",
+  description: "synology api for js",
   icon: "/icon.png",
   logo: "/logo.png",
-  logoText: "Javascript Synology Api",
+  logoText: `@fett/synology-api @${pkg.version}`,
   globalStyles: path.join(__dirname, "document/styles/index.css"),
   lang: "en",
   locales: [
