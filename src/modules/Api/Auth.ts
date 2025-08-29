@@ -1,9 +1,8 @@
 import Axios from "axios";
 
 import { SynoApi, SynologyApiResponse } from "@/types";
-import { SynologyApi } from "@/core";
 
-export async function login(core: SynologyApi) {
+export async function login(core: any) {
   const params = {
     method: "login",
     api: SynoApi.Auth,
@@ -25,7 +24,7 @@ export async function login(core: SynologyApi) {
   return result;
 }
 
-export async function logout(core: SynologyApi) {
+export async function logout(core: any) {
   const params = {
     api: SynoApi.Auth,
     version: 6,

@@ -1,5 +1,5 @@
 import { METHODS as BASE_METHODS } from "./index.base";
-import { uploadFile } from "./Upload";
+import { uploadFile } from "./Upload.rn";
 
 export const METHODS = {
   ...BASE_METHODS,

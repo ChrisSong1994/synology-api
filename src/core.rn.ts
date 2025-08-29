@@ -1,25 +1,18 @@
 // reference: https://kb.synology.com/zh-tw/DSM/tutorial/What_websites_does_Synology_NAS_connect_to_when_running_services_or_updating_software
 import Axios, { AxiosRequestConfig } from "axios";
-import { isNode } from "@/utils";
 
-import { BaseModuleSynologyApi } from "./modules";
+import { RnBaseModuleSynologyApi } from "./modules/index.rn";
 import { isHttpUrl, getApiKey, isUndfined } from "./utils";
 import { getServerInfo } from "./helpers";
 import { login, logout, getApiInfo } from "./modules/Api";
 import { resWithErrorCode } from "./errorcodes";
 import { QuickConnectServerType } from "@/types";
 
-interface Agent {
-  http?: { host: string; port: number };
-  https?: { host: string; port: number };
-}
-
 export interface SynologyApiOptions {
   server: string;
   username: string;
   password: string;
   quickConnectServerType?: QuickConnectServerType; // quick connect server type
-  agent?: Agent; // http/https proxy agent
 }
 
 export interface SynologyApiInfoData {
@@ -36,11 +29,10 @@ export interface SynologyApiAuthInfo {
   synotoken: string;
 }
 
-export class SynologyApi extends BaseModuleSynologyApi {
+export class RnSynologyApi extends RnBaseModuleSynologyApi {
   server: string;
   username: string;
   password: string;
-  agent?: Agent;
   baseUrl: string;
   isConnecting: boolean = false;
   quickConnectServerType?: QuickConnectServerType;
@@ -53,7 +45,6 @@ export class SynologyApi extends BaseModuleSynologyApi {
     this.password = options.password;
     this.quickConnectServerType = options.quickConnectServerType ?? QuickConnectServerType.proxy;
     this.baseUrl = `${this.server}/webapi/`;
-    this.agent = options.agent ?? undefined;
   }
 
   public async connect() {
@@ -151,22 +142,6 @@ export class SynologyApi extends BaseModuleSynologyApi {
       },
       data: options.data ?? null,
     };
-    // https agent for node
-    if (isNode) {
-      if (this.agent?.https) {
-        const { HttpsProxyAgent } = require("https-proxy-agent");
-        requestOptions.httpsAgent = new HttpsProxyAgent(
-          `https://${this.agent.https.host}:${this.agent.https.port}`
-        );
-      }
-      // http agent
-      if (this.agent?.http) {
-        const { HttpProxyAgent } = require("http-proxy-agent");
-        requestOptions.httpAgent = new HttpProxyAgent(
-          `http://${this.agent.http.host}:${this.agent.http.port}`
-        );
-      }
-    }
 
     return requestOptions;
   }
