@@ -5,6 +5,7 @@ export const createSynologyApi = () => {
     server: process.env.SYNOLOGY_SERVER as string,
     username: process.env.SYNOLOGY_USER as string,
     password: process.env.SYNOLOGY_PASSWORD as string,
+    quickConnectServerType: process.env.SYNOLOGY_QUICK_CONNECT_SERVER_TYPE,
     // agent for testing
     // agent: {
     //   http: {

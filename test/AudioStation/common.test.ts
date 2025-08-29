@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { createSynologyApi } from "./helper";
+import { createSynologyApi } from "../helper";
 
 describe("SynologyApi AudioStation", async () => {
   const synologyApi = createSynologyApi();
