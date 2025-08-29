@@ -7,12 +7,12 @@ export const createSynologyApi = () => {
     password: process.env.SYNOLOGY_PASSWORD as string,
     quickConnectServerType: process.env.SYNOLOGY_QUICK_CONNECT_SERVER_TYPE,
     // agent for testing
-    // agent: {
-    //   http: {
-    //     host: "localhost",
-    //     port: 8888,
-    //   },
-    // },
+    agent: {
+      http: {
+        host: "localhost",
+        port: 8888,
+      },
+    },
   });
 
   return synologyApi;

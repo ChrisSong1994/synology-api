@@ -1,12 +1,23 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "synology api for nodejs",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "bin": {
     "synology": "./lib/cli/index.js",
     "syno": "./lib/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js",
+      "react-native": "./lib/index.rn.js"
+    },
+    "./react-native": {
+      "import": "./lib/index.rn.js",
+      "require": "./lib/index.rn.js"
+    }
   },
   "files": [
     "lib",

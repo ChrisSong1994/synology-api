@@ -1,9 +1,8 @@
 import Axios from "axios";
 
 import { SynoApi, SynologyApiResponse } from "@/types";
-import { SynologyApi } from "@/core";
 
-export async function getApiInfo(core: SynologyApi) {
+export async function getApiInfo(core: any) {
   const params = {
     api: SynoApi.Info,
     version: 1,

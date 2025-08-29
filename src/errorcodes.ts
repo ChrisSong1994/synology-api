@@ -1,4 +1,4 @@
-import { SynologyApiKeysMap } from "@/modules";
+
 import { SynologyApiResponse } from "@/types";
 import { isUndfined } from "./utils";
 
@@ -7,7 +7,7 @@ const CODE_UNKNOWN = 9999;
 export const COMMON_CODES = "COMMON_CODES";
 
 export const SYNOLOGY_ERROR_CODES = {
-  [SynologyApiKeysMap.FileStation]: {
+  ['FileStation']: {
     400: "Invalid parameter of file operation",
     401: "Unknown error of file operation",
     402: "System is too busy",
@@ -55,7 +55,7 @@ export const SYNOLOGY_ERROR_CODES = {
     2001: "Cannot generate sharing link because too many sharing links exist.",
     2002: " Failed to access sharing links.",
   },
-  [SynologyApiKeysMap.AudioStation]: {},
+  ['AudioStation']: {},
   ["COMMON_CODES"]: {
     [CODE_SUCCESS]: "Success",
     100: "Unknown error",

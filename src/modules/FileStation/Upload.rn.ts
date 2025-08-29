@@ -1,5 +1,4 @@
 import { AxiosProgressEvent } from "axios";
-import { isNode } from "@/utils";
 import { createFormData, getFormDataHeaders } from "@/utils";
 import { FileStationApi, SynologyApiResponse } from "@/types";
 
@@ -35,27 +34,14 @@ export async function uploadFile(params: UploadFileParams) {
   formData.append("path", path);
   formData.append("overwrite", overwrite);
   formData.append("create_parents", String(create_parents));
-
-  if (isNode) {
-    let fileContent;
-    let fileName = "";
-    if (typeof file === "string") {
-      fileName = require("path").basename(file);
-      fileContent = await require("path").readFile(file);
-    }
-    formData.append("file", fileContent, {
-      filename: fileName,
-      contentType: "application/octet-stream", // 可根据文件类型修改
-    });
-  } else {
-    // for browser environment
-    formData.append("file", file);
-  }
+  formData.append("file", file);
 
   const res = this.run(FileStationApi.Upload, {
     method: "post",
     data: formData,
-    headers: getFormDataHeaders(formData),
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
   return res;
 }

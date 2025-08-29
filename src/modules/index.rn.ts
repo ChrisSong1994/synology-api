@@ -1,9 +1,10 @@
 import * as AudioStation from "./AudioStation";
-import * as FileStation from "./FileStation";
+import * as FileStation from "./FileStation/index.rn";
 import * as VideoStation from "./VideoStation";
 import * as Auth from "./Auth";
 import * as Core from "./Core";
 import * as Docker from "./Docker";
+
 import { BindMethods } from "../decorators";
 
 type EnumFromArray<T extends string[]> = {
@@ -33,7 +34,7 @@ export const SynologyApiMethods = SynologyApiModules.reduce((acc, module) => {
 }, {});
 
 @BindMethods(SynologyApiMethods)
-export class BaseModuleSynologyApi {
+export class RnBaseModuleSynologyApi {
   [AudioStation.KEY]: AudioStation.TMethods;
   [AudioStation.ALIAS_KEY]: AudioStation.TMethods;
   [FileStation.KEY]: FileStation.TMethods;
