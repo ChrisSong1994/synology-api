@@ -7,15 +7,18 @@ import { isHttpUrl, getApiKey, isUndfined } from "./utils";
 import { getServerInfo } from "./helpers";
 import { login, logout, getApiInfo } from "./modules/Api";
 import { resWithErrorCode } from "./errorcodes";
+import { QuickConnectServerType } from "@/types";
 
 interface Agent {
   http?: { host: string; port: number };
   https?: { host: string; port: number };
 }
+
 export interface SynologyApiOptions {
   server: string;
   username: string;
   password: string;
+  quickConnectServerType?: QuickConnectServerType; // quick connect server type
   agent?: Agent; // http/https proxy agent
 }
 
@@ -40,6 +43,7 @@ export class SynologyApi extends BaseSynologyApi {
   agent?: Agent;
   baseUrl: string;
   isConnecting: boolean = false;
+  quickConnectServerType?: QuickConnectServerType;
   private authInfo: SynologyApiAuthInfo | null = null;
   private apiInfo: Record<string, SynologyApiInfoData> = {};
   constructor(options: SynologyApiOptions) {
@@ -47,6 +51,7 @@ export class SynologyApi extends BaseSynologyApi {
     this.server = options.server;
     this.username = options.username;
     this.password = options.password;
+    this.quickConnectServerType = options.quickConnectServerType ?? QuickConnectServerType.proxy;
     this.baseUrl = `${this.server}/webapi/`;
     this.agent = options.agent ?? undefined;
   }
@@ -54,7 +59,7 @@ export class SynologyApi extends BaseSynologyApi {
   public async connect() {
     // if quickconnect id
     if (!isHttpUrl(this.server as string)) {
-      this.server = await getServerInfo(this.server as string);
+      this.server = await getServerInfo(this.server as string, this.quickConnectServerType);
       this.baseUrl = `${this.server}/webapi/`;
     }
     try {

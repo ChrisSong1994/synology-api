@@ -5,6 +5,40 @@
 目前，该项目仅在 Synology DSM 7.1.1 版本上进行过测试，你可以尝试使用，但我无法保证它能在你的 Synology NAS 上正常运行。
 :::
 
+## 配置项
+
+`SynologyApi` 实例化参数说明
+
+| 配置项                 | 类型                | 说明                                                      | 默认值 |
+| :----------------------: | :------------------: | :--------------------------------------------------------- | :----: |
+| server                 | string              | Synology NAS 地址 或者 QuickConnectId                     |   -    |
+| quickConnectServerType | proxy \| wan \| lan | 使用 QuickConnect ID 连接时，选择 QuickConnect 服务器类型 | proxy  |
+| username               | string              | Synology NAS 用户名                                       | -      |
+| password               | string              | Synology NAS 密码                                         | -      |
+
+你可以选择使用 QuickConnect ID 或者 Synology 服务器地址连接 Synology 服务器，例如：
+
+### QuickConnect ID 连接
+
+```js
+const synologyApi = new SynologyApi({
+  server: "QuickConnectId",
+  quickConnectServerType: "lan", // my server is in LAN
+  username: "username",
+  password: "password",
+});
+```
+
+### Synology 服务器地址
+
+```js
+const synologyApi = new SynologyApi({
+  server: "https://192.168.1.1:5001",
+  username: "username",
+  password: "password",
+});
+```
+
 ## 在浏览器或 Node.js 中使用
 
 ```bash

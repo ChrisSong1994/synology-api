@@ -7,7 +7,9 @@
 
 ⚠️ The project is under development ...
 
-Synology Api Javascript wrapper, can be used in Browser、CLI or Nodejs to interact with Synology NAS.
+**API Document:** [chrissong1994.github.io/synology-api/](chrissong1994.github.io/synology-api/)
+
+Synology Api Javascript wrapper can be used in Browser、CLI or Nodejs to interact with Synology NAS.
 You can use domain or ip address, also supports Synology Quick Connect connect Synology server.
 All apis from [https://kb.synology.cn](https://kb.synology.cn/zh-cn/search?query=API&services%5B%5D=File_Station)
 
@@ -17,7 +19,45 @@ All apis from [https://kb.synology.cn](https://kb.synology.cn/zh-cn/search?query
 npm install @fett/synology-api
 ```
 
+## Configuration
+
+`SynologyApi` instance parameters description
+
+|       Parameter        |        Type         | Description                                                  | Default |
+| :--------------------: | :-----------------: | :----------------------------------------------------------- | :-----: |
+|         server         |       string        | Synology NAS address or QuickConnectId                       |    -    |
+| quickConnectServerType | proxy \| wan \| lan | QuickConnect server type when connecting via QuickConnect ID |  proxy  |
+|        username        |       string        | Synology NAS username                                        |    -    |
+|        password        |       string        | Synology NAS password                                        |    -    |
+
+You can choose to connect to the Synology server using either a **QuickConnectId** or **Synology server address**, for example:
+
+### Connect via QuickConnectId
+
+```js
+const synologyApi = new SynologyApi({
+  server: "QuickConnectId",
+  quickConnectServerType: "lan", // my server is in LAN
+  username: "username",
+  password: "password",
+});
+```
+
+### Connect via Synology server address
+
+```js
+const synologyApi = new SynologyApi({
+  server: "https://192.168.1.1:5001",
+  username: "username",
+  password: "password",
+});
+```
+
 ## Use In Browser or Node.js
+
+```bash
+npm install @fett/synology-api
+```
 
 First you need to confirm that you can access across domains,for example in the React Native environment
 
@@ -25,13 +65,12 @@ First you need to confirm that you can access across domains,for example in the 
 import SynologyApi from '@fett/synology-api';
 
 const synologyApi = new SynologyApi(
-    server: "https://192.168.1.1:5001",
+  server: "https://192.168.1.1:5001", // or QuickConnectId
   username: "username",
   password: "password",
 );
 
 const info = await synologyApi.FileStation.getInfo();
-console.log(info);
 ```
 
 ## Use In CLI
@@ -70,13 +109,13 @@ Commands:
 add a connect configuration
 
 ```bash
-syno config add newConnetionName --server=https://192.168.1.1:5001 --username=admin --password=password
+syno config add ConnetionName --server=https://192.168.1.1:5001 --username=admin --password=password
 ```
 
 then you can use it and exec command
 
 ```bash
-syno config use newConnetionName
+syno config use ConnetionName
 
 syno fs getInfo --pretty # print file system info
 

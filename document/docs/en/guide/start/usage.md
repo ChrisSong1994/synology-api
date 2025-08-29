@@ -5,6 +5,40 @@ First, make sure that you are using Node.js version of no less than 20.
 Currently, this project is only tested for Synology DSM 7.1.1，you can try it. but I can't guarantee that it will work for your Synology NAS.
 :::
 
+## Configuration
+
+`SynologyApi` instance parameters description
+
+|       Parameter        |        Type         | Description                                                  | Default |
+| :--------------------: | :-----------------: | :----------------------------------------------------------- | :-----: |
+|         server         |       string        | Synology NAS address or QuickConnectId                       |    -    |
+| quickConnectServerType | proxy \| wan \| lan | QuickConnect server type when connecting via QuickConnect ID |  proxy  |
+|        username        |       string        | Synology NAS username                                        |    -    |
+|        password        |       string        | Synology NAS password                                        |    -    |
+
+You can choose to connect to the Synology server using either a **QuickConnectId** or **Synology server address**, for example:
+
+### Connect via QuickConnectId
+
+```js
+const synologyApi = new SynologyApi({
+  server: "QuickConnectId",
+  quickConnectServerType: "lan", // my server is in LAN
+  username: "username",
+  password: "password",
+});
+```
+
+### Connect via Synology server address
+
+```js
+const synologyApi = new SynologyApi({
+  server: "https://192.168.1.1:5001",
+  username: "username",
+  password: "password",
+});
+```
+
 ## Use In Browser or Node.js
 
 ```bash

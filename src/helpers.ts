@@ -1,34 +1,42 @@
 import Axios from "axios";
 import { GLOBAL_QUICK_CONNECT_URL, QUICK_CONNECT_PINGPANG_API } from "./constants";
-import { SynologyApiResponse } from "@/types";
+import { SynologyApiResponse, QuickConnectServerType } from "@/types";
 
-const getServersFromServerInfo = async (serverInfo) => {
-  // first lan ip
-  // lan ip
-  if (serverInfo?.server?.interface?.[0]) {
-    const server = `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
-    const res = await pingpang(server);
-    if (res) {
-      return server;
-    }
+const getServersFromServerInfo = async (serverInfo, quickConnectServerType) => {
+  const serverMap: Record<QuickConnectServerType, string | undefined> = {
+    [QuickConnectServerType.proxy]: undefined,
+    [QuickConnectServerType.lan]: undefined,
+    [QuickConnectServerType.wan]: undefined,
+  };
+  // proxy server
+  if (serverInfo?.service?.relay_ip) {
+    serverMap[QuickConnectServerType.proxy] =
+      `http://${serverInfo.service.relay_ip}:${serverInfo.service.relay_port}`;
   }
 
   // WAN IP
   if (serverInfo?.server?.external?.ip) {
-    const server = `http://${serverInfo.server.external.ip}:${serverInfo.service.port}`;
-    const res = await pingpang(server);
-    if (res) {
-      return server;
-    }
+    serverMap[QuickConnectServerType.wan] =
+      `http://${serverInfo.server.external.ip}:${serverInfo.service.port}`;
   }
 
-  // proxy server
-  if (serverInfo?.service?.relay_ip) {
-    const server = `http://${serverInfo.service.relay_ip}:${serverInfo.service.relay_port}`;
-    const res = await pingpang(server);
-    if (res) {
-      return server;
-    }
+  // lan ip
+  if (serverInfo?.server?.interface?.[0]) {
+    serverMap[QuickConnectServerType.lan] =
+      `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
+  }
+
+  const server = serverMap[quickConnectServerType];
+  
+  if (!server) {
+    return Promise.reject(`${quickConnectServerType} server not found`);
+  }
+  const res = await pingpang(server);
+  if (!res) {
+    return Promise.reject(`${server} server can not connect`);
+  }
+  if (res) {
+    return server;
   }
 };
 
@@ -50,7 +58,10 @@ export type ServerInfo = {
     relay_port: number;
   };
 };
-export const getServerInfo = async (quickConnectId: string) => {
+export const getServerInfo = async (
+  quickConnectId: string,
+  quickConnectServerType: QuickConnectServerType
+) => {
   const params = {
     version: 1,
     id: "dsm",
@@ -67,12 +78,13 @@ export const getServerInfo = async (quickConnectId: string) => {
       platform: "web",
       command: "request_tunnel",
     };
+    // get replay tunnel
     const result = (
       await Axios.post(`https://${serverInfo.env.control_host}/Serv.php`, relayRequestParams)
     ).data;
-    return getServersFromServerInfo(result);
+    return getServersFromServerInfo(result, quickConnectServerType);
   } else {
-    return getServersFromServerInfo(serverInfo);
+    return getServersFromServerInfo(serverInfo, quickConnectServerType);
   }
 };
 
