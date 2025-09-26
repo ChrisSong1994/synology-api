@@ -117,7 +117,7 @@ then you can use it and exec command
 ```bash
 syno config use ConnetionName
 
-syno fs getInfo --pretty # print file system info
+syno fs getInfo --beautify # print file system info
 
 ```
 

@@ -103,6 +103,8 @@ syno config add ConnetionName --server=https://192.168.1.1:5001 --username=admin
 ```bash
 syno config use ConnetionName
 
-syno fs getInfo --pretty # 打印文件系统信息
+syno fs getInfo --beautify # 打印文件系统信息
+
+syno fs getInfo --output _output.json # 输出到文件
 
 ```

@@ -1,6 +1,6 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "synology api for nodejs",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
