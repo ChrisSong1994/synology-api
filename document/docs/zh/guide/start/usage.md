@@ -13,6 +13,7 @@
 | :----------------------: | :------------------: | :--------------------------------------------------------- | :----: |
 | server                 | string              | Synology NAS 地址 或者 QuickConnectId                     |   -    |
 | quickConnectServerType | proxy \| wan \| lan | 使用 QuickConnect ID 连接时，选择 QuickConnect 服务器类型 | proxy  |
+| lanPriority            | boolean             | 当 quickConnectServerType 不是 lan 时，优先使用 LAN IP    | false  |
 | username               | string              | Synology NAS 用户名                                       | -      |
 | password               | string              | Synology NAS 密码                                         | -      |
 
