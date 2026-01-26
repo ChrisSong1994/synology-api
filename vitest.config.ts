@@ -2,7 +2,8 @@ import { loadEnv } from "vite";
 import { defineConfig } from "vitest/config";
 
 const TEST_INCLUDES = [
-  "./test/FileStation/Search.test.ts",
+  "./test/Auth.test.ts",
+  // "./test/FileStation/Search.test.ts",
   // "./test/VideoStation.test.ts",
   // "./test/AudioStation.test.ts",
   // "./test/Command.test.ts",

@@ -2,7 +2,7 @@ import Axios from "axios";
 import { GLOBAL_QUICK_CONNECT_URL, QUICK_CONNECT_PINGPANG_API } from "./constants";
 import { SynologyApiResponse, QuickConnectServerType } from "@/types";
 
-const getServersFromServerInfo = async (serverInfo, quickConnectServerType) => {
+const getServersFromServerInfo = async (serverInfo, quickConnectServerType, lanPriority?: boolean) => {
   const serverMap: Record<QuickConnectServerType, string | undefined> = {
     [QuickConnectServerType.proxy]: undefined,
     [QuickConnectServerType.lan]: undefined,
@@ -26,8 +26,15 @@ const getServersFromServerInfo = async (serverInfo, quickConnectServerType) => {
       `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
   }
 
-  const server = serverMap[quickConnectServerType];
-  
+  let server = serverMap[quickConnectServerType];
+
+  if (lanPriority && serverMap[QuickConnectServerType.lan]) {
+    const lanServer = serverMap[QuickConnectServerType.lan];
+    if (lanServer && (await pingpang(lanServer))) {
+      return lanServer;
+    }
+  }
+
   if (!server) {
     return Promise.reject(`${quickConnectServerType} server not found`);
   }
@@ -60,7 +67,8 @@ export type ServerInfo = {
 };
 export const getServerInfo = async (
   quickConnectId: string,
-  quickConnectServerType: QuickConnectServerType
+  quickConnectServerType: QuickConnectServerType,
+  lanPriority?: boolean
 ) => {
   const params = {
     version: 1,
@@ -82,9 +90,9 @@ export const getServerInfo = async (
     const result = (
       await Axios.post(`https://${serverInfo.env.control_host}/Serv.php`, relayRequestParams)
     ).data;
-    return getServersFromServerInfo(result, quickConnectServerType);
+    return getServersFromServerInfo(result, quickConnectServerType, lanPriority);
   } else {
-    return getServersFromServerInfo(serverInfo, quickConnectServerType);
+    return getServersFromServerInfo(serverInfo, quickConnectServerType, lanPriority);
   }
 };
 

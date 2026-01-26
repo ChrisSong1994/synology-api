@@ -20,6 +20,7 @@ export interface SynologyApiOptions {
   password: string;
   quickConnectServerType?: QuickConnectServerType; // quick connect server type
   agent?: Agent; // http/https proxy agent
+  lanPriority?: boolean; // use lan ip priority
 }
 
 export interface SynologyApiInfoData {
@@ -44,6 +45,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
   baseUrl: string;
   isConnecting: boolean = false;
   quickConnectServerType?: QuickConnectServerType;
+  lanPriority?: boolean; // use lan ip priority
   private authInfo: SynologyApiAuthInfo | null = null;
   private apiInfo: Record<string, SynologyApiInfoData> = {};
   constructor(options: SynologyApiOptions) {
@@ -52,6 +54,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
     this.username = options.username;
     this.password = options.password;
     this.quickConnectServerType = options.quickConnectServerType ?? QuickConnectServerType.proxy;
+    this.lanPriority = options.lanPriority ?? false;
     this.baseUrl = `${this.server}/webapi/`;
     this.agent = options.agent ?? undefined;
   }
@@ -59,7 +62,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
   public async connect() {
     // if quickconnect id
     if (!isHttpUrl(this.server as string)) {
-      this.server = await getServerInfo(this.server as string, this.quickConnectServerType);
+      this.server = await getServerInfo(this.server as string, this.quickConnectServerType, this.lanPriority);
       this.baseUrl = `${this.server}/webapi/`;
     }
     try {
