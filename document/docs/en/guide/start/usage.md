@@ -13,6 +13,7 @@ Currently, this project is only tested for Synology DSM 7.1.1，you can try it. 
 | :--------------------: | :-----------------: | :----------------------------------------------------------- | :-----: |
 |         server         |       string        | Synology NAS address or QuickConnectId                       |    -    |
 | quickConnectServerType | proxy \| wan \| lan | QuickConnect server type when connecting via QuickConnect ID |  proxy  |
+|      lanPriority       |       boolean       | Prioritize LAN IP when quickConnectServerType is not lan     |  false  |
 |        username        |       string        | Synology NAS username                                        |    -    |
 |        password        |       string        | Synology NAS password                                        |    -    |
 

@@ -30,6 +30,7 @@ npm install @fett/synology-api
 | :----: | :----: | :---- | :----: |
 | server | string | Synology NAS 地址或 QuickConnectId | - |
 | quickConnectServerType | proxy \| wan \| lan | 通过 QuickConnect ID 连接时的服务器类型 | proxy |
+| lanPriority | boolean | 当 quickConnectServerType 不是 lan 时，优先使用 LAN IP | false |
 | username | string | Synology NAS 用户名 | - |
 | password | string | Synology NAS 密码 | - |
 
