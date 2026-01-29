@@ -13,7 +13,7 @@ import {
 } from "./Favorite";
 import { startSearch, stopSearch, getSearchList, cleanSearch } from "./Search";
 import { createFolder } from "./CreateFolder";
-import { getDownloadFile } from "./Download";
+import { downloadFile, getDownloadFile } from "./Download";
 import { stopDeleteFile, startDeleteFile, getDeleteFileStatus } from "./Delete";
 import { getThumbUrl } from "./Thumb";
 import { startDirSizeCalc, stopDirSizeCalc, getDirSizeCalcStatus } from "./DirSize";
@@ -47,6 +47,7 @@ export const METHODS = {
   cleanSearch,
   createFolder,
   getDownloadFile,
+  downloadFile,
   stopDeleteFile,
   startDeleteFile,
   getDeleteFileStatus,
@@ -71,4 +72,3 @@ export const METHODS = {
   getCopyMoveStatus,
   stopCopyMove,
 };
-
