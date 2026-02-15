@@ -49,7 +49,7 @@ const getServersFromServerInfo = async (serverInfo, quickConnectServerType, lanP
 
 // get server ip
 export type ServerInfo = {
-  env: {
+  env?: {
     control_host: string;
   };
   server: {
@@ -65,6 +65,16 @@ export type ServerInfo = {
     relay_port: number;
   };
 };
+
+type ServerInfoError = {
+  command?: string;
+  errinfo?: string;
+  errno?: number;
+  sites?: string[];
+  suberrno?: number;
+  version?: number;
+};
+
 export const getServerInfo = async (
   quickConnectId: string,
   quickConnectServerType: QuickConnectServerType,
@@ -77,7 +87,9 @@ export const getServerInfo = async (
     get_ca_fingerprints: true,
     command: "get_server_info",
   };
-  const serverInfo = (await Axios.post<ServerInfo>(GLOBAL_QUICK_CONNECT_URL, params)).data;
+  const serverInfo = (
+    await Axios.post<ServerInfo & ServerInfoError>(GLOBAL_QUICK_CONNECT_URL, params)
+  ).data;
   if (!serverInfo?.service?.relay_ip && !serverInfo?.service?.relay_port) {
     const relayRequestParams = {
       version: 1,
@@ -86,10 +98,16 @@ export const getServerInfo = async (
       platform: "web",
       command: "request_tunnel",
     };
+
+    let control_host = serverInfo?.env?.control_host;
+
+    // If control_host is not provided, use the first site from serverInfo.sites as a fallback
+    if (!control_host && serverInfo?.sites && serverInfo.sites.length > 0) {
+      control_host = serverInfo.sites[0]; // Use the first site as the control host
+    }
+
     // get replay tunnel
-    const result = (
-      await Axios.post(`https://${serverInfo.env.control_host}/Serv.php`, relayRequestParams)
-    ).data;
+    const result = (await Axios.post(`https://${control_host}/Serv.php`, relayRequestParams)).data;
     return getServersFromServerInfo(result, quickConnectServerType, lanPriority);
   } else {
     return getServersFromServerInfo(serverInfo, quickConnectServerType, lanPriority);
