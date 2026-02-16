@@ -106,6 +106,9 @@ export const getServerInfo = async (
       control_host = serverInfo.sites[0]; // Use the first site as the control host
     }
 
+    if (!control_host) {
+      throw new Error("control_host is undefined; cannot request relay tunnel");
+    }
     // get replay tunnel
     const result = (await Axios.post(`https://${control_host}/Serv.php`, relayRequestParams)).data;
     return getServersFromServerInfo(result, quickConnectServerType, lanPriority);
