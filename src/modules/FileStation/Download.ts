@@ -15,9 +15,7 @@ export async function getDownloadFile(params: DownloadFileParams): Promise<Downl
     method: "download",
     path,
     mode,
-    version: api.maxVersion,
-    api: FileStationApi.Download,
-    _sid: this.authInfo.sid,
+    api: FileStationApi.Download
   };
   const url = buildUrlWithQuery(`${this.baseUrl}${api.path}`, query);
   return {
