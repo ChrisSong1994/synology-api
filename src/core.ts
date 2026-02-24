@@ -124,6 +124,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
       params?: Record<string, any>;
       data?: Record<string, any>;
       headers?: Record<string, any>;
+      responseType?: AxiosRequestConfig["responseType"];
     }
   ): Promise<AxiosRequestConfig> {
     if (!this.isConnecting) {
@@ -154,6 +155,9 @@ export class SynologyApi extends BaseModuleSynologyApi {
       },
       data: options.data ?? null,
     };
+    if (options.responseType) {
+      requestOptions.responseType = options.responseType;
+    }
     // https agent for node
     if (isNode) {
       if (this.agent?.https) {
@@ -181,6 +185,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
       params?: Record<string, any>;
       data?: Record<string, any>;
       headers?: Record<string, any>;
+      responseType?: AxiosRequestConfig["responseType"];
     }
   ) {
     const requestOptions = await this.genRequestOptions(apiName, options);

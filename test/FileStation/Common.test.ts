@@ -49,13 +49,21 @@ describe("SynologyApi FileStation", async () => {
     expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
   });
 
-  test("getDownloadFile", async () => {
-    const result = await synologyApi.FileStation.getDownloadFile({
+  test("getDownload", async () => {
+    const result = await synologyApi.FileStation.getDownload({
       path: "/下载/《Linux是怎样工作的》〔武内觉 著〕文字版[非扫描].pdf",
     });
-    console.log("getDownloadFile result", result);
-    expect(result.data).toMatch(/^https?:\/\//);
+    expect(result).toBeInstanceOf(Buffer);
+    expect(result.length).toBeGreaterThan(0);
   });
+
+//   test("getFileOpenUrl", async () => {
+//     const result = await synologyApi.FileStation.getFileOpenUrl({
+//       path: "/book/logo.png",
+//     });
+//     expect(result.success).toBeTruthy();
+//     expect(result.data).toBeDefined();
+//   });
 
   test.skip("getVirtualFolderList", async () => {
     const result = await synologyApi.FileStation.getVirtualFolderList();
@@ -67,11 +75,12 @@ describe("SynologyApi FileStation", async () => {
     expect(result.success).toBeTruthy();
   });
 
-  test.skip("getThumb", async () => {
-    const result = await synologyApi.FileStation.getThumbUrl({
+  test("getThumb", async () => {
+    const result = await synologyApi.FileStation.getThumb({
       path: "/book/logo.png",
     });
-    expect(result.data).toBeDefined();
+  expect(result).toBeInstanceOf(Buffer);
+    expect(result.length).toBeGreaterThan(0);
   });
 
   test.skip("DirSize", async () => {
