@@ -405,38 +405,6 @@ Create a folder.
 
 :::
 
-## getDownload
-
-Download file content.
-
-**Parameters**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| path | string | File path |
-
-**Returns**
-
-- Node environment: Buffer
-- Browser environment: ArrayBuffer
-
-## getThumb
-
-Get thumbnail data.
-
-**Parameters**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| path | string | File path |
-| size | "small" \| "medium" \| "large" \| "original" | Thumbnail size (default "small") |
-| rotate | 0 \| 1 \| 2 \| 3 \| 4 | Rotation (default 0) |
-
-**Returns**
-
-- Node environment: Buffer
-- Browser environment: ArrayBuffer
-
 ## getFavoriteList
 
 Get favorite list.
@@ -542,7 +510,7 @@ Delete all broken statuses of favorites.
 
 :::
 
-## getThumb
+## getThumbUrl
 
 Get a thumbnail of a file
 Note:
@@ -935,7 +903,7 @@ None
 
 :::
 
-## getDownload
+## getDownloadFile
 
 get download file url
 

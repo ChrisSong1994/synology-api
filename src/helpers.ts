@@ -26,7 +26,7 @@ const getServersFromServerInfo = async (serverInfo, quickConnectServerType, lanP
       `http://${serverInfo.server.interface?.[0].ip}:${serverInfo.service.port}`;
   }
 
-  const server = serverMap[quickConnectServerType];
+  let server = serverMap[quickConnectServerType];
 
   if (lanPriority && serverMap[QuickConnectServerType.lan]) {
     const lanServer = serverMap[QuickConnectServerType.lan];

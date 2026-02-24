@@ -15,6 +15,7 @@ export async function getStreamId(
   });
 }
 
+
 export type VideoStationGetStreamUrlParams = {
   id: number;
 };
@@ -33,8 +34,7 @@ export async function getStreamUrl(
       allow_api: VideoStationApi.Streaming,
       allow_methods: ["stream"],
     });
-    const apiInfo = this.getApiInfoByName(VideoStationApi.Streaming);
-    const url = `${this.baseUrl}${apiInfo.path}/1.mp4`;
+    const url = `${this.baseUrl}entry.cgi/1.mp4`;
     const query = {
       ...params,
       api: VideoStationApi.Streaming,

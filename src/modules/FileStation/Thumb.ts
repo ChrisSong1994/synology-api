@@ -1,5 +1,5 @@
-import { FileStationApi } from "@/types";
-import { isNode } from "@/utils";
+import { FileStationApi, SynologyApiResponse } from "@/types";
+import { buildUrlWithQuery } from "@/utils";
 
 export type GetThumbRequest = {
   path: string;
@@ -17,13 +17,12 @@ export type GetThumbRequest = {
   rotate?: 0 | 1 | 2 | 3 | 4;
 };
 
-export type GetThumbResponse = Buffer;
+export type GetThumbResponse = SynologyApiResponse<{}>;
 
-export async function getThumb(params: GetThumbRequest): Promise<GetThumbResponse> {
+export async function getThumbUrl(params: GetThumbRequest): Promise<GetThumbResponse> {
   const { path, size = "small", rotate = 0 } = params;
-
-  const res = await this.run(FileStationApi.Thumb, {
-    responseType: "arraybuffer",
+  const options = await this.genRequestOptions(FileStationApi.Thumb, {
+    method: "get",
     params: {
       path,
       size,
@@ -31,5 +30,10 @@ export async function getThumb(params: GetThumbRequest): Promise<GetThumbRespons
     },
   });
 
-  return isNode ? Buffer.from(res as ArrayBuffer) : (res as any);
+  const thumbUrl = buildUrlWithQuery(options.url, options.params);
+
+  return {
+    success: true,
+    data: thumbUrl,
+  };
 }

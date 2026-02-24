@@ -1,6 +1,6 @@
 {
   "name": "@fett/synology-api",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "synology api for nodejs",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -58,7 +58,6 @@
     "pub": "npm publish --access=public",
     "pub:beta": "npm publish --access=public --tag=beta",
     "test": "vitest",
-    "test:debug": "node --inspect-brk=9230 ./node_modules/vitest/vitest.mjs run --pool=forks",
     "coverage": "vitest run --coverage"
   },
   "devDependencies": {

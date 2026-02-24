@@ -27,7 +27,7 @@ export async function uploadFile(params: UploadFileParams) {
   const api = this.getApiInfoByName(FileStationApi.Upload);
   const { path, file, overwrite = OverwriteEnum.OVERWRITE, create_parents = true } = params;
 
-  const formData = createFormData();
+  let formData = createFormData();
   formData.append("method", "upload");
   formData.append("version", String(api?.maxVersion));
   formData.append("api", FileStationApi.Upload);

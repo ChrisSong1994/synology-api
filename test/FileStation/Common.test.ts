@@ -49,21 +49,12 @@ describe("SynologyApi FileStation", async () => {
     expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
   });
 
-  test("getDownload", async () => {
-    const result = await synologyApi.FileStation.getDownload({
-      path: "/下载/《Linux是怎样工作的》〔武内觉 著〕文字版[非扫描].pdf",
+  test.skip("getDownloadFile", async () => {
+    const result = await synologyApi.FileStation.getDownloadFile({
+      path: "xxxxxx",
     });
-    expect(result).toBeInstanceOf(Buffer);
-    expect(result.length).toBeGreaterThan(0);
+    expect(result.data).toMatch(/^https?:\/\//);
   });
-
-//   test("getFileOpenUrl", async () => {
-//     const result = await synologyApi.FileStation.getFileOpenUrl({
-//       path: "/book/logo.png",
-//     });
-//     expect(result.success).toBeTruthy();
-//     expect(result.data).toBeDefined();
-//   });
 
   test.skip("getVirtualFolderList", async () => {
     const result = await synologyApi.FileStation.getVirtualFolderList();
@@ -75,12 +66,11 @@ describe("SynologyApi FileStation", async () => {
     expect(result.success).toBeTruthy();
   });
 
-  test("getThumb", async () => {
-    const result = await synologyApi.FileStation.getThumb({
+  test.skip("getThumb", async () => {
+    const result = await synologyApi.FileStation.getThumbUrl({
       path: "/book/logo.png",
     });
-  expect(result).toBeInstanceOf(Buffer);
-    expect(result.length).toBeGreaterThan(0);
+    expect(result.data).toBeDefined();
   });
 
   test.skip("DirSize", async () => {
@@ -97,7 +87,7 @@ describe("SynologyApi FileStation", async () => {
     }
   });
 
-  test.skip("MD5", async () => {
+  test("MD5", async () => {
     const result = await synologyApi.FileStation.startMD5Calc({
       file_path: "/book/logo1.png",
     });
@@ -111,17 +101,17 @@ describe("SynologyApi FileStation", async () => {
     }
   });
 
-  test.skip("getBackgroundTaskList", async () => {
+  test("getBackgroundTaskList", async () => {
     const result = await synologyApi.FileStation.getBackgroundTaskList();
     expect(result.data).toBeDefined();
   });
 
-  test.skip("clearFinishedBackgroundTasks", async () => {
+  test("clearFinishedBackgroundTasks", async () => {
     const result = await synologyApi.FileStation.clearFinishedBackgroundTasks();
     expect(result.success).toBeTruthy();
   });
 
-  test.skip("rename", async () => {
+  test("rename", async () => {
     const fileRename = "test.svg";
     const result = await synologyApi.FileStation.rename({
       path: "/book/test1.svg",

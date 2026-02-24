@@ -56,7 +56,7 @@ export const onMethodCall = (module: string) => async (method: string, options: 
 
   if (options.output) {
     try {
-      const out_path = path.resolve(options.output);
+      let out_path = path.resolve(options.output);
       if (!fse.existsSync(out_path)) {
         fse.ensureFileSync(out_path);
         console.log(chalk.yellowBright(`Output file created: ${out_path}`));
