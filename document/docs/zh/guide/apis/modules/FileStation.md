@@ -404,6 +404,38 @@
 
 :::
 
+## getDownload
+
+下载指定文件内容。
+
+**参数**
+
+| 名称 | 类型 | 描述 |
+| --- | --- | --- |
+| path | string | 文件路径 |
+
+**返回值**
+
+- Node 环境返回 Buffer
+- 浏览器环境返回 ArrayBuffer
+
+## getThumb
+
+获取缩略图数据。
+
+**参数**
+
+| 名称 | 类型 | 描述 |
+| --- | --- | --- |
+| path | string | 文件路径 |
+| size | "small" \| "medium" \| "large" \| "original" | 缩略图大小（默认 "small"） |
+| rotate | 0 \| 1 \| 2 \| 3 \| 4 | 旋转角度（默认 0） |
+
+**返回值**
+
+- Node 环境返回 Buffer
+- 浏览器环境返回 ArrayBuffer
+
 ## getFavoriteList
 
 获取收藏夹列表。
@@ -509,7 +541,7 @@
 
 :::
 
-## getThumbUrl
+## getThumb
 
 获取文件的缩略图
 注意：
@@ -531,16 +563,7 @@
 
 **返回值**
 
-:::details
 
-```json
-{
-  "success": true,
-  "data": "http://192.168.1.100:5000/webapi/entry.cgi?api=SYNO.FileStation.Thumbnail&version=2&method=get&path=%2Fvideo%2F12&size=small&rotate=0"
-}
-```
-
-:::
 
 ## startDirSizeCalc
 
@@ -868,7 +891,7 @@ None
 
 :::
 
-## getDownloadFile
+## getDownload
 
 获取下载文件URL
 

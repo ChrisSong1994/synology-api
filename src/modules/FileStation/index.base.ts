@@ -13,9 +13,9 @@ import {
 } from "./Favorite";
 import { startSearch, stopSearch, getSearchList, cleanSearch } from "./Search";
 import { createFolder } from "./CreateFolder";
-import { getDownloadFile } from "./Download";
+import { getDownload } from "./Download";
 import { stopDeleteFile, startDeleteFile, getDeleteFileStatus } from "./Delete";
-import { getThumbUrl } from "./Thumb";
+import { getThumb } from "./Thumb";
 import { startDirSizeCalc, stopDirSizeCalc, getDirSizeCalcStatus } from "./DirSize";
 import { startMD5Calc, stopMD5Calc, getMD5CalcStatus } from "./MD5";
 import { checkPermission } from "./CheckPermission";
@@ -46,11 +46,12 @@ export const METHODS = {
   getSearchList,
   cleanSearch,
   createFolder,
-  getDownloadFile,
+  getDownload,
+//   getFileOpenUrl,
   stopDeleteFile,
   startDeleteFile,
   getDeleteFileStatus,
-  getThumbUrl,
+  getThumb,
   startDirSizeCalc,
   stopDirSizeCalc,
   getDirSizeCalcStatus,
