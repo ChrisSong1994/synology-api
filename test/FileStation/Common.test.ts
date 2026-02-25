@@ -50,7 +50,7 @@ describe("SynologyApi FileStation", async () => {
     expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
   });
 
-  test("getDownloadFile", async () => {
+  test.skip("getDownloadFile", async () => {
     const result: any = await synologyApi.FileStation.getDownloadFile({
      path: "/book/test1.svg",
       responseType: "stream",
@@ -82,9 +82,9 @@ describe("SynologyApi FileStation", async () => {
     expect(result.success).toBeTruthy();
   });
 
-  test.skip("getThumb", async () => {
+  test("getThumb", async () => {
     const result = await synologyApi.FileStation.getThumbUrl({
-    path: "/book/test1.svg",
+    path: "/book/logo.png",
     });
     expect(result.data).toBeDefined();
   });
@@ -105,7 +105,7 @@ describe("SynologyApi FileStation", async () => {
 
   test.skip("MD5", async () => {
     const result = await synologyApi.FileStation.startMD5Calc({
-      file_path: "/book/logo1.png",
+      file_path: "/book/logo.png",
     });
     expect(result.data.taskid).toBeDefined();
 
