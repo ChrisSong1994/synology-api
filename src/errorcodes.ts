@@ -115,7 +115,7 @@ export const SYNOLOGY_ERROR_CODES = {
   },
 };
 
-export const resWithErrorCode = (apiKey: string, res: SynologyApiResponse<any>) => {
+export const resWithErrorCode = (apiKey: string, res: SynologyApiResponse<any> | any) => {
   const errorCodes = SYNOLOGY_ERROR_CODES[apiKey];
   const commonErrorCode = SYNOLOGY_ERROR_CODES[COMMON_CODES];
   const code = res?.error?.code;

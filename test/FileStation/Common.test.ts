@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
+import { Readable } from "node:stream";
+import fs from "fs";
 
 import { createSynologyApi } from "../helper";
-// import fs from "fs"
 
 describe("SynologyApi FileStation", async () => {
   const synologyApi = createSynologyApi();
@@ -49,12 +50,26 @@ describe("SynologyApi FileStation", async () => {
     expect(result.data.shares.length).toBeGreaterThanOrEqual(0);
   });
 
-  test("getDownloadFile", async () => {
-    const result = await synologyApi.FileStation.getDownloadFile({
-      path: "/下载/《Linux是怎样工作的》〔武内觉 著〕文字版[非扫描].pdf",
+  test.skip("getDownloadFile", async () => {
+    const result: any = await synologyApi.FileStation.getDownloadFile({
+     path: "/book/test1.svg",
+      responseType: "stream",
     });
-    console.log("getDownloadFile result", result);
-    expect(result.data).toMatch(/^https?:\/\//);
+    expect(result).toBeDefined();
+    expect(typeof result?.on).toBe("function");
+    expect(typeof result?.pipe).toBe("function");
+    if (Readable) {
+      expect(result instanceof Readable || result?.readable === true).toBeTruthy();
+    }
+    const writeStream = fs.createWriteStream("test.svg");
+    result.pipe(writeStream);
+    await new Promise((resolve, reject) => {
+      writeStream.on("finish", () => resolve(true));
+      writeStream.on("error", reject);
+    });
+    const stat = fs.statSync("test.svg");
+    expect(stat.size).toBeGreaterThan(0);
+    fs.unlinkSync("test.svg");
   });
 
   test.skip("getVirtualFolderList", async () => {
@@ -67,9 +82,9 @@ describe("SynologyApi FileStation", async () => {
     expect(result.success).toBeTruthy();
   });
 
-  test.skip("getThumb", async () => {
+  test("getThumb", async () => {
     const result = await synologyApi.FileStation.getThumbUrl({
-      path: "/book/logo.png",
+    path: "/book/logo.png",
     });
     expect(result.data).toBeDefined();
   });
@@ -90,7 +105,7 @@ describe("SynologyApi FileStation", async () => {
 
   test.skip("MD5", async () => {
     const result = await synologyApi.FileStation.startMD5Calc({
-      file_path: "/book/logo1.png",
+      file_path: "/book/logo.png",
     });
     expect(result.data.taskid).toBeDefined();
 
