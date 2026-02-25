@@ -124,6 +124,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
       params?: Record<string, any>;
       data?: Record<string, any>;
       headers?: Record<string, any>;
+      responseType?: AxiosRequestConfig["responseType"];
     }
   ): Promise<AxiosRequestConfig> {
     if (!this.isConnecting) {
@@ -153,6 +154,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
         "x-syno-token": this.authInfo.synotoken,
       },
       data: options.data ?? null,
+      responseType: options.responseType,
     };
     // https agent for node
     if (isNode) {
