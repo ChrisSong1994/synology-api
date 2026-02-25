@@ -517,18 +517,16 @@ Note:
 
 - 1. Supported image formats: jpg, jpeg, jpe, bmp, png, tif, tiff, gif, arw, srf, sr2, dcr, k25, kdc, cr2, crw, nef, mrw,
      ptx, pef, raf, 3fr, erf, mef, mos, orf, rw2, dng, x3f, heic, raw.
-- 2. Supported video formats in an indexed folder: 3gp, 3g2, asf, dat, divx, dvr-ms, m2t, m2ts, m4v, mkv, mp4,
-     mts, mov, qt, tp, trp, ts, vob, wmv, xvid, ac3, amr, rm, rmvb, ifo, mpeg, mpg, mpe, m1v, m2v, mpeg1, mpeg2,
-     mpeg4, ogv, webm, flv, f4v, avi, swf, vdr, iso, hevc.
-- 3. Video thumbnails exist only if video files are placed in the "photo" shared folder or users' home folders.
+- 2. Supported video formats in indexed folders: 3gp, 3g2, asf, dat, divx, dvr-ms, m2t, m2ts, m4v, mkv, mp4,
+     mts, mov, qt, mpeg, mpg, mpe, m1v, m2v, ogv, rm, rmvb, vob, wmv, xvid, avi, flv, m4v。
 
 **Parameters**
 
-| Name   | Type   | Description                                                                                                                          |
-| ------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| path   | string | The path of the folder.                                                                                                              |
-| size   | string | The size of the thumbnail.                                                                                                           |
-| rotate | number | Optional. Return rotated thumbnail. Rotate Options: 0: Do not rotate. 1: Rotate 90°. 2: Rotate 180°. 3: Rotate 270°. 4: Rotate 360°. |
+| Name   | Type                                        | Description         |
+| ------ | ------------------------------------------- | ------------------- |
+| path   | string                                      | File path.          |
+| size   | "small" \| "medium" \| "large" \| "original" | Thumbnail size.     |
+| rotate | 0 \| 1 \| 2 \| 3 \| 4                       | Rotate option.      |
 
 **Returns**
 
@@ -537,7 +535,34 @@ Note:
 ```json
 {
   "success": true,
-  "data": "http://192.168.1.100:5000/webapi/entry.cgi?api=SYNO.FileStation.Thumbnail&version=2&method=get&path=%2Fvideo%2F12&size=small&rotate=0"
+  "data": "https://synology_ip:5001/webapi/entry.cgi?api=SYNO.FileStation.Thumb&version=2&method=get&path=%2Fvideo%2Ftest.jpg&size=small&_sid=xxxx"
+}
+```
+
+:::
+
+## getDownloadFile
+
+Download file(s) or folder(s).
+
+**Parameters**
+
+| Name         | Type                           | Description                                                                 |
+| ------------ | ------------------------------ | --------------------------------------------------------------------------- |
+| path         | string                         | File path.                                                                  |
+| mode         | "download" \| "open"           | Download mode.                                                              |
+| responseType | "stream" \| "blob" \| "arraybuffer" | Response type, default json. If set to stream, returns stream object. |
+
+**Returns**
+
+If responseType is stream, returns stream object. Otherwise returns json object.
+
+:::details
+
+```json
+{
+  "success": true,
+  "data": "https://synology_ip:5001/webapi/entry.cgi?api=SYNO.FileStation.Download&version=2&method=download&path=%2Fvideo%2Ftest.jpg&mode=download&_sid=xxxx"
 }
 ```
 

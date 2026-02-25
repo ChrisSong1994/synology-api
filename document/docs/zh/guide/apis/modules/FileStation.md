@@ -517,17 +517,15 @@
 - 1. 支持的图像格式：jpg, jpeg, jpe, bmp, png, tif, tiff, gif, arw, srf, sr2, dcr, k25, kdc, cr2, crw, nef, mrw,
      ptx, pef, raf, 3fr, erf, mef, mos, orf, rw2, dng, x3f, heic, raw。
 - 2. 索引文件夹中支持的视频格式：3gp, 3g2, asf, dat, divx, dvr-ms, m2t, m2ts, m4v, mkv, mp4,
-     mts, mov, qt, tp, trp, ts, vob, wmv, xvid, ac3, amr, rm, rmvb, ifo, mpeg, mpg, mpe, m1v, m2v, mpeg1, mpeg2,
-     mpeg4, ogv, webm, flv, f4v, avi, swf, vdr, iso, hevc。
-- 3. 视频缩略图仅在视频文件放置在"photo"共享文件夹或用户主文件夹中时才存在。
+     mts, mov, qt, mpeg, mpg, mpe, m1v, m2v, ogv, rm, rmvb, vob, wmv, xvid, avi, flv, m4v。
 
 **参数**
 
-| 名称   | 类型   | 描述                                                                                                 |
-| ------ | ------ | ---------------------------------------------------------------------------------------------------- |
-| path   | string | 文件夹路径。                                                                                         |
-| size   | string | 缩略图大小。                                                                                         |
-| rotate | number | 可选。返回旋转的缩略图。旋转选项：0：不旋转。1：旋转 90°。2：旋转 180°。3：旋转 270°。4：旋转 360°。 |
+| 名称   | 类型                                        | 描述             |
+| ------ | ------------------------------------------- | ---------------- |
+| path   | string                                      | 图像文件路径。   |
+| size   | "small" \| "medium" \| "large" \| "original" | 缩略图大小。     |
+| rotate | 0 \| 1 \| 2 \| 3 \| 4                       | 旋转选项。       |
 
 **返回值**
 
@@ -536,7 +534,34 @@
 ```json
 {
   "success": true,
-  "data": "http://192.168.1.100:5000/webapi/entry.cgi?api=SYNO.FileStation.Thumbnail&version=2&method=get&path=%2Fvideo%2F12&size=small&rotate=0"
+  "data": "https://synology_ip:5001/webapi/entry.cgi?api=SYNO.FileStation.Thumb&version=2&method=get&path=%2Fvideo%2Ftest.jpg&size=small&_sid=xxxx"
+}
+```
+
+:::
+
+## getDownloadFile
+
+下载文件或文件夹。
+
+**参数**
+
+| 名称         | 类型                           | 描述                                                                 |
+| ------------ | ------------------------------ | -------------------------------------------------------------------- |
+| path         | string                         | 文件路径。                                                           |
+| mode         | "download" \| "open"           | 下载模式。                                                           |
+| responseType | "stream" \| "blob" \| "arraybuffer" | 响应类型，默认 json。如果设置为 stream，则返回 stream 对象。 |
+
+**返回值**
+
+如果 responseType 为 stream，则返回 stream 对象。否则返回 json 对象。
+
+:::details
+
+```json
+{
+  "success": true,
+  "data": "https://synology_ip:5001/webapi/entry.cgi?api=SYNO.FileStation.Download&version=2&method=download&path=%2Fvideo%2Ftest.jpg&mode=download&_sid=xxxx"
 }
 ```
 
