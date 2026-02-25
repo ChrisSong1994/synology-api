@@ -1,25 +1,25 @@
+import { AxiosRequestConfig } from "axios";
 import { FileStationApi, SynologyApiResponse } from "@/types";
 import { buildUrlWithQuery } from "@/utils";
 
 export type DownloadFileParams = {
   path: string;
   mode?: "download" | "open";
+  responseType?: AxiosRequestConfig["responseType"];
 };
 
-export type DownloadFileResponse = SynologyApiResponse<string>;
+export type DownloadFileResponse = DownloadFileParams["responseType"];
 
 export async function getDownloadFile(params: DownloadFileParams): Promise<DownloadFileResponse> {
-  const { path, mode = "download" } = params;
-  const api = this.getApiInfoByName(FileStationApi.Download);
-  const query = {
-    method: "download",
-    path,
-    mode,
-    api: FileStationApi.Download
-  };
-  const url = buildUrlWithQuery(`${this.baseUrl}${api.path}`, query);
-  return {
-    data: url,
-    success: true,
-  };
+  const { path, mode = "download" ,responseType} = params;
+  const res = await this.run(FileStationApi.Download, {
+    params: {
+      path,
+      mode,
+      method: "download",
+    },
+    responseType,
+  });
+
+  return res;
 }

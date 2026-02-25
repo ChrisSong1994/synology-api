@@ -4,9 +4,9 @@ import { defineConfig } from "vitest/config";
 const TEST_INCLUDES = [
   // "./test/Auth.test.ts",
   // "./test/FileStation/Search.test.ts",
-    // "./test/FileStation/Common.test.ts",
+    "./test/FileStation/Common.test.ts",
   // "./test/VideoStation.test.ts",
-  "./test/AudioStation/common.test.ts",
+  // "./test/AudioStation/common.test.ts",
   // "./test/Command.test.ts",
   // "./test/Core.User.test.ts",
   // "./test/Docker.test.ts",

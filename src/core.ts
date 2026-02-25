@@ -62,7 +62,11 @@ export class SynologyApi extends BaseModuleSynologyApi {
   public async connect() {
     // if quickconnect id
     if (!isHttpUrl(this.server as string)) {
-      this.server = await getServerInfo(this.server as string, this.quickConnectServerType, this.lanPriority);
+      this.server = await getServerInfo(
+        this.server as string,
+        this.quickConnectServerType,
+        this.lanPriority
+      );
       this.baseUrl = `${this.server}/webapi/`;
     }
     try {
@@ -124,6 +128,7 @@ export class SynologyApi extends BaseModuleSynologyApi {
       params?: Record<string, any>;
       data?: Record<string, any>;
       headers?: Record<string, any>;
+      responseType?: AxiosRequestConfig["responseType"];
     }
   ): Promise<AxiosRequestConfig> {
     if (!this.isConnecting) {
@@ -153,7 +158,9 @@ export class SynologyApi extends BaseModuleSynologyApi {
         "x-syno-token": this.authInfo.synotoken,
       },
       data: options.data ?? null,
+      responseType: options.responseType ?? "json",
     };
+
     // https agent for node
     if (isNode) {
       if (this.agent?.https) {
@@ -181,13 +188,14 @@ export class SynologyApi extends BaseModuleSynologyApi {
       params?: Record<string, any>;
       data?: Record<string, any>;
       headers?: Record<string, any>;
+      responseType?: AxiosRequestConfig["responseType"];
     }
   ) {
     const requestOptions = await this.genRequestOptions(apiName, options);
     const apiKey = getApiKey(apiName);
     try {
       let result = (await Axios(requestOptions)).data;
-      if (!isUndfined(apiKey)) {
+      if (!isUndfined(apiKey) && options.responseType === "json") {
         result = resWithErrorCode(apiKey, result);
       }
       return result;
