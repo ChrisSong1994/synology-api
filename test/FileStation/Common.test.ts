@@ -82,7 +82,7 @@ describe("SynologyApi FileStation", async () => {
     expect(result.success).toBeTruthy();
   });
 
-  test("getThumb", async () => {
+  test("getThumbUrl", async () => {
     const result = await synologyApi.FileStation.getThumbUrl({
     path: "/book/logo.png",
     });
