@@ -557,17 +557,6 @@ Download file(s) or folder(s).
 
 If responseType is stream, returns stream object. Otherwise returns json object.
 
-:::details
-
-```json
-{
-  "success": true,
-  "data": "https://synology_ip:5001/webapi/entry.cgi?api=SYNO.FileStation.Download&version=2&method=download&path=%2Fvideo%2Ftest.jpg&mode=download&_sid=xxxx"
-}
-```
-
-:::
-
 ## startDirSizeCalc
 
 Start to calculate size for one or more file/folder paths
@@ -923,29 +912,6 @@ None
     "progress": 0.03199071809649467,
     "total": 6033
   }
-}
-```
-
-:::
-
-## getDownloadFile
-
-get download file url
-
-**Parameters**
-| Name | Type | Description |
-|----- | ---- | ----------- |
-| path | string | file path |
-|mode | "download" | "open" | download mode |
-
-**Returns**
-
-:::details
-
-```json
-{
-  "data": "https://192.168.1.1:5001/entry.cgi?api=SYNO.FileStation.Download&method=download&version=2&path=%2Fvideo%2F1000%2F509%2F%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87.jpg&_sid=5",
-  "success": true
 }
 ```
 

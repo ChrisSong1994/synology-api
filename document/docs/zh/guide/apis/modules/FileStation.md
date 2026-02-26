@@ -556,17 +556,6 @@
 
 如果 responseType 为 stream，则返回 stream 对象。否则返回 json 对象。
 
-:::details
-
-```json
-{
-  "success": true,
-  "data": "https://synology_ip:5001/webapi/entry.cgi?api=SYNO.FileStation.Download&version=2&method=download&path=%2Fvideo%2Ftest.jpg&mode=download&_sid=xxxx"
-}
-```
-
-:::
-
 ## startDirSizeCalc
 
 开始计算一个或多个文件/文件夹路径的大小
@@ -888,29 +877,6 @@ None
     "progress": 0.03199071809649467,
     "total": 6033
   }
-}
-```
-
-:::
-
-## getDownloadFile
-
-获取下载文件URL
-
-**参数**
-| 名称 | 类型 | 描述 |
-|----- | ---- | ----------- |
-| path | string | 文件路径 |
-|mode | "download" \| "open" | 下载模式 |
-
-**返回值**
-
-:::details
-
-```json
-{
-  "data": "https://192.168.1.1:5001/entry.cgi?api=SYNO.FileStation.Download&method=download&version=2&path=%2Fvideo%2F1000%2F509%2F%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87.jpg&_sid=5",
-  "success": true
 }
 ```
 
